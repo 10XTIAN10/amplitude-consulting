@@ -1727,58 +1727,79 @@ ai: {
   num: '05',
   title: 'AI Adoption Accelerator',
   subtitle: 'AI Tools Usage Analysis + Personalized Prompt Generation',
-  desc: 'Analiza el uso real de AI Chat, Dashboard Agent, AI Visibility y AI Feedback. Genera los mejores prompts personalizados para cada usuario basados en sus datos y dashboards reales.',
+  desc: 'Analiza el uso real de AI Chat, Dashboard Agent, AI Visibility y AI Feedback. Verifica qué herramientas están habilitadas, mide adopción con KPIs de éxito definidos al inicio, y genera prompts personalizados basados en los dashboards y eventos REALES de la cuenta.',
   color: 'var(--green)',
   colorDim: 'var(--green-dim)',
   tags: [{label:'AI Adoption',color:'var(--green)'},{label:'Todos los roles',color:'var(--muted)'},{label:'AI features',color:'var(--muted)'}],
   vars: [
-    ['Proyecto','[NOMBRE_PROYECTO]'],
+    ['Proyecto','[NOMBRE_PROYECTO] — validar al inicio, no asumir'],
     ['Período','Últimos 90 días'],
-    ['Umbral power user AI','> 5 interacciones con AI tools en 90 días'],
-    ['Umbral adopción baja AI','< 10% de usuarios activos usa alguna AI tool'],
-    ['Roles a mapear','PM / Analista / Marketing / Ingeniería'],
+    ['Umbral power user','> 5 interacciones con AI tools en 90 días'],
+    ['Umbral adopción baja','< 10% de usuarios activos usa alguna AI tool'],
+    ['Roles','PM / Analista / Marketing / Ingeniería'],
+    ['KPI primario','% usuarios activos con ≥1 AI tool → meta: +15% en 90d'],
+    ['KPI secundario','Promedio de interacciones AI por usuario activo'],
+    ['KPI de calidad','% consultas AI que resultan en acción concreta (chart, dashboard, insight)'],
   ],
   notebook: [
-    ['01','# INVENTARIO DE USO — AI TOOLS','Métricas por herramienta: Chat, Agent, Visibility, Feedback'],
-    ['02','# ANÁLISIS DE POWER USERS AI','Top 5 y patrones de uso'],
-    ['03','# CORRELACIÓN AI ↔ CREACIÓN DE CONTENT','¿Los usuarios de AI crean más charts?'],
-    ['04','# TIPOS DE CONSULTAS EN AI CHAT','Exploratorias vs verificación vs reporting'],
-    ['05','# PROMPTS PERSONALIZADOS POR USUARIO','Basados en sus dashboards y datos reales'],
-    ['06','# PROGRAMA AI CHAMPIONS','Top candidatos y plan de activación'],
-    ['07','# GUÍA DE BEST PRACTICES POR ROL','PM / Analista / Marketing / Ingeniería'],
-    ['08','# PLAN DE ADOPCIÓN 90 DÍAS','Roadmap de activación de AI tools'],
+    ['01','# INVENTARIO DE USO — AI TOOLS','Herramientas habilitadas + métricas + alerta adopción crítica'],
+    ['02','# ANÁLISIS DE POWER USERS AI','Top 5 con timeline real, rol y dashboards consultados'],
+    ['03','# CORRELACIÓN AI ↔ CREACIÓN DE CONTENT','Cohorte A vs B — conclusión con datos + respuesta directa'],
+    ['04','# TIPOS DE CONSULTAS EN AI CHAT','Taxonomía real con criterios de clasificación + "Otro"'],
+    ['05','# PROMPTS PERSONALIZADOS POR USUARIO','Por dashboard real + Dashboard Agent + AI Visibility'],
+    ['06','# PROGRAMA AI CHAMPIONS','Candidatos basados en S1+S2 + plan 4 semanas contextualizado'],
+    ['07','# GUÍA DE BEST PRACTICES POR ROL','Por rol con dashboards y KPIs REALES del proyecto'],
+    ['08','# PLAN DE ADOPCIÓN 90 DÍAS','3 meses con herramienta foco, equipo foco y KPIs de éxito'],
   ],
   checklist: [
-    ['Inventario AI','Métricas de las 4 herramientas AI en el hilo.'],
-    ['Power users','Top 5 identificados con análisis de patrones.'],
-    ['Prompts personalizados','Mínimo 10 prompts basados en datos reales del proyecto.'],
-    ['Guía por rol','Best practices para cada rol con ejemplos concretos.'],
-    ['Notebook','8 secciones verificadas. Link en el hilo.'],
-    ['Plan 90d','Roadmap de adopción con responsables y prompts.'],
+    ['Validación inicial','Proyecto confirmado explícitamente. No se usó el placeholder literal.'],
+    ['Herramientas habilitadas','Regla 7 aplicada: herramientas no activas marcadas correctamente.'],
+    ['Alerta adopción','Si adopción < 10%: alerta visible en Sección 1.'],
+    ['Cohortes','Correlación con Cohorte A vs B. Conclusión directa sí/no con dato.'],
+    ['Prompts reales','Todos los prompts referencian dashboards y eventos REALES. Sin genéricos.'],
+    ['Checkpoint pre-ejecución','8 filas + resumen de datos clave mostrados. Confirmación explícita recibida.'],
+    ['Notebook','8 secciones verificadas con get_notebook. Link en el hilo.'],
+    ['KPIs de éxito','Baseline declarado en Sección 8. Meta a 90 días definida.'],
   ],
   phases: [
-    { title: 'Diagnóstico', items: ['Inventario de uso actual por herramienta','Identificar power users y no usuarios','Analizar tipos de consultas en AI Chat'] },
-    { title: 'Activación', items: ['Generar prompts personalizados por usuario','Lanzar programa AI Champions','Training por rol con casos reales'] },
-    { title: 'Escala', items: ['Medir adopción semana a semana','Publicar guía de best practices','Newsletter de casos de uso exitosos'] },
+    { title: 'Pre-ejecución', items: ['Validar proyecto explícitamente','Declarar variables y KPIs de éxito','Verificar herramientas habilitadas','Listar 8 filas y esperar confirmación'] },
+    { title: 'Diagnóstico (S1–S4)', items: ['Inventario con alerta si adopción < 10%','Top 5 power users con get_user_timeline','Cohorte A vs B: correlación AI ↔ output','Taxonomía de consultas con ejemplos reales'] },
+    { title: 'Activación (S5–S8)', items: ['Prompts por dashboard real + Agent + Visibility','Champions basados en datos reales S1+S2','Guía por rol con dashboards nombrados','Plan 90d con herramienta foco y KPIs de éxito'] },
   ],
   prompt: `⚠️ INSTRUCCIONES DE COMPORTAMIENTO — LEER ANTES DE EJECUTAR ⚠️
 Structured Execution Contract. Reglas OBLIGATORIAS:
-1. NOMBRES EXACTOS: Títulos literales, sin parafrasear.
+1. NOMBRES EXACTOS: Títulos literales entre secciones y filas del notebook — sin parafrasear.
 2. ORDEN FIJO: 8 filas en el orden definido.
 3. VERIFICACIÓN: get_notebook antes de compartir el link.
-4. CHECKPOINT: Listar las 8 filas y esperar confirmación.
-5. DATOS FALTANTES: "⚠️ Sin datos disponibles — [razón]"
+4. CHECKPOINT PRE-EJECUCIÓN: Listar las 8 filas con títulos exactos y datos
+   clave encontrados por sección. Esperar confirmación explícita del usuario
+   ("confirmar" o "proceder") ANTES de crear el notebook.
+5. DATOS FALTANTES: "⚠️ Sin datos disponibles — [razón específica]"
 6. TONO: Ejecutivo. Prompts concretos, no genéricos.
    Los prompts deben basarse en eventos y dashboards REALES del proyecto.
+7. HERRAMIENTA NO HABILITADA: Si una herramienta AI no está activa en el
+   proyecto, marcar toda su fila como:
+   "⚠️ Herramienta no habilitada en este proyecto — omitida del análisis"
+   y ajustar el % de adopción general en consecuencia.
+8. VALIDACIÓN INICIAL: Si [NOMBRE_PROYECTO] no fue provisto explícitamente
+   por el usuario, preguntar antes de ejecutar. No asumir. No continuar
+   con el placeholder literal.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-VARIABLES — DECLARAR AL INICIO
+VARIABLES — DECLARAR Y VALIDAR AL INICIO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 - Proyecto: [NOMBRE_PROYECTO]
 - Período: últimos 90 días
 - Umbral power user: > 5 interacciones con AI tools en 90 días
 - Umbral adopción baja: < 10% de usuarios usa alguna AI tool
 - Roles: PM / Analista / Marketing / Ingeniería
+
+KPIs de éxito del programa (medir al cierre de los 90 días):
+- KPI primario: % de usuarios activos que usan ≥1 AI tool
+  (baseline actual → meta: +15% en 90 días)
+- KPI secundario: Promedio de interacciones AI por usuario activo
+- KPI de calidad: % de consultas AI que resultan en una acción
+  concreta (chart creado, dashboard modificado, insight compartido)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 PERSONA Y OBJETIVO
@@ -1790,77 +1811,163 @@ OBJETIVO: Analizar el uso real de las herramientas AI de Amplitude en
 personalizados basados en los datos reales de la cuenta.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECCIÓN 1 — INVENTARIO DE USO AI TOOLS
+SECCIÓN 1 — INVENTARIO DE USO — AI TOOLS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Verificar primero qué herramientas están habilitadas en el proyecto.
+Para cada herramienta no habilitada, aplicar Regla 7.
+
 | Herramienta     | Usuarios únicos | Total usos | % sobre total users | Tendencia |
 | AI Chat         |                 |            |                     | ↑/↓/→    |
 | Dashboard Agent |                 |            |                     | ↑/↓/→    |
 | AI Visibility   |                 |            |                     | ↑/↓/→    |
 | AI Feedback     |                 |            |                     | ↑/↓/→    |
 
-% de usuarios que probó al menos 1 herramienta AI.
-Herramienta con mayor y menor adopción, y por qué.
+Incluir debajo de la tabla:
+- % de usuarios que probó al menos 1 herramienta AI
+- Herramienta con mayor adopción y razón probable
+- Herramienta con menor adopción y razón probable
+- Si adopción total < 10% → activar alerta:
+  "⚠️ Adopción crítica — priorizar intervención inmediata"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 2 — ANÁLISIS DE POWER USERS AI
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Top 5 usuarios por interacciones con AI tools:
+Top 5 usuarios por interacciones con AI tools en los últimos 90 días.
+Fuente de datos: usar get_user_timeline para cada usuario identificado.
+
 | Usuario | Total interacciones | Herramienta favorita | Rol estimado | Patrón de uso |
-Para cada uno: ¿qué tipo de preguntas hace? ¿qué dashboards consulta?
+
+Notas de ejecución:
+- Si el rol no está disponible como user property: marcarlo como
+  "⚠️ Rol no disponible como propiedad"
+- Para cada usuario: describir qué tipo de preguntas hace y
+  qué dashboards consulta, basado en su timeline real
+- Si hay menos de 5 usuarios con > 5 interacciones: incluir
+  todos los disponibles y señalar "⚠️ Base de power users reducida
+  — considerar bajar el umbral a > 2 interacciones"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 3 — CORRELACIÓN AI ↔ CREACIÓN DE CONTENT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Comparar entre usuarios que usan AI tools vs los que no:
-| Grupo | Charts creados (90d) | Dashboards | Sesiones | Diversidad de features |
-¿Los usuarios de AI crean más y más diverso contenido?
-Conclusión con datos: ¿vale la pena invertir en adopción de AI?
+Metodología obligatoria:
+- Cohorte A: usuarios con ≥1 uso de AI tool en los últimos 90 días
+- Cohorte B: usuarios activos sin ningún uso de AI tool en los mismos 90 días
+- Comparar ambas cohortes en el mismo período de 90 días
+
+| Grupo      | Charts creados | Dashboards | Sesiones | Diversidad de features |
+| Cohorte A  |                |            |          |                        |
+| Cohorte B  |                |            |          |                        |
+| Diferencia |                |            |          |                        |
+
+Incluir debajo:
+- Conclusión con datos: ¿los usuarios de AI crean más y más diverso contenido?
+- Respuesta directa: ¿vale la pena invertir en adopción de AI? (sí/no + dato)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 4 — TIPOS DE CONSULTAS EN AI CHAT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Clasificar las consultas detectadas en:
-- Exploratoria: "¿Por qué cayó X?"
-- Verificación: "¿El dato de Y es correcto?"
-- Reporting: "Dame el resumen de Z período"
-- Creación: "Créame un chart de W"
-| Tipo | % del total | Ejemplo real | Oportunidad de mejora |
+Clasificar las consultas detectadas usando estos criterios:
+- Exploratoria: contiene "por qué", "qué pasó", "causa", "razón", "cayó", "subió"
+- Verificación: contiene "es correcto", "confirmar", "validar", "coincide", "revisar"
+- Reporting: contiene "resumen", "total", "período", "dame el número", "cuántos"
+- Creación: contiene "créame", "genera", "construye", "nuevo chart", "nuevo dashboard"
+
+| Tipo         | % del total | Ejemplo real de la cuenta | Oportunidad de mejora |
+| Exploratoria |             |                           |                       |
+| Verificación |             |                           |                       |
+| Reporting    |             |                           |                       |
+| Creación     |             |                           |                       |
+
+Si una consulta no encaja en ninguna categoría: crear fila "Otro"
+con descripción y % correspondiente.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECCIÓN 5 — PROMPTS PERSONALIZADOS
+SECCIÓN 5 — PROMPTS PERSONALIZADOS POR USUARIO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CRÍTICO: Los prompts deben basarse en los eventos, métricas y
 dashboards REALES de [NOMBRE_PROYECTO]. No prompts genéricos.
 
-Para cada dashboard principal detectado en la cuenta, generá los
-3 mejores prompts que ese equipo debería hacerle al AI Chat.
-Formato: Dashboard / Prompt exacto / Por qué es valioso
+Para cada dashboard principal detectado en la cuenta:
+- Los 3 mejores prompts que ese equipo debería hacerle al AI Chat
+- Formato: Dashboard / Prompt exacto / Por qué es valioso
 
-Para Dashboard Agent: listá los 3 dashboards con mejor potencial
-para usar el agente y el brief exacto de qué pedirle.
+Para Dashboard Agent (si está habilitado):
+- Los 3 dashboards con mejor potencial para usar el agente
+- El brief exacto de qué pedirle para cada uno
+
+Para AI Visibility (si está habilitada):
+- Los 3 KPIs del proyecto donde AI Visibility aportaría más valor
+- Prompt exacto para detectar anomalías en cada KPI
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 6 — PROGRAMA AI CHAMPIONS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Top 3–5 usuarios con mayor potencial para ser AI Champions:
-| Usuario | Por qué | Herramienta foco | Primera acción sugerida |
-Plan de activación en 30 días:
-- Semana 1: Onboarding 1-1 con prompts personalizados
-- Semana 2: Primer caso de uso compartido con el equipo
-- Semana 3-4: Generar guía interna y presentarla
+Top 3–5 usuarios con mayor potencial para ser AI Champions.
+Seleccionar basándose en: volumen de uso, diversidad de herramientas
+usadas y dashboards consultados (datos de Secciones 1 y 2).
+
+| Usuario | Por qué es candidato | Herramienta foco | Primera acción sugerida |
+
+Plan de activación en 30 días — personalizado según champions
+identificados, herramientas con menor adopción (S1) y dashboards
+reales del proyecto (S5):
+- Semana 1: Onboarding 1-1 con prompts personalizados de S5
+  para los dashboards que cada champion ya usa
+- Semana 2: Primer caso de uso compartido con el equipo,
+  basado en la herramienta con menor adopción detectada
+- Semana 3: Generar guía interna usando ejemplos reales de S4
+  (consultas más frecuentes del proyecto)
+- Semana 4: Presentación al equipo + definir ritual de uso
+  (ej: "AI review" semanal en la reunión de datos)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 7 — GUÍA DE BEST PRACTICES POR ROL
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Para cada rol (PM / Analista / Marketing / Ingeniería):
-- Top 3 casos de uso de AI Chat con prompts de ejemplo REALES
+Para cada rol (PM / Analista / Marketing / Ingeniería),
+basarse en los dashboards y eventos REALES del proyecto:
+- Top 3 casos de uso de AI Chat con prompts de ejemplo reales
+  (usar eventos y métricas detectadas en el proyecto)
 - Cómo usar Dashboard Agent para sus dashboards específicos
+  (nombrar los dashboards reales identificados en S5)
 - Cómo usar AI Visibility para detectar anomalías en sus KPIs
+  (nombrar los KPIs reales de cada rol en el proyecto)
+
+Si un rol no tiene usuarios identificados en el proyecto:
+"⚠️ Rol sin usuarios detectados — guía basada en casos de uso típicos"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECCIÓN 8 — ENTREGA EN NOTEBOOK
+SECCIÓN 8 — PLAN DE ADOPCIÓN 90 DÍAS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-CHECKPOINT: Listar las 8 filas y esperar confirmación.
+Plan concreto basado en los hallazgos de las secciones anteriores.
+No genérico — cada acción debe referenciar datos reales del proyecto.
+
+Mes 1 — Quick Wins:
+- Herramienta foco: [la de menor adopción detectada en S1]
+- Equipo foco: [el rol con mayor potencial detectado en S7]
+- Acción concreta: [basada en champions de S6]
+- Métrica de éxito: [KPI primario baseline → meta mes 1]
+
+Mes 2 — Expansión:
+- Champions activos compartiendo casos documentados
+- Segunda herramienta AI incorporada al flujo del equipo foco
+- Métrica de éxito: [KPI secundario baseline → meta mes 2]
+
+Mes 3 — Institucionalización:
+- Guías internas publicadas (basadas en S7)
+- Ritual de uso establecido (definido en S6, Semana 4)
+- Revisión de los 3 KPIs de éxito definidos en VARIABLES
+- Decisión: ¿escalar el programa a otros equipos o proyectos?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ENTREGA EN NOTEBOOK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CHECKPOINT PRE-EJECUCIÓN (OBLIGATORIO antes de crear el notebook):
+Mostrar al usuario:
+1. Las 8 filas con sus títulos exactos
+2. Resumen de datos clave encontrados por sección
+3. Esperar confirmación explícita ("confirmar" o "proceder")
+
+Una vez confirmado, crear el notebook con estas 8 filas en orden:
 Fila 1 → # INVENTARIO DE USO — AI TOOLS
 Fila 2 → # ANÁLISIS DE POWER USERS AI
 Fila 3 → # CORRELACIÓN AI ↔ CREACIÓN DE CONTENT
@@ -1869,7 +1976,9 @@ Fila 5 → # PROMPTS PERSONALIZADOS POR USUARIO
 Fila 6 → # PROGRAMA AI CHAMPIONS
 Fila 7 → # GUÍA DE BEST PRACTICES POR ROL
 Fila 8 → # PLAN DE ADOPCIÓN 90 DÍAS
-Verificar con get_notebook. Corregir si es necesario. Link en el hilo.`
+
+Verificar con get_notebook. Corregir si es necesario.
+Compartir link en el hilo.\`
 },
 
 newsletter: {
