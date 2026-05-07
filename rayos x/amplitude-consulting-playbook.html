@@ -188,7 +188,7 @@ body {
 
 .prompt-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1px;
   background: var(--border);
   margin: 0 40px 40px;
@@ -906,6 +906,12 @@ body {
         <span class="card-pill">Todos los roles</span>
       </div>
       <div class="card-arrow">↗</div>
+    </div>
+
+    <div class="prompt-card" style="cursor:default;pointer-events:none;background:var(--surface);opacity:0.3">
+      <div style="flex:1;display:flex;align-items:center;justify-content:center">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted2);letter-spacing:.12em;text-transform:uppercase">Próximamente</div>
+      </div>
     </div>
 
 </div>
