@@ -1594,133 +1594,250 @@ funnel: {
   num: '04',
   title: 'Funnel Diagnosis',
   subtitle: 'Drop Analysis + Session Replay + Experiment Prioritization',
-  desc: 'Analiza drops por segmento, cruza con session replay y prioriza los próximos experimentos por impacto esperado. Convierte un funnel estático en un plan de acción concreto.',
+  desc: 'Diagnostica el funnel paso a paso con evidencia cuantitativa y cualitativa. Cruza drops por segmento con session replay, formula hipótesis de fricción con criterios de impacto y genera los 3 próximos experimentos priorizados por impacto × esfuerzo.',
   color: '#a78bfa',
   colorDim: '#a78bfa18',
   tags: [{label:'Análisis',color:'#a78bfa'},{label:'Funnel existente',color:'var(--muted)'},{label:'PM + Analytics',color:'var(--muted)'}],
   vars: [
-    ['Funnel objetivo','[NOMBRE o pasos del funnel] — declarar al inicio'],
-    ['Proyecto','[NOMBRE_PROYECTO]'],
-    ['Período','Últimos 90 días'],
-    ['Segmentos a analizar','[País / dispositivo / fuente / plan]'],
-    ['Umbral drop crítico','Caída > 20% entre pasos consecutivos'],
-    ['Replay sample','Mínimo 20 sesiones por paso con mayor drop'],
+    ['Funnel (OBLIGATORIO)','[NOMBRE o lista de eventos en orden] — detener si vacío'],
+    ['Proyecto (OBLIGATORIO)','[NOMBRE_PROYECTO o APP_ID] — detener si vacío'],
+    ['Período','Últimos 90 días [DEFAULT]'],
+    ['Segmentos','Dispositivo, país, fuente de tráfico, plan [DEFAULT: todos]'],
+    ['Umbral drop crítico','> 20% entre pasos consecutivos [DEFAULT]'],
+    ['Mínimo sesiones replay','20 por paso crítico [DEFAULT]'],
+    ['Ventana de conversión','7 días [DEFAULT — ajustar si ciclo de compra es distinto]'],
   ],
   notebook: [
-    ['01','# RESUMEN DEL FUNNEL — ESTADO ACTUAL','Conversión global y por paso'],
-    ['02','# ANÁLISIS DE DROPS POR SEGMENTO','Dónde cae y para quién'],
-    ['03','# CRUZA CON SESSION REPLAY','Qué ven los usuarios en los pasos críticos'],
-    ['04','# HIPÓTESIS DE FRICCIÓN','Causas probables por evidencia'],
-    ['05','# EXPERIMENTOS PRIORIZADOS','Top 3 ordenados por impacto estimado'],
-    ['06','# PLAN DE SEGUIMIENTO','Próximos pasos y prompts de acción'],
-    ['07','# PROMPTS DE FOLLOW-UP','Por experimento priorizado'],
+    ['01','# RESUMEN DEL FUNNEL — ESTADO ACTUAL','TL;DR + tabla de pasos + chart embebido + semáforo'],
+    ['02','# ANÁLISIS DE DROPS POR SEGMENTO','Solo pasos críticos >20% · outlier ≥ 1.5× global'],
+    ['03','# CRUZA CON SESSION REPLAY','Patrones · clips · rage clicks · tiempo en paso'],
+    ['04','# HIPÓTESIS DE FRICCIÓN','Mín. 3 · cruce cuanti+cuali · criterios de impacto'],
+    ['05','# EXPERIMENTOS PRIORIZADOS','Top 3 por impacto÷esfuerzo · MDE · duración · prompt'],
+    ['06','# PLAN DE SEGUIMIENTO','Owner · fecha revisión · guardrail metrics · criterio decisión'],
+    ['07','# PROMPTS DE FOLLOW-UP','3 prompts listos: Experiment Kickstart + siguiente funnel + retención'],
   ],
   checklist: [
-    ['Funnel chart','Creado o identificado en Amplitude. Link en el hilo.'],
-    ['Segmentación','Drops analizados por al menos 2 segmentos clave.'],
-    ['Replay clips','Mínimo 3 clips de sesiones en el paso con mayor drop.'],
-    ['Hipótesis','Al menos 3 hipótesis de fricción con evidencia.'],
-    ['Experimentos','Top 3 priorizados con brief de diseño. Links en el hilo.'],
-    ['Notebook','7 secciones verificadas. Link en el hilo.'],
+    ['Variables obligatorias','Funnel y Proyecto confirmados. No placeholders.'],
+    ['Checkpoint','7 filas listadas con títulos exactos. Confirmación recibida.'],
+    ['TL;DR','3 líneas: conversión global + paso crítico + acción inmediata.'],
+    ['Chart funnel','Creado en Amplitude y link compartido en el hilo.'],
+    ['Session Replay','Habilitado verificado. Si no: sección marcada con ⚠️.'],
+    ['Hipótesis','Mínimo 3, cruzando evidencia cuantitativa y cualitativa.'],
+    ['Experimentos','Top 3 con MDE, duración y prompt de Experiment Kickstart.'],
+    ['Notebook','7 filas verificadas con get_notebook. Link con formato estándar.'],
+    ['Errores','Secciones con error documentadas al final con sugerencia de resolución.'],
   ],
   phases: [
-    { title: 'Diagnóstico', items: ['Mapear conversión actual por paso','Segmentar por dispositivo, país, fuente','Identificar pasos con drop > 20%','Ver replays de los pasos críticos'] },
-    { title: 'Hipótesis', items: ['Formular hipótesis por evidencia de replay','Priorizar por impacto potencial','Diseñar top 3 experimentos'] },
-    { title: 'Acción', items: ['Lanzar experimentos priorizados','Configurar métricas de guardia','Definir cadencia de revisión'] },
+    { title: 'Paso 0 — Validación', items: ['Confirmar Funnel y Proyecto (obligatorios)','Listar 7 filas y esperar confirmación','Verificar Session Replay habilitado','TL;DR ejecutivo antes de cualquier tabla'] },
+    { title: 'Diagnóstico (S1–S4)', items: ['Chart de funnel + semáforo por paso','Segmentación solo en pasos críticos >20%','Mínimo 20 replays por paso con mayor drop','Hipótesis cruzando cuanti + cuali, ordenadas por impacto'] },
+    { title: 'Acción (S5–S7)', items: ['Top 3 experimentos por impacto÷esfuerzo','MDE y duración calculados con tráfico real','Plan de seguimiento con owner y guardrail metrics','3 prompts de follow-up listos para copiar/pegar'] },
   ],
   prompt: `⚠️ INSTRUCCIONES DE COMPORTAMIENTO — LEER ANTES DE EJECUTAR ⚠️
-Structured Execution Contract. Reglas OBLIGATORIAS:
-1. NOMBRES EXACTOS: Títulos literales, sin parafrasear.
-2. ORDEN FIJO: 7 filas en el orden definido.
-3. VERIFICACIÓN: get_notebook antes de compartir el link.
-4. CHECKPOINT: Listar las 7 filas y esperar confirmación.
-5. DATOS FALTANTES: "⚠️ Sin datos disponibles — [razón]"
-6. TONO: Ejecutivo. Tablas con datos reales o "N/D".
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STRUCTURED EXECUTION CONTRACT — REGLAS OBLIGATORIAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. NOMBRES EXACTOS: Usar títulos literales de cada sección. Sin parafrasear.
+2. ORDEN FIJO: 7 filas en el orden definido. No omitir ninguna.
+3. VERIFICACIÓN: Llamar get_notebook después de crear. Corregir si hay discrepancias.
+4. CHECKPOINT TEMPRANO: Antes de ejecutar, listar las 7 filas y esperar confirmación.
+5. DATOS FALTANTES: Escribir "⚠️ Sin datos disponibles — [razón específica]". No inventar.
+6. TONO: Ejecutivo. Directo. Sin bullets decorativos. Tablas con datos reales o "N/D".
+7. ERRORES DE HERRAMIENTAS: Si una herramienta falla, documentar el error, continuar
+   con las secciones restantes y marcar la sección afectada con ⚠️.
+8. VALIDACIÓN DE VARIABLES: Si alguna variable OBLIGATORIA está vacía o es "[PLACEHOLDER]",
+   detener la ejecución y solicitar el valor antes de continuar.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-VARIABLES — DECLARAR AL INICIO
+VARIABLES — DECLARAR Y VALIDAR AL INICIO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- Funnel: [NOMBRE o lista de pasos]
-- Proyecto: [NOMBRE_PROYECTO]
-- Período: últimos 90 días
-- Segmentos a analizar: [país / dispositivo / fuente / plan]
-- Umbral drop crítico: caída > 20% entre pasos consecutivos
-- Replay: mínimo 20 sesiones por paso crítico
+OBLIGATORIAS (detener si están vacías):
+- Funnel: [NOMBRE o lista de eventos en orden]
+- Proyecto: [NOMBRE_PROYECTO o APP_ID]
+
+OPCIONALES (usar defaults si no se especifican):
+- Período: últimos 90 días [DEFAULT]
+- Segmentos a analizar: dispositivo, país, fuente de tráfico, plan [DEFAULT: todos]
+- Umbral drop crítico: > 20% entre pasos consecutivos [DEFAULT]
+- Mínimo sesiones replay: 20 por paso crítico [DEFAULT]
+- Ventana de conversión: 7 días [DEFAULT — ajustar si el ciclo de compra es distinto]
+
+PASO 0 — CHECKPOINT PREVIO:
+1. Confirmar que las variables OBLIGATORIAS tienen valores reales.
+2. Listar las 7 filas del notebook con sus títulos exactos.
+3. Esperar confirmación del usuario antes de continuar.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 PERSONA Y OBJETIVO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Actuás como Senior Product Analyst experto en optimización de funnels
-y experiencia de usuario basada en datos.
-OBJETIVO: Diagnosticar el funnel [NOMBRE], identificar los drops más
-críticos con evidencia de session replay, y generar los próximos 3
-experimentos priorizados por impacto esperado.
+Actuás como Senior Product Analyst especializado en optimización de funnels
+y diseño de experimentos basados en evidencia.
+OBJETIVO: Diagnosticar el funnel [NOMBRE], identificar los drops más críticos
+con evidencia cuantitativa y cualitativa (session replay), y generar los
+próximos 3 experimentos priorizados por impacto esperado × esfuerzo.
+FORMATO DE RESPUESTA: Comenzar siempre con un TL;DR ejecutivo de 3 líneas
+que resuma: (1) conversión global, (2) paso más crítico, (3) próxima acción.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECCIÓN 1 — RESUMEN DEL FUNNEL
+SECCIÓN 0 — TL;DR EJECUTIVO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-| Paso | Nombre del evento | Usuarios | Conversión al siguiente | Drop % |
-Conversión global (primer → último paso).
-Semáforo por paso: 🟢 >60% / 🟡 40–60% / 🔴 <40%.
-Crear chart del funnel en Amplitude y compartir el link.
+Antes de cualquier tabla o análisis, escribir 3 líneas:
+- Conversión global del funnel (primer → último paso): X%
+- Paso con mayor drop: [Nombre del paso] con caída de X%
+- Acción inmediata recomendada: [Una frase concreta]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECCIÓN 1 — RESUMEN DEL FUNNEL — ESTADO ACTUAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Crear chart de funnel en Amplitude con los pasos declarados.
+Período: [PERÍODO]. Ventana de conversión: [VENTANA].
+Compartir link del chart en el hilo.
+
+| Paso | Evento | Usuarios | Conv. al siguiente | Drop % | Estado |
+(Completar con datos reales. "N/D" si no hay datos.)
+
+Estado por paso (semáforo):
+🟢 Conversión > 60% | 🟡 40–60% | 🔴 < 40%
+
+Conversión global (paso 1 → último): X%
+Pasos con drop crítico (> 20%): listar en orden descendente de severidad.
+
+Si los datos del funnel son todos cero o muy bajos, verificar:
+  (1) Que los nombres de eventos sean exactos.
+  (2) Que el período tenga datos.
+  (3) Que el proyecto sea el correcto.
+  Documentar la verificación y solicitar confirmación antes de continuar.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 2 — ANÁLISIS DE DROPS POR SEGMENTO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Para cada paso con drop > 20%, analizar por:
-- Dispositivo (mobile vs desktop vs tablet)
-- País o región (si es relevante)
-- Fuente de tráfico (orgánico / paid / directo)
-- Tipo de plan o segmento de usuario
-| Segmento | Paso crítico | Drop % | vs Global | ¿Outlier? |
-Identificar el segmento con el drop más severo por paso.
+Analizar SOLO los pasos con drop crítico (> 20%).
+Prioridad de segmentos: (1) Dispositivo → (2) País/Región → (3) Fuente → (4) Plan.
+Si los datos son escasos, priorizar en ese orden y documentar cuáles se omitieron.
+
+Por cada paso crítico, tabla de segmentos:
+| Segmento | Valor | Drop % | Drop Global | Δ vs Global | ¿Outlier? |
+
+Definición de outlier: segmento con drop ≥ 1.5× el drop global del mismo paso.
+
+Conclusión por paso: "El segmento [X] muestra el drop más severo en [Paso],
+con [Y]% vs [Z]% global. Esto representa [N] usuarios perdidos por [período]."
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 3 — CRUZA CON SESSION REPLAY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Para los 2 pasos con mayor drop:
-- Filtrar sesiones de usuarios que abandonaron en ese paso
-- Revisar mínimo 20 sesiones por paso
-- Documentar patrones observados:
-  · ¿Qué hacen antes de abandonar?
-  · ¿Hay errores visibles?
-  · ¿Hay elementos que no funcionan?
-  · ¿Cuánto tiempo pasan antes de irse?
-Compartir links a clips relevantes en el hilo.
+PRECONDICIÓN: Verificar si Session Replay está habilitado en el proyecto.
+- Si NO está habilitado: marcar sección con ⚠️ y documentar
+  "Session Replay no disponible en este proyecto. Análisis cualitativo omitido."
+  Continuar con Sección 4 usando solo evidencia cuantitativa.
+
+Si está habilitado:
+- Analizar los 2 pasos con mayor drop absoluto (en usuarios, no solo %).
+- Filtrar sesiones donde el usuario llegó al paso pero NO completó el siguiente.
+- Revisar mínimo 20 sesiones por paso. Si hay menos de 20, analizar todas
+  las disponibles con nota de limitación.
+
+Por cada paso analizado:
+| Patrón observado | Frecuencia | Evidencia (link a clip) |
+
+Preguntas guía para el análisis:
+- ¿Qué acción realiza el usuario justo antes de abandonar?
+- ¿Hay errores visibles (mensajes de error, pantallas en blanco, timeouts)?
+- ¿Hay elementos de UI que el usuario intenta usar sin éxito (rage clicks)?
+- ¿Cuánto tiempo promedio pasan en el paso antes de abandonar?
+- ¿El abandono ocurre en un punto específico del scroll o interacción?
+
+Compartir links a los 3 clips más representativos por paso.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 4 — HIPÓTESIS DE FRICCIÓN
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Para cada hipótesis:
-| Hipótesis | Evidencia (replay + datos) | Paso afectado | Impacto potencial |
-Mínimo 3 hipótesis ordenadas por impacto potencial (Alto/Medio/Bajo).
-Formato: "Creemos que [fricción] causa el drop en [paso]
-porque [evidencia observable en replay]."
+Generar mínimo 3 hipótesis, ordenadas por impacto potencial (Alto → Bajo).
+Cada hipótesis debe cruzar evidencia cuantitativa (S2) con cualitativa (S3).
+Si Session Replay no está disponible, basar en datos de segmento.
+
+| # | Hipótesis | Evidencia cuantitativa | Evidencia cualitativa | Paso | Impacto |
+
+Redacción estándar:
+"Creemos que [fricción específica] causa el drop en [paso] porque [evidencia:
+dato de segmento + patrón de replay]. Si lo resolvemos, esperamos mejorar
+la conversión en ese paso en [rango estimado]%."
+
+Criterios de impacto:
+- Alto: afecta > 30% de usuarios en el paso O segmento outlier con > 2× drop global
+- Medio: afecta 15–30% de usuarios O segmento con 1.5–2× drop global
+- Bajo: afecta < 15% de usuarios O evidencia solo cualitativa sin dato cuantitativo
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 5 — EXPERIMENTOS PRIORIZADOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Top 3 experimentos, ordenados por impacto esperado:
-Por cada uno:
-- Hipótesis que valida
-- Cambio propuesto (tratamiento)
-- Métrica primaria + MDE esperado
-- Duración estimada
-- Esfuerzo de implementación (Bajo/Medio/Alto)
-- Prompt para ejecutar el diseño completo con Experiment Kickstart
+Top 3 experimentos ordenados por: Impacto esperado ÷ Esfuerzo de implementación.
+
+Por cada experimento:
+| Campo                              | Detalle |
+| Hipótesis que valida               | [Número de S4] |
+| Cambio propuesto (tratamiento)     | [Descripción concreta] |
+| Métrica primaria                   | [Evento de conversión específico] |
+| MDE mínimo detectable              | [%] — baseline ± mejora esperada |
+| Usuarios necesarios (por variante) | [N] — α=0.05, poder=80% |
+| Duración estimada                  | [Días] — basado en tráfico actual |
+| Esfuerzo de implementación         | Bajo / Medio / Alto |
+| Riesgo de regresión                | Bajo / Medio / Alto |
+
+Nota sobre MDE: usar conversión actual del paso como baseline.
+MDE mínimo recomendado: 10% de mejora relativa.
+Ejemplo: conversión actual 40% → MDE = 4pp (40% → 44%).
+
+Prompt de follow-up por experimento (listo para copiar):
+"Ejecutar Experiment Kickstart para el experimento [N]: [nombre],
+hipótesis: [texto], métrica primaria: [evento], MDE: [%], duración: [días]."
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECCIÓN 6 — ENTREGA EN NOTEBOOK
+SECCIÓN 6 — PLAN DE SEGUIMIENTO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-CHECKPOINT: Listar las 7 filas y esperar confirmación.
+- Fecha de revisión de resultados: [hoy + duración del experimento más largo]
+- Owner de cada experimento: [completar]
+- Guardrail metrics a monitorear durante los tests (métricas que NO deben degradarse)
+- Criterio de decisión por experimento:
+  "Si el experimento [N] muestra [resultado] en [fecha], entonces [escalar / detener / iterar]."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECCIÓN 7 — ENTREGA EN NOTEBOOK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Crear notebook con exactamente 7 filas en este orden:
 Fila 1 → # RESUMEN DEL FUNNEL — ESTADO ACTUAL
+  Contenido: TL;DR + tabla de pasos + chart del funnel embebido
 Fila 2 → # ANÁLISIS DE DROPS POR SEGMENTO
+  Contenido: Tablas de segmentos por cada paso crítico + conclusión por paso
 Fila 3 → # CRUZA CON SESSION REPLAY
+  Contenido: Tabla de patrones + links a clips + limitaciones si aplica
 Fila 4 → # HIPÓTESIS DE FRICCIÓN
+  Contenido: Tabla de hipótesis ordenadas por impacto
 Fila 5 → # EXPERIMENTOS PRIORIZADOS
+  Contenido: Tabla de los 3 experimentos con todos los campos
 Fila 6 → # PLAN DE SEGUIMIENTO
+  Contenido: Owner + fecha revisión + guardrail metrics + criterio de decisión
 Fila 7 → # PROMPTS DE FOLLOW-UP
-Verificar con get_notebook. Corregir si es necesario. Link en el hilo.`
+  Contenido: 3 prompts listos para ejecutar:
+  1. "Ejecutar Experiment Kickstart para [Experimento 1]: [texto completo]"
+  2. "Ejecutar Funnel Diagnosis en [siguiente funnel del journey]"
+  3. "Analizar retención post-conversión de usuarios que completaron [último paso]"
+
+VERIFICACIÓN OBLIGATORIA:
+1. Llamar get_notebook con el ID del notebook creado.
+2. Confirmar que existen exactamente 7 filas con los títulos correctos.
+3. Si hay discrepancias: corregir con set_rows y volver a verificar.
+4. Compartir el link en el hilo con el formato:
+   "📓 Notebook: [Nombre del funnel] — Diagnóstico [Fecha]
+   [link]"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MANEJO DE ERRORES — PROTOCOLO GLOBAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Si una herramienta falla:
+- Documentar: "⚠️ [Nombre de sección] — Error: [descripción]. Continuando."
+- No detener la ejecución completa.
+- Completar las secciones restantes con los datos disponibles.
+- Al final, listar todas las secciones con errores y sugerir cómo resolverlos.`
 },
 
 ai: {
