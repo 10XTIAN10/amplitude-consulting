@@ -1460,135 +1460,218 @@ Compartir link SOLO después de pasar ambos checkpoints.`
 experiment: {
   num: '03',
   title: 'Experiment Kickstart',
-  subtitle: 'From Idea to Active Experiment — Full Design & Launch',
-  desc: 'Dado un feature o flujo del producto, diseña el experimento completo con hipótesis, métricas, tamaño de muestra y duración estimada, y lo crea directamente en Amplitude.',
+  subtitle: 'Full Experiment Design + Step-by-Step Guide to Create in Amplitude',
+  desc: 'Dado un feature o flujo del producto, diseña el experimento completo con hipótesis, métricas, tamaño de muestra y duración estimada, y documenta el paso a paso para crearlo manualmente en Amplitude. Incluye priorización de experimentos candidatos si hay más de uno en scope.',
   color: 'var(--yellow)',
   colorDim: 'var(--yellow-dim)',
   tags: [{label:'Experimentos',color:'var(--yellow)'},{label:'Feature-level',color:'var(--muted)'},{label:'Product + Data',color:'var(--muted)'}],
   vars: [
-    ['Feature / flujo','[DESCRIPCIÓN] — declarar al inicio'],
-    ['Proyecto','[NOMBRE_PROYECTO] — declarar al inicio'],
-    ['Métrica norte','[A definir o sugerir]'],
-    ['Nivel de confianza','95% (estándar)'],
-    ['Poder estadístico','80% (estándar)'],
-    ['MDE mínimo','5% (ajustable por feature)'],
+    ['Feature / flujo','[DESCRIPCIÓN] — confirmar con usuario si no se provee'],
+    ['Proyecto','[NOMBRE_PROYECTO] — detectar desde contexto'],
+    ['Métrica norte','[Definir o confirmar · buscar en Amplitude primero]'],
+    ['Tasa base actual','[Buscar en Amplitude antes de pedir al usuario]'],
+    ['Tráfico disponible','[Buscar en Amplitude antes de pedir al usuario]'],
+    ['Nivel de confianza','95% (ajustable)'],
+    ['Poder estadístico','80% (ajustable)'],
+    ['MDE mínimo','5% (ajustable)'],
   ],
   notebook: [
-    ['01','# CONTEXTO Y OBJETIVO DEL EXPERIMENTO','Feature, problema, hipótesis central'],
-    ['02','# DISEÑO EXPERIMENTAL','Variables, grupos, segmentación'],
-    ['03','# MÉTRICAS','Primaria, secundarias, métricas de guardia'],
-    ['04','# TAMAÑO DE MUESTRA Y DURACIÓN','Cálculo estadístico y cronograma'],
-    ['05','# CRITERIOS DE ÉXITO Y FALLO','Umbrales de decisión explícitos'],
-    ['06','# PLAN DE ANÁLISIS POST-EXPERIMENTO','Cómo leer los resultados y qué sigue'],
+    ['01','# CONTEXTO Y OBJETIVO DEL EXPERIMENTO','Feature, problema, hipótesis estructurada, audiencia y elegibilidad'],
+    ['02','# DISEÑO EXPERIMENTAL','Tipo de test, variable independiente, unidad de aleatorización, grupos, riesgos'],
+    ['03','# MÉTRICAS','Primaria (1) + secundarias (2–4) + guardia (2–3) · verificadas en Amplitude'],
+    ['04','# TAMAÑO DE MUESTRA Y DURACIÓN','MDE, muestra/grupo, tráfico, duración, fechas · advertencia anti-peeking'],
+    ['05','# CRITERIOS DE ÉXITO Y FALLO','5 escenarios: éxito, nulo, ambiguo, guardia rota, fallo'],
+    ['06','# CÓMO CREAR EL EXPERIMENTO EN AMPLITUDE','Guía paso a paso · valores exactos · checklist de lanzamiento'],
   ],
   checklist: [
-    ['Hipótesis','Formulada en formato: Si [acción] → entonces [resultado] → porque [razón].'],
-    ['Experiment creado','Creado en Amplitude con todas las métricas configuradas. Link en el hilo.'],
-    ['Cálculo muestra','Tamaño de muestra calculado y duración estimada declarados.'],
-    ['Notebook','6 secciones verificadas con get_notebook. Link en el hilo.'],
-    ['Criterios','Umbrales de éxito/fallo definidos antes de lanzar.'],
+    ['Paso 0','Variables recolectadas. Tasa base y tráfico buscados en Amplitude antes de preguntar.'],
+    ['Hipótesis','Formato: Si [cambio] → entonces [métrica mejora X%] → porque [mecanismo].'],
+    ['Métricas verificadas','Eventos confirmados en Amplitude. Si no existen: indicado explícitamente.'],
+    ['MDE calculado','Basado en tasa base real. Duración ≥ 2 semanas para capturar ciclos semanales.'],
+    ['Anti-peeking','Fecha de lectura definida antes de lanzar. Advertencia visible en notebook.'],
+    ['Guía de creación','6 pasos con valores exactos a completar + checklist de lanzamiento.'],
+    ['Checkpoint','6 filas listadas con resumen + confirmación explícita del usuario recibida.'],
+    ['Notebook','6 filas verificadas con get_notebook. Link compartido en su propia línea.'],
   ],
   phases: [
-    { title: 'Pre-lanzamiento', items: ['Definir hipótesis y métricas','Calcular tamaño de muestra','Configurar experimento en Amplitude','Validar tracking con QA'] },
-    { title: 'Durante', items: ['Monitorear sample ratio mismatch','Verificar métricas de guardia','No hacer peeking hasta la muestra completa'] },
-    { title: 'Post-experimento', items: ['Análisis de resultados','Decisión: lanzar / iterar / descartar','Documentar aprendizajes','Prompt de follow-up'] },
+    { title: 'Paso 0 — Variables', items: ['Buscar tasa base y tráfico en Amplitude','Confirmar feature y métrica norte','Solo preguntar lo que no se pueda resolver con herramientas'] },
+    { title: 'Diseño (S1–S5)', items: ['Hipótesis estructurada con mecanismo causal','Tipo de test y unidad de aleatorización justificados','Métricas verificadas en Amplitude','MDE y duración calculados con datos reales','5 escenarios de decisión definidos antes de lanzar'] },
+    { title: 'Entrega (S6 + Notebook)', items: ['Guía paso a paso con valores exactos por campo','Checklist de lanzamiento con 7 items','Checkpoint con resumen + confirmación del usuario','Notebook verificado con get_notebook'] },
   ],
-  prompt: `⚠️ INSTRUCCIONES DE COMPORTAMIENTO — LEER ANTES DE EJECUTAR ⚠️
-Structured Execution Contract. Reglas OBLIGATORIAS:
-1. NOMBRES EXACTOS: Títulos de filas copiados literalmente.
-2. ORDEN FIJO: 6 filas en el orden definido.
-3. VERIFICACIÓN: get_notebook antes de compartir el link.
-4. CHECKPOINT: Listar las 6 filas y esperar confirmación.
-5. DATOS FALTANTES: "⚠️ Sin datos disponibles — [razón]"
-6. TONO: Técnico pero ejecutivo. Sin relleno.
+  prompt: `⚠️ CONTRATO DE EJECUCIÓN — LEER ANTES DE COMENZAR ⚠️
+REGLAS OBLIGATORIAS (no negociables):
+1. NOMBRES EXACTOS: Los títulos de sección del notebook se copian literalmente.
+2. ORDEN FIJO: 6 filas en el orden definido. Sin omisiones.
+3. VERIFICACIÓN: Llamar a get_notebook después de crearlo y corregir si hay discrepancias.
+4. CHECKPOINT OBLIGATORIO: Antes de crear el notebook, listar las 6 filas con su
+   contenido resumido y esperar confirmación explícita del usuario.
+5. DATOS FALTANTES: Indicar "⚠️ Sin datos disponibles — [razón específica]". No inventar.
+6. TONO: Técnico-ejecutivo. Sin relleno. Sin frases de cortesía innecesarias.
+7. LINKS: Compartir el link del notebook al finalizar, en su propia línea.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-VARIABLES — DECLARAR AL INICIO
+PASO 0 — RECOLECCIÓN DE VARIABLES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Antes de ejecutar cualquier sección, confirmar:
 - Feature / flujo a experimentar: [DESCRIPCIÓN]
-- Proyecto: [NOMBRE_PROYECTO]
-- Métrica norte: [A definir o confirmar]
-- Nivel de confianza: 95%
-- Poder estadístico: 80%
+- Proyecto Amplitude: [NOMBRE_PROYECTO]
+- Métrica norte (primaria): [definir o confirmar con el usuario]
+- Tasa base actual de la métrica primaria: [buscar en Amplitude primero]
+- Tráfico disponible por día/semana: [buscar en Amplitude primero]
+- Nivel de confianza: 95% (ajustable)
+- Poder estadístico: 80% (ajustable)
 - MDE mínimo: 5% (ajustable)
+
+Si alguna variable no fue provista, buscarla en Amplitude antes de pedir al usuario.
+Solo preguntar lo que no se pueda resolver con herramientas.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 PERSONA Y OBJETIVO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Actuás como Senior Experimentation Analyst experto en diseño
+Actuás como Senior Experimentation Analyst con expertise en diseño
 estadístico y experimentación en productos digitales.
-OBJETIVO: Diseñar el experimento completo para [FEATURE/FLUJO] y
-crearlo en Amplitude con todas las métricas correctamente configuradas.
+OBJETIVO: Diseñar el experimento completo para [FEATURE/FLUJO],
+documentarlo en un notebook estructurado listo para compartir con
+el equipo, e incluir una guía paso a paso para crearlo manualmente
+en Amplitude — sin que el AI lo cree directamente.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECCIÓN 1 — CONTEXTO Y OBJETIVO
+SECCIÓN 1 — CONTEXTO Y OBJETIVO DEL EXPERIMENTO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- Descripción del feature o flujo a experimentar
-- Problema que busca resolver (con datos del funnel actual si existen)
-- Hipótesis en formato:
-  Si [cambio implementado] → entonces [métrica mejora X%]
-  → porque [mecanismo causal]
-- Audiencia objetivo y criterios de elegibilidad
+▸ Descripción del feature o flujo a experimentar
+▸ Problema que busca resolver:
+  → Incluir datos del funnel actual si existen en Amplitude
+  → Si no existen: "⚠️ Sin datos de funnel disponibles"
+▸ Hipótesis estructurada:
+  "Si [cambio implementado] → entonces [métrica] mejora [X%]
+   → porque [mecanismo causal específico]"
+▸ Audiencia objetivo y criterios de elegibilidad:
+  (ej: usuarios activos últimos 30 días, plataforma, plan, etc.)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 2 — DISEÑO EXPERIMENTAL
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- Tipo de test: A/B / A/B/n / Multi-armed bandit
-- Variable independiente (qué cambia en el tratamiento)
-- Variable de unidad de aleatorización (usuario / sesión / dispositivo)
-- Grupos: Control (descripción) vs Tratamiento (descripción)
-- Segmentación: ¿todo el tráfico o subconjunto? ¿por qué?
-- Riesgos de contaminación entre grupos
+▸ Tipo de test: A/B / A/B/n / Multi-armed bandit — justificar elección
+▸ Variable independiente: qué cambia exactamente en el tratamiento
+▸ Unidad de aleatorización: usuario / sesión / dispositivo — justificar
+▸ Grupos:
+  - Control: [descripción de la experiencia actual]
+  - Tratamiento: [descripción exacta del cambio]
+▸ Segmentación de tráfico: ¿100% o subconjunto? ¿Por qué?
+▸ Riesgos de contaminación entre grupos y cómo mitigarlos
+▸ Consideraciones de novelty effect si aplica
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 3 — MÉTRICAS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Métrica primaria (1): la que determina ganador/perdedor
-  - Nombre en Amplitude, tipo, dirección esperada (↑/↓)
+IMPORTANTE: Verificar que los eventos y métricas existan en Amplitude
+antes de listarlos. Si no existen, indicarlo explícitamente.
 
-Métricas secundarias (2–4): señales de apoyo
-  - Nombre | Tipo | Dirección esperada | Por qué es relevante
+Métrica primaria (exactamente 1):
+  Nombre en Amplitude | Tipo (conversión/retención/revenue) | Dirección (↑/↓)
+  → Esta métrica determina ganador/perdedor
 
-Métricas de guardia (2–3): lo que NO debe degradarse
-  - Nombre | Umbral de alarma | Acción si se rompe
+Métricas secundarias (2–4):
+  Nombre | Tipo | Dirección | Por qué es relevante para este experimento
+
+Métricas de guardia (2–3):
+  Nombre | Umbral de alarma | Acción si se rompe
+  → Ejemplos: tasa de error, tiempo de carga, cancelaciones, soporte
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 4 — TAMAÑO DE MUESTRA Y DURACIÓN
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Con nivel de confianza 95% y poder 80%:
-- Tasa base actual de la métrica primaria
-- MDE (efecto mínimo detectable): 5% por defecto
-- Tamaño de muestra requerido por grupo
-- Tráfico disponible por día/semana
-- Duración estimada del experimento
-- Fecha de inicio sugerida y fecha de lectura de resultados
-Advertencia sobre peeking: no leer resultados antes de completar muestra.
+Calcular con: confianza 95%, poder 80%, MDE 5% (o el definido en Paso 0):
+
+▸ Tasa base actual de la métrica primaria: [obtenida de Amplitude]
+▸ MDE absoluto y relativo
+▸ Tamaño de muestra requerido por grupo (fórmula estándar de proporciones)
+▸ Tráfico disponible por día/semana: [obtenido de Amplitude]
+▸ Duración estimada = muestra requerida / tráfico disponible
+▸ Fecha de inicio sugerida y fecha de lectura de resultados
+▸ Semanas mínimas recomendadas: ≥ 2 para capturar ciclos semanales
+
+⚠️ ADVERTENCIA ANTI-PEEKING: No evaluar resultados antes de alcanzar
+el tamaño de muestra completo. Definir fecha de lectura de antemano
+y no modificarla una vez iniciado el experimento.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 5 — CRITERIOS DE ÉXITO Y FALLO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-| Escenario | Condición | Decisión |
-| Éxito claro | p<0.05 + mejora ≥ MDE + guardia OK | Lanzar |
-| Resultado ambiguo | p>0.05 pero tendencia positiva | Iterar |
-| Guardia rota | Cualquier guardia supera umbral | Detener |
-| Fallo claro | p<0.05 + dirección negativa | Descartar |
+| Escenario         | Condición                             | Decisión         |
+|-------------------|---------------------------------------|------------------|
+| Éxito claro       | p<0.05 + mejora ≥ MDE + guardias OK  | Lanzar al 100%   |
+| Resultado nulo    | p>0.05 + intervalo incluye 0          | Descartar cambio |
+| Resultado ambiguo | p>0.05 pero tendencia positiva        | Iterar y re-test |
+| Guardia rota      | Cualquier guardia supera umbral       | Detener inmediato|
+| Fallo claro       | p<0.05 + dirección negativa           | Descartar cambio |
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECCIÓN 6 — ENTREGA EN NOTEBOOK + CREACIÓN EN AMPLITUDE
+SECCIÓN 6 — CÓMO CREAR EL EXPERIMENTO EN AMPLITUDE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. Crear el experimento en Amplitude con las métricas configuradas.
-2. Compartir el link del experimento en el hilo.
-3. CHECKPOINT: Listar las 6 filas del notebook y esperar confirmación.
-4. Crear notebook. Verificar con get_notebook. Corregir si es necesario.
-5. Compartir link del notebook en el hilo.
+Guía paso a paso para crear el experimento manualmente.
+Incluir los valores exactos a completar en cada campo,
+derivados del diseño de las secciones anteriores.
 
-Fila 1 → # CONTEXTO Y OBJETIVO DEL EXPERIMENTO
-Fila 2 → # DISEÑO EXPERIMENTAL
-Fila 3 → # MÉTRICAS
-Fila 4 → # TAMAÑO DE MUESTRA Y DURACIÓN
-Fila 5 → # CRITERIOS DE ÉXITO Y FALLO
-Fila 6 → # PLAN DE ANÁLISIS POST-EXPERIMENTO`
+PASO 1 — Crear el experimento
+  → Ir a Experiments → New Experiment
+  → Nombre sugerido: "[FEATURE] — [HIPÓTESIS CORTA]"
+  → Descripción: [copiar hipótesis estructurada de Sección 1]
+  → Tipo: [A/B Test o el definido en Sección 2]
+
+PASO 2 — Configurar variantes
+  → Control: [descripción exacta de Sección 2]
+  → Tratamiento: [descripción exacta de Sección 2]
+  → Distribución de tráfico: 50/50 (o la definida)
+
+PASO 3 — Definir la audiencia
+  → Unidad de aleatorización: [usuario / sesión / dispositivo de Sección 2]
+  → Filtros de elegibilidad: [criterios de Sección 1]
+  → % de tráfico a incluir: [según cálculo de Sección 4]
+
+PASO 4 — Configurar métricas
+  → Métrica primaria: [nombre exacto en Amplitude + tipo]
+  → Métricas secundarias: [listar con nombre exacto en Amplitude]
+  → Métricas de guardia: [listar con nombre exacto + umbral]
+  ⚠️ Si alguna métrica no existe en Amplitude, indicar:
+     "⚠️ Crear métrica '[NOMBRE]' antes de continuar — [instrucciones]"
+
+PASO 5 — Configurar duración
+  → Fecha de inicio: [fecha sugerida de Sección 4]
+  → Fecha de lectura: [fecha sugerida de Sección 4]
+  → Tamaño de muestra objetivo por grupo: [valor de Sección 4]
+
+PASO 6 — Revisión final antes de lanzar
+  ☐ Hipótesis documentada
+  ☐ Variantes configuradas correctamente
+  ☐ Audiencia y elegibilidad definidas
+  ☐ Métrica primaria configurada
+  ☐ Métricas de guardia con umbrales
+  ☐ Fechas de inicio y lectura definidas
+  ☐ Equipo notificado
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASO FINAL — CREACIÓN DEL NOTEBOOK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Ejecutar en este orden exacto:
+
+1. CHECKPOINT: Listar las 6 filas del notebook con contenido resumido.
+   Esperar confirmación explícita del usuario antes de continuar.
+
+2. CREAR el notebook con exactamente estas 6 filas en este orden:
+   Fila 1 → # CONTEXTO Y OBJETIVO DEL EXPERIMENTO
+   Fila 2 → # DISEÑO EXPERIMENTAL
+   Fila 3 → # MÉTRICAS
+   Fila 4 → # TAMAÑO DE MUESTRA Y DURACIÓN
+   Fila 5 → # CRITERIOS DE ÉXITO Y FALLO
+   Fila 6 → # CÓMO CREAR EL EXPERIMENTO EN AMPLITUDE
+
+3. VERIFICAR con get_notebook que las 6 filas existen y tienen contenido.
+   Corregir cualquier discrepancia antes de compartir.
+
+4. COMPARTIR el link del notebook en el hilo (en su propia línea).`
 },
+
 
 funnel: {
   num: '04',
