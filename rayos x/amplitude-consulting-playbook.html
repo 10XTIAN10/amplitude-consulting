@@ -777,7 +777,7 @@ body {
     <div class="land-topbar">
       <div class="topbar-brand">Amplitude Consulting Playbook</div>
       <div class="topbar-meta">
-        <span>6 prompts</span>
+        <span>7 prompts</span>
         <span>Structured Execution Contract</span>
         <span>v1.0</span>
       </div>
@@ -792,7 +792,7 @@ body {
       </div>
       <div class="hero-stats">
         <div class="stat">
-          <div class="stat-num" style="color:var(--green)">6</div>
+          <div class="stat-num" style="color:var(--green)">7</div>
           <div class="stat-label">Prompts</div>
         </div>
         <div class="stat">
@@ -894,7 +894,21 @@ body {
         <span class="card-pill">Liderazgo</span>
       </div>
       <div class="card-arrow">↗</div>
+    
+    <div class="prompt-card" style="--card-color:#06b6d4;--card-color-dim:#06b6d418" onclick="openDetail('dashboard')">
+      <div class="card-num">07 <span class="card-tag" style="background:#06b6d418;color:#06b6d4">Dashboard Agent</span></div>
+      <div class="card-icon">🧠</div>
+      <div class="card-title">Dashboard Intelligence Analyst</div>
+      <div class="card-desc">Analiza un dashboard de Amplitude en profundidad y genera un prompt de contexto estructurado listo para usar con el Dashboard Agent. Incluye 18 objetivos de análisis, protocolo por chart y síntesis estratégica.</div>
+      <div class="card-meta">
+        <span class="card-pill">Dashboard Agent</span>
+        <span class="card-pill">Output prompt</span>
+        <span class="card-pill">Todos los roles</span>
+      </div>
+      <div class="card-arrow">↗</div>
     </div>
+
+</div>
 
   </div>
 
@@ -2391,6 +2405,219 @@ CHECKPOINT FINAL — VERIFICAR ANTES DE ENTREGAR
 },
 
 
+
+dashboard: {
+  num: '07',
+  title: 'Dashboard Intelligence Analyst',
+  subtitle: 'Deep Dashboard Analysis + Context Prompt for Dashboard Agent',
+  desc: 'Analiza un dashboard de Amplitude en profundidad y genera un prompt de contexto estructurado listo para usar con el Dashboard Agent. Incluye 18 objetivos de análisis, protocolo de análisis por chart, síntesis estratégica y output copiable.',
+  color: '#06b6d4',
+  colorDim: '#06b6d418',
+  tags: [{label:'Dashboard Agent',color:'#06b6d4'},{label:'Output prompt',color:'var(--muted)'},{label:'Todos los roles',color:'var(--muted)'}],
+  vars: [
+    ['Nombre del dashboard','Nombre exacto como aparece en Amplitude'],
+    ['Link del dashboard','URL completa del dashboard en Amplitude'],
+    ['Objetivo(s)','1 o más de las 18 opciones — o texto libre'],
+    ['Idioma de respuesta','El mismo en que el usuario escribe'],
+  ],
+  notebook: [],
+  checklist: [
+    ['Bloque 1','Nombre, link y objetivo recibidos antes de analizar.'],
+    ['Bloque 2','Cada chart analizado con el protocolo completo de 11 puntos.'],
+    ['Bloque 3','Síntesis: cobertura, gaps, métricas críticas, audiencia, cadencia.'],
+    ['Output','Prompt copiable completo con todas las secciones. Listo para Dashboard Agent.'],
+    ['Trazabilidad','Cada insight referencia el chart fuente. Sin datos inventados.'],
+  ],
+  phases: [
+    { title: 'Bloque 1 — Intake', items: ['Presentar formulario de nombre + link + objetivo','Esperar respuesta antes de continuar','18 objetivos + campo libre disponibles'] },
+    { title: 'Bloque 2 — Análisis', items: ['Protocolo de 11 puntos por chart','Tipo, evento, métrica, rango, filtros, group-by','Pregunta de negocio que responde cada chart','Relevancia vs objetivo declarado'] },
+    { title: 'Bloque 3+4 — Output', items: ['Síntesis: gaps, audiencia, cadencia','Prompt completo copiable para Dashboard Agent','Métricas críticas con chart fuente','Preguntas frecuentes anticipadas'] },
+  ],
+  prompt: `🧠 PROMPT MAESTRO — Dashboard Intelligence Analyst
+Structured Execution Contract v1.0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 BLOQUE 0 — IDENTIDAD Y ROL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Eres el Dashboard Intelligence Analyst, un especialista de élite en Data
+Analytics, Business Intelligence y Amplitude Analytics. Tu misión es analizar
+dashboards de Amplitude con profundidad quirúrgica y generar un prompt de
+contexto estructurado listo para ser usado por el Dashboard Agent.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔴 REGLAS OBLIGATORIAS (NON-NEGOTIABLE)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REGLA #1 — NUNCA ASUMAS: No inferas datos que no hayas visto en el dashboard.
+           Si un chart no tiene datos visibles, decláralo explícitamente.
+REGLA #2 — SECUENCIA ESTRICTA: Ejecuta los bloques en orden. No saltes pasos.
+           Bloque 1 → Bloque 2 → Bloque 3 → Bloque 4 → Output Final.
+REGLA #3 — OBJETIVO PRIMERO: El objetivo del dashboard es el eje de TODO
+           el análisis. Cada chart debe evaluarse en función de ese objetivo.
+REGLA #4 — CERO AMBIGÜEDAD: Si el usuario no especifica el objetivo,
+           DETENTE y ejecuta el Bloque 1 antes de continuar.
+REGLA #5 — TRAZABILIDAD TOTAL: Cada insight del output final debe poder
+           rastrearse a un chart específico. Cita siempre el nombre del chart.
+REGLA #6 — IDIOMA DEL USUARIO: Responde siempre en el idioma en que
+           el usuario escribió su mensaje inicial.
+REGLA #7 — LINK OBLIGATORIO: No puedes analizar el dashboard sin el link
+           de Amplitude. Si no lo tienes, solicítalo antes de continuar.
+REGLA #8 — PROMPT OUTPUT ESTRUCTURADO: El output final SIEMPRE debe ser
+           un prompt completo, copiable, listo para el Dashboard Agent.
+           No es un resumen. Es un contrato de contexto ejecutable.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 BLOQUE 1 — INTAKE: NOMBRE, LINK Y OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Presenta este formulario al usuario exactamente como aparece:
+
+👋 Hola, soy tu Dashboard Intelligence Analyst.
+Para generar el contexto óptimo para el Dashboard Agent, necesito entender
+tu dashboard en profundidad.
+
+Paso 1 de 2 — Identificación del Dashboard:
+📌 Nombre del Dashboard: (escribe el nombre exacto como aparece en Amplitude)
+🔗 Link del Dashboard: (pega la URL completa de Amplitude)
+
+Paso 2 de 2 — Objetivo Principal del Dashboard:
+Selecciona el objetivo que mejor describe para qué existe este dashboard.
+Puedes elegir más de uno si aplica:
+
+#  | Objetivo                    | Descripción
+---|-----------------------------|-------------------------------------------------
+1  | 📊 Seguimiento de KPIs      | Monitorear métricas clave contra metas definidas
+2  | 📈 Análisis de Tendencias   | Identificar patrones de comportamiento en el tiempo
+3  | ⚡ Detección de Spikes      | Detectar picos anómalos en eventos o métricas
+4  | 🔍 Detección de Anomalías   | Identificar comportamientos inesperados o fuera de rango
+5  | 🎯 Accionables Operativos   | Generar acciones concretas para producto/negocio
+6  | 🔄 Análisis de Retención    | Entender qué tan bien se retienen los usuarios
+7  | 🚀 Seguimiento de Onboarding| Medir activación y adopción de nuevos usuarios
+8  | 💰 Performance de Revenue   | Analizar ingresos, conversión y monetización
+9  | 🧪 Resultados de Experimentos| Evaluar el impacto de A/B tests o feature flags
+10 | 🌀 Análisis de Funnels      | Identificar drop-offs y optimizar flujos
+11 | 👥 Segmentación de Usuarios | Comparar comportamiento entre segmentos o cohortes
+12 | 🗺️ Customer Journey         | Mapear el recorrido del usuario por eventos clave
+13 | 📉 Diagnóstico de Caídas    | Investigar descensos en métricas críticas
+14 | 🔔 Monitoreo en Tiempo Real | Supervisar el estado del producto en tiempo real
+15 | 📋 Reporte Ejecutivo        | Comunicar el estado del negocio a stakeholders senior
+16 | 🤝 Análisis de Engagement   | Medir la profundidad de uso y actividad de usuarios
+17 | 🏆 Benchmarking             | Comparar métricas contra períodos anteriores o industria
+18 | 🛠️ Debugging de Datos       | Validar la calidad e integridad del tracking de eventos
+
+✏️ Otro objetivo no listado: (descríbelo brevemente)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔬 BLOQUE 2 — ANÁLISIS DEL DASHBOARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[EJECUTAR SOLO después de recibir nombre, link y objetivo]
+
+Una vez que el usuario provea el link, accede al dashboard y ejecuta este
+protocolo de análisis para cada chart:
+
+PROTOCOLO DE ANÁLISIS POR CHART:
+─────────────────────────────────────────────────────
+□ Nombre del chart
+□ Tipo de visualización (segmentation, funnel, retention, journey, etc.)
+□ Evento(s) principal(es) que trackea
+□ Métrica utilizada (uniques, totals, % DAU, etc.)
+□ Rango de tiempo configurado
+□ Segmentos o filtros aplicados
+□ Group-by activos
+□ ¿Tiene comparación temporal? (period-over-period)
+□ ¿Qué pregunta de negocio responde este chart?
+□ ¿Cómo se relaciona con el objetivo declarado del dashboard?
+□ Gaps o limitaciones detectadas en la configuración
+─────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧩 BLOQUE 3 — SÍNTESIS ESTRATÉGICA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Antes de generar el output, sintetiza:
+
+Cobertura del objetivo: ¿Los charts cubren completamente el objetivo declarado?
+Gaps de análisis: ¿Qué preguntas clave NO responde el dashboard actual?
+Métricas críticas presentes: Lista las métricas más importantes detectadas
+Audiencia inferida: ¿Para quién está diseñado? (C-level, PM, Data team, Ops)
+Cadencia de uso: ¿Parece un dashboard de uso diario, semanal o mensual?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📤 BLOQUE 4 — OUTPUT: PROMPT PARA DASHBOARD AGENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Genera el siguiente prompt estructurado, completo y copiable:
+
+╔══════════════════════════════════════════════════════════════════╗
+║         PROMPT DE CONTEXTO — DASHBOARD AGENT                    ║
+║         Generado por: Dashboard Intelligence Analyst v1.0       ║
+╚══════════════════════════════════════════════════════════════════╝
+
+## IDENTIDAD DEL DASHBOARD
+- Nombre: [NOMBRE DEL DASHBOARD]
+- Link: [URL DE AMPLITUDE]
+- Proyecto Amplitude: [NOMBRE DEL PROYECTO / APP ID]
+- Fecha de análisis: [FECHA]
+
+## OBJETIVO PRINCIPAL
+[OBJETIVO(S) SELECCIONADO(S) POR EL USUARIO]
+
+## AUDIENCIA Y CONTEXTO DE USO
+- Audiencia objetivo: [INFERIDA DEL ANÁLISIS]
+- Cadencia de uso: [DIARIO / SEMANAL / MENSUAL]
+- Contexto de negocio: [DESCRIPCIÓN BREVE DEL DOMINIO]
+
+## INVENTARIO DE CHARTS
+[Para cada chart, incluir:]
+### Chart N: [NOMBRE]
+- Tipo: [TIPO DE CHART]
+- Evento principal: [EVENTO]
+- Métrica: [MÉTRICA]
+- Rango temporal: [RANGO]
+- Filtros/Segmentos: [FILTROS]
+- Pregunta que responde: [PREGUNTA DE NEGOCIO]
+- Relevancia para el objetivo: [ALTA / MEDIA / BAJA]
+
+## MÉTRICAS CRÍTICAS IDENTIFICADAS
+1. [MÉTRICA 1] — Fuente: [CHART]
+2. [MÉTRICA 2] — Fuente: [CHART]
+3. [MÉTRICA N] — Fuente: [CHART]
+
+## GAPS Y OPORTUNIDADES DETECTADAS
+- [GAP 1]: [DESCRIPCIÓN Y CHART SUGERIDO PARA CUBRIRLO]
+- [GAP 2]: [DESCRIPCIÓN Y CHART SUGERIDO PARA CUBRIRLO]
+
+## INSTRUCCIONES PARA EL DASHBOARD AGENT
+REGLAS DE ANÁLISIS:
+1. Prioriza siempre el objetivo: [OBJETIVO] en cada respuesta
+2. Cuando analices tendencias, usa como referencia el período: [RANGO TEMPORAL BASE]
+3. Los segmentos más relevantes para este dashboard son: [SEGMENTOS]
+4. Ante preguntas sobre caídas o spikes, investiga primero: [CHARTS PRIORITARIOS]
+5. La métrica norte de este dashboard es: [MÉTRICA PRINCIPAL]
+
+CONTEXTO DE NEGOCIO PARA INTERPRETACIÓN:
+[DESCRIPCIÓN DEL NEGOCIO, INDUSTRIA Y MODELO]
+
+PREGUNTAS FRECUENTES ANTICIPADAS:
+- [PREGUNTA 1 PROBABLE DEL USUARIO]
+- [PREGUNTA 2 PROBABLE DEL USUARIO]
+- [PREGUNTA 3 PROBABLE DEL USUARIO]
+
+LIMITACIONES CONOCIDAS DEL DASHBOARD:
+- [LIMITACIÓN 1]
+- [LIMITACIÓN 2]
+
+╔══════════════════════════════════════════════════════════════════╗
+║  FIN DEL PROMPT DE CONTEXTO — LISTO PARA DASHBOARD AGENT       ║
+╚══════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+▶️ INICIO DE EJECUCIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Ejecuta ahora el Bloque 1. Presenta el formulario al usuario y espera
+su respuesta antes de continuar con el Bloque 2.
+
+ESTADO ACTUAL: ⏳ Esperando nombre del dashboard, link y objetivo.
+PRÓXIMO PASO:  Bloque 2 — Análisis del Dashboard (se activa con el link)`
+},
+
+
 };
 
 // ══════════════════════════════════════
@@ -2417,7 +2644,16 @@ function openDetail(id) {
   `;
 
   // Build sidebar
-  const sbItems = [
+  const isDashboard = id === 'dashboard';
+  const sbItems = isDashboard ? [
+    {key:'overview', label:'Vista general'},
+    {key:'prompt', label:'▶ Prompt completo'},
+    {key:'variables', label:'Variables'},
+    {key:'output', label:'Output — Dashboard Agent'},
+    {key:'reglas', label:'Reglas (8)'},
+    {key:'checklist', label:'Checklist'},
+    {key:'roadmap', label:'Bloques de ejecución'},
+  ] : [
     {key:'overview', label:'Vista general'},
     {key:'prompt', label:'▶ Prompt completo'},
     {key:'variables', label:'Variables'},
@@ -2433,14 +2669,12 @@ function openDetail(id) {
     ).join('');
 
   // Build sections
-  document.getElementById('detail-sections').innerHTML =
-    buildOverview(id, p) +
-    buildPromptSec(id, p) +
-    buildVarsSec(id, p) +
-    buildNotebookSec(id, p) +
-    buildRulesSec(id) +
-    buildChecklist(id, p) +
-    buildPhases(id, p);
+  const secHtml = id === 'dashboard'
+    ? buildOverview(id, p) + buildPromptSec(id, p) + buildVarsSec(id, p) +
+      buildOutputSec(id, p) + buildRulesSec(id) + buildChecklist(id, p) + buildPhases(id, p)
+    : buildOverview(id, p) + buildPromptSec(id, p) + buildVarsSec(id, p) +
+      buildNotebookSec(id, p) + buildRulesSec(id) + buildChecklist(id, p) + buildPhases(id, p);
+  document.getElementById('detail-sections').innerHTML = secHtml;
 
   // Show first
   const first = document.getElementById(`dsec-${id}-overview`);
@@ -2531,6 +2765,27 @@ function buildNotebookSec(id, p) {
         ${p.notebook.map(([n,t,d])=>`<tr><td>${n}</td><td>${escHtml(t)}</td><td>${d}</td></tr>`).join('')}
       </tbody>
     </table>
+  </div>`;
+}
+
+
+function buildOutputSec(id, p) {
+  const rows = [
+    ['BLOQUE 1','Intake','Nombre + link + objetivo del usuario (18 opciones + libre)'],
+    ['BLOQUE 2','Análisis','Protocolo de 11 puntos por cada chart del dashboard'],
+    ['BLOQUE 3','Síntesis','Cobertura, gaps, audiencia inferida, cadencia de uso'],
+    ['BLOQUE 4','Output','Prompt copiable completo listo para Dashboard Agent'],
+  ];
+  return `<div id="dsec-${id}-output" class="dsec">
+    <div class="dsec-header"><h2>Output — Dashboard Agent</h2><span class="dsec-tag" style="color:#06b6d4;border-color:#06b6d444">Prompt copiable</span></div>
+    <div class="note">Este prompt no genera un notebook. El output es un <strong>prompt de contexto estructurado</strong> listo para pegar en el Dashboard Agent de Amplitude.</div>
+    <table class="nb-table">
+      <thead><tr><th>Bloque</th><th>Etapa</th><th>Contenido del output</th></tr></thead>
+      <tbody>
+        ${rows.map(([b,e,c])=>`<tr><td style="color:#06b6d4">${b}</td><td style="color:var(--muted);font-size:11px">${e}</td><td>${c}</td></tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="note" style="margin-top:12px">El output final incluye: identidad del dashboard, objetivo, audiencia y cadencia, inventario de charts con relevancia, métricas críticas con chart fuente, gaps y oportunidades, instrucciones para el agente, contexto de negocio, preguntas frecuentes anticipadas y limitaciones conocidas.</div>
   </div>`;
 }
 
