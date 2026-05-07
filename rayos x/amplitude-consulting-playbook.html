@@ -2102,124 +2102,211 @@ newsletter: {
   num: '06',
   title: 'Insights Newsletter',
   subtitle: 'Automated Insights Digest — Weekly or Monthly',
-  desc: 'Genera el newsletter de insights del período desde adentro de la cuenta. Extrae los hallazgos más relevantes, detecta anomalías y produce un resumen ejecutivo listo para enviar al equipo de liderazgo.',
+  desc: 'Prompt de ejecución autónoma. Recolecta datos reales de Amplitude antes de redactar, detecta anomalías con umbral del 15%, y produce un resumen ejecutivo listo para pegar en email o Slack — sin edición adicional.',
   color: '#f472b6',
   colorDim: '#f472b618',
-  tags: [{label:'Contenido',color:'#f472b6'},{label:'Semanal / mensual',color:'var(--muted)'},{label:'Liderazgo',color:'var(--muted)'}],
+  tags: [{label:'Contenido',color:'#f472b6'},{label:'Auto-ejecutado',color:'var(--muted)'},{label:'Liderazgo',color:'var(--muted)'}],
   vars: [
-    ['Proyecto','[NOMBRE_PROYECTO]'],
-    ['Período del newsletter','[Última semana / Último mes]'],
-    ['Audiencia','[Liderazgo / Equipo completo / Inversores]'],
-    ['Formato','Ejecutivo (máx. 400 palabras + tablas)'],
-    ['KPIs principales','[A declarar o inferir del proyecto]'],
-    ['Umbral anomalía','Variación > 15% vs período anterior'],
+    ['Proyecto','[NOMBRE_PROYECTO] — usar contexto activo si no se especifica'],
+    ['App ID','[APP_ID] — detectar desde contexto'],
+    ['Período actual','Últimos 7 días completos [DEFAULT]'],
+    ['Período de comparación','Los 7 días previos [DEFAULT]'],
+    ['Audiencia','Liderazgo ejecutivo no técnico'],
+    ['Umbral de anomalía','Variación > 15% vs período anterior'],
+    ['Fecha de ejecución','[HOY] — declarar al inicio'],
   ],
   notebook: [
-    ['01','# HEADLINE — EL NÚMERO QUE IMPORTA','El insight más relevante del período'],
-    ['02','# KPIs DEL PERÍODO','Tabla de métricas clave vs período anterior'],
-    ['03','# ANOMALÍAS DETECTADAS','Movimientos inusuales con contexto'],
-    ['04','# INSIGHT DESTACADO','Un análisis profundo de una métrica clave'],
-    ['05','# PRÓXIMA SEMANA / MES — QUÉ MIRAR','3 señales a monitorear'],
+    ['01','# HEADLINE: EL NÚMERO QUE IMPORTA','1 oración · número real · ≤15 palabras · anomalía crítica si existe'],
+    ['02','# KPIs DEL PERÍODO','Tabla con semáforo · línea de contexto obligatoria por cada 🔴'],
+    ['03','# ANOMALÍAS DETECTADAS','Máx. 3 · formato QUÉ / CAUSA / ACCIÓN · ordenadas por magnitud'],
+    ['04','# INSIGHT DESTACADO','QUÉ + POR QUÉ + QUÉ HACER · ≤150 palabras · accionable'],
+    ['05','# PRÓXIMO PERÍODO: QUÉ MIRAR','Señal + experimento activo + pregunta abierta'],
   ],
   checklist: [
-    ['Headline','Un solo número o insight que define el período. Claro y sin jerga.'],
-    ['KPIs','Tabla con variación % vs período anterior. Semáforo por métrica.'],
-    ['Anomalías','Al menos 1 anomalía con contexto explicativo (no solo el dato).'],
-    ['Insight','Análisis de 1 métrica con causa probable y acción sugerida.'],
-    ['Notebook','5 secciones verificadas. Link en el hilo.'],
-    ['Formato listo','Texto listo para copiar y pegar en email o Slack.'],
+    ['Paso 0','Variables declaradas al inicio. Fechas y proyecto explícitos.'],
+    ['Paso 1','Datos recolectados de Amplitude antes de redactar. Sin estimaciones.'],
+    ['Headline','Número real + ≤15 palabras. Anomalía crítica priorizada si existe.'],
+    ['KPIs','Tabla completa + línea de contexto por cada 🔴.'],
+    ['Anomalías','Estructura QUÉ / CAUSA / ACCIÓN por cada una.'],
+    ['Insight','QUÉ / POR QUÉ / QUÉ HACER. Máximo 150 palabras.'],
+    ['Notebook','Creado y verificado con get_notebook. Link en el hilo.'],
+    ['Formato email/Slack','Copia limpia sin markdown técnico compartida en el hilo.'],
   ],
   phases: [
-    { title: 'Extracción', items: ['Definir KPIs del período','Detectar variaciones vs anterior','Identificar la anomalía más relevante'] },
-    { title: 'Síntesis', items: ['Elegir el headline (1 número/insight)','Redactar contexto de anomalías','Formular el insight destacado'] },
-    { title: 'Entrega', items: ['Revisar que no haya jerga técnica','Verificar que sea accionable','Compartir link del notebook'] },
+    { title: 'Paso 0 — Variables', items: ['Declarar proyecto, App ID, fechas, audiencia','Calcular período actual y de comparación','Declarar umbral de anomalía (15%)'] },
+    { title: 'Paso 1 — Recolección', items: ['Buscar dashboards y charts existentes','Consultar DAU/WAU/MAU, nuevos usuarios, retención','Detectar anomalías > 15%','Identificar insight destacado antes de redactar'] },
+    { title: 'Paso 2 — Entrega', items: ['Redactar 5 secciones con datos reales','Crear notebook con links a charts','Verificar con get_notebook','Compartir link + copia email/Slack en el hilo'] },
   ],
-  prompt: `⚠️ INSTRUCCIONES DE COMPORTAMIENTO — LEER ANTES DE EJECUTAR ⚠️
-Structured Execution Contract. Reglas OBLIGATORIAS:
-1. NOMBRES EXACTOS: Títulos literales, sin parafrasear.
-2. ORDEN FIJO: 5 filas en el orden definido.
-3. VERIFICACIÓN: get_notebook antes de compartir el link.
-4. CHECKPOINT: Listar las 5 filas y esperar confirmación.
-5. DATOS FALTANTES: "⚠️ Sin datos disponibles — [razón]"
-6. TONO: Ejecutivo para no-técnicos. Sin jerga. Sin relleno.
-   Máximo 3 líneas por insight. El resto en tablas.
+  prompt: `# INSIGHTS NEWSLETTER — PROMPT DE EJECUCIÓN AUTÓNOMA
+
+⚠️ ESTE PROMPT ES AUTOEJECUTADO: cuando esté curado, el AI lo ejecuta
+completo sin esperar instrucciones adicionales del usuario.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-VARIABLES — DECLARAR AL INICIO
+STRUCTURED EXECUTION CONTRACT — REGLAS OBLIGATORIAS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- Proyecto: [NOMBRE_PROYECTO]
-- Período: [última semana / último mes — fechas exactas]
-- Período anterior de comparación: [semana/mes anterior]
-- Audiencia: [liderazgo / equipo / inversores]
-- Formato: ejecutivo, máx. 400 palabras + tablas
-- Umbral anomalía: variación > 15% vs período anterior
+1. NOMBRES EXACTOS: Títulos de sección literales, sin parafrasear.
+2. ORDEN FIJO: 5 secciones en el orden definido, sin omitir ninguna.
+3. DATOS PRIMERO: Recolectar todos los datos (Paso 1) antes de redactar.
+4. DATOS FALTANTES: Usar "⚠️ Sin datos disponibles — [razón específica]". Nunca inventar.
+5. TONO: Ejecutivo para no-técnicos. Sin jerga. Sin relleno.
+   Máximo 3 líneas de texto por sección. El resto en tablas.
+6. VERIFICACIÓN FINAL: Ejecutar get_notebook antes de compartir el link.
+   Si el contenido no coincide, corregir antes de compartir.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-PERSONA Y OBJETIVO
+PASO 0 — DECLARAR VARIABLES AL INICIO (OBLIGATORIO)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Actuás como Senior Analytics Strategist especializado en comunicación
-de datos para audiencias ejecutivas no técnicas.
-OBJETIVO: Generar el newsletter de insights del período [FECHAS] para
-[NOMBRE_PROYECTO], listo para enviar a [AUDIENCIA] sin edición adicional.
+Antes de cualquier análisis, declarar en el hilo:
+- Proyecto: [NOMBRE_PROYECTO] — AppId: [APP_ID]
+- Período actual: [FECHA_INICIO] → [FECHA_FIN]
+- Período de comparación: [FECHA_INICIO_ANTERIOR] → [FECHA_FIN_ANTERIOR]
+- Audiencia: liderazgo ejecutivo no técnico
+- Umbral de anomalía: variación > 15% vs período anterior
+- Fecha de ejecución: [HOY]
+
+Si el proyecto no está especificado, usar el proyecto activo en el contexto actual.
+Si las fechas no están especificadas, usar:
+  - Período actual = últimos 7 días completos
+  - Período anterior = los 7 días previos a ese
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECCIÓN 1 — HEADLINE
+PASO 1 — RECOLECCIÓN DE DATOS (EJECUTAR ANTES DE ESCRIBIR)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Antes de redactar, ejecutar en Amplitude:
+1. Buscar dashboards y charts existentes con search().
+2. Consultar métricas clave del período actual vs anterior:
+   - Usuarios activos (DAU/WAU/MAU según el período)
+   - Nuevos usuarios / activación
+   - Retención (semana 1 si es semanal, mes 1 si es mensual)
+   - Conversión al evento de valor principal del producto
+   - Revenue o transacciones (si aplica)
+3. Detectar anomalías: cualquier métrica con variación > 15%.
+4. Identificar el insight más interesante para la Sección 4.
+
+Si una métrica no tiene datos:
+"⚠️ Sin datos disponibles — [razón: evento no encontrado /
+sin datos en el período / métrica no configurada]"
+NO inventar datos. NO estimar sin fuente. Solo datos reales de Amplitude.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECCIÓN 1 — HEADLINE: EL NÚMERO QUE IMPORTA
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 El insight más relevante del período en 1 oración.
-Formato: "[NÚMERO o TENDENCIA]: [contexto en ≤15 palabras]"
-Ejemplos: "DAU +18%: el mejor resultado en 3 meses"
-          "Retención semana 1 cayó 8pts: requiere atención"
-No usar jerga técnica. Que cualquier persona del equipo lo entienda.
+Formato obligatorio: "[NÚMERO o TENDENCIA]: [contexto en ≤ 15 palabras]"
+
+Ejemplos (no copiar — generar con datos reales):
+  ✓ "DAU +18%: el mejor resultado en 3 meses"
+  ✓ "Retención semana 1 cayó 8 puntos: requiere atención inmediata"
+  ✓ "Conversión a primera compra en mínimo histórico: 2.1%"
+
+Criterio de selección: el dato que más impacta en el negocio,
+positivo o negativo. Si hay una anomalía crítica, priorizarla.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 2 — KPIs DEL PERÍODO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-| Métrica | Período actual | Período anterior | Variación | Semáforo |
-Incluir las métricas principales del proyecto (DAU, MAU, retención,
-conversión, revenue si aplica, activación de nuevos usuarios).
-Semáforo: 🟢 mejora / 🟡 estable / 🔴 caída
-Una línea de contexto por cada semáforo rojo.
+| Métrica | Período actual | Período anterior | Variación | Estado |
+(Completar con datos reales de Paso 1. "N/D" si no hay datos.)
+
+Criterio de semáforo:
+- 🟢 Mejora: variación positiva > 5%
+- 🟡 Estable: variación entre -5% y +5%
+- 🔴 Caída: variación negativa > 5%
+
+Regla obligatoria: por cada 🔴, agregar una línea de contexto debajo de la tabla.
+Ejemplo: "🔴 Retención: caída concentrada en usuarios de iOS — posible bug post-update."
+
+Métricas a incluir (adaptar según el tipo de producto):
+- Usuarios activos únicos (DAU / WAU / MAU)
+- Nuevos usuarios
+- Tasa de activación (usuarios que completan el evento de valor)
+- Retención (día 1 / semana 1 / mes 1 según el período)
+- Conversión al evento principal
+- Revenue / transacciones (si aplica)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 3 — ANOMALÍAS DETECTADAS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Variaciones > 15% vs período anterior, positivas o negativas.
-Para cada anomalía:
-- Métrica y magnitud del cambio
-- Causa probable (con evidencia si existe)
-- Acción sugerida (si es negativa) o cómo replicar (si es positiva)
-Máximo 3 anomalías. Si no hay: "Sin anomalías relevantes este período."
+Máximo 3 anomalías. Ordenar por magnitud de impacto (mayor primero).
+
+Para cada anomalía, usar esta estructura exacta:
+[NOMBRE DE LA MÉTRICA] — [+/-X%]
+- Qué pasó: [descripción en 1 línea]
+- Causa probable: [hipótesis con evidencia, o "sin evidencia clara"]
+- Acción: [si negativa → qué hacer / si positiva → cómo replicar]
+
+Si no hay anomalías: "Sin anomalías relevantes este período.
+Todas las métricas dentro del rango esperado (±15% vs período anterior)."
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 4 — INSIGHT DESTACADO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Un solo análisis profundo de la métrica más interesante del período.
-Estructura:
-- QUÉ: el dato concreto
-- POR QUÉ: la causa más probable (con segmentación si es posible)
-- QUÉ HACER: acción concreta recomendada
-Máximo 150 palabras. Sin jerga.
+Elegir la que tenga mayor potencial de acción o aprendizaje.
+Estructura obligatoria (máximo 150 palabras en total):
+
+QUÉ: [el dato concreto con número]
+POR QUÉ: [causa más probable — incluir segmentación si hay datos:
+          por plataforma, por cohorte, por canal de adquisición]
+QUÉ HACER: [1 acción concreta, con responsable sugerido si es posible]
+
+Criterio: priorizar métricas accionables sobre informativas.
+Un insight sin acción posible no es un insight útil.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECCIÓN 5 — ENTREGA EN NOTEBOOK
+SECCIÓN 5 — PRÓXIMO PERÍODO: QUÉ MIRAR
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Al final, incluir:
-"PRÓXIMO PERÍODO — QUÉ MIRAR:
-1. [Señal o métrica a monitorear]
-2. [Experimento o iniciativa en curso con fecha de resultado]
-3. [Pregunta sin responder que queremos responder el próximo período]"
+1. Señal a monitorear: [métrica específica + umbral de alerta]
+   Ejemplo: "Retención semana 1 — alertar si cae por debajo de 25%"
 
-CHECKPOINT: Listar las 5 filas y esperar confirmación.
-Fila 1 → # HEADLINE — EL NÚMERO QUE IMPORTA
-Fila 2 → # KPIs DEL PERÍODO
-Fila 3 → # ANOMALÍAS DETECTADAS
-Fila 4 → # INSIGHT DESTACADO
-Fila 5 → # PRÓXIMA SEMANA / MES — QUÉ MIRAR
-Verificar con get_notebook. Corregir si es necesario.
-Compartir link del notebook en el hilo.
-Además, copiar el contenido completo del newsletter en el hilo
-en formato listo para pegar en email o Slack.`
+2. Experimento o iniciativa en curso: [nombre + fecha esperada de resultado]
+   Ejemplo: "Test A/B en onboarding — resultados esperados el [FECHA]"
+   Si no hay experimentos activos: "Sin experimentos activos este período."
+
+3. Pregunta sin responder: [la pregunta analítica más importante
+   que quedó abierta y que queremos responder el próximo período]
+   Ejemplo: "¿Por qué los usuarios de Android retienen 12pts menos que iOS?"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASO 2 — ENTREGA EN NOTEBOOK + HILO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+A) Crear un Notebook en Amplitude con:
+   - Nombre: "Newsletter Insights — [NOMBRE_PROYECTO] — [FECHA]"
+   - Contenido: las 5 secciones completas en formato markdown
+   - Incluir links a los charts consultados como evidencia
+
+   Títulos exactos de las 5 filas:
+   Fila 1 → # HEADLINE: EL NÚMERO QUE IMPORTA
+   Fila 2 → # KPIs DEL PERÍODO
+   Fila 3 → # ANOMALÍAS DETECTADAS
+   Fila 4 → # INSIGHT DESTACADO
+   Fila 5 → # PRÓXIMO PERÍODO: QUÉ MIRAR
+
+B) Verificar con get_notebook que el contenido fue guardado correctamente.
+   Si hay discrepancias, corregir antes de continuar.
+
+C) Compartir en el hilo:
+   1. Link al Notebook con formato: "📓 Newsletter: [NOMBRE_PROYECTO] — [FECHA] → [URL]"
+   2. Copia completa del newsletter en formato listo para pegar en email o Slack
+      (sin markdown técnico, solo texto limpio con emojis de semáforo)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CHECKPOINT FINAL — VERIFICAR ANTES DE ENTREGAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+☐ Variables declaradas al inicio (Paso 0)
+☐ Datos recolectados de Amplitude (Paso 1) — no estimados
+☐ Sección 1: HEADLINE con número real y ≤ 15 palabras de contexto
+☐ Sección 2: Tabla KPIs completa + línea de contexto por cada 🔴
+☐ Sección 3: Anomalías con estructura QUÉ / CAUSA / ACCIÓN
+☐ Sección 4: Insight con QUÉ / POR QUÉ / QUÉ HACER (≤ 150 palabras)
+☐ Sección 5: 3 puntos de seguimiento con especificidad
+☐ Notebook creado y verificado con get_notebook
+☐ Link del Notebook compartido en el hilo
+☐ Copia del newsletter en formato email/Slack compartida en el hilo`
 },
+
 
 };
 
