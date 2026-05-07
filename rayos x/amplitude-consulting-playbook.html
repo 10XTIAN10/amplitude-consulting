@@ -1229,39 +1229,44 @@ taxonomia: {
   num: '02',
   title: 'Taxonomía Audit',
   subtitle: 'Data Governance & Taxonomy Deep Dive — Single Project',
-  desc: 'Análisis quirúrgico de la calidad de datos de un proyecto específico. Genera un plan de limpieza priorizado con owner sugerido, esfuerzo e impacto estimado por cada hallazgo.',
+  desc: 'Análisis quirúrgico de la calidad de datos de un proyecto específico. Detecta eventos fantasma, anomalías de volumen, naming inconsistente y propiedades sin uso. Genera un plan de limpieza priorizado con Quick Wins identificados, owner sugerido y prompts de follow-up ejecutables.',
   color: 'var(--blue)',
   colorDim: 'var(--blue-dim)',
   tags: [{label:'Governance',color:'var(--blue)'},{label:'Por proyecto',color:'var(--muted)'},{label:'Data Engineer',color:'var(--muted)'}],
   vars: [
-    ['Proyecto objetivo','[NOMBRE_PROYECTO] — declarar al inicio'],
-    ['App ID','[APP_ID] — declarar al inicio'],
+    ['Proyecto','Auto-detectar desde sesión; si no es posible, preguntar'],
+    ['App ID','Auto-detectar desde sesión; si no es posible, preguntar'],
     ['Período','Últimos 90 días'],
-    ['Umbral bajo volumen','Evento con < 10 ocurrencias en 90 días'],
-    ['Alta cardinalidad','Propiedad con > 1.000 valores únicos'],
-    ['Naming esperado','snake_case'],
+    ['Umbral bajo volumen ingestado','< 10 ocurrencias en 90 días'],
+    ['Umbral bajo query volume','< 5 consultas en 90 días'],
+    ['Umbral evento fantasma','Ratio Query/Ingestado < 0.01'],
+    ['Alta cardinalidad','> 1.000 valores únicos'],
+    ['Naming esperado','A determinar en Fase 0 — no asumir snake_case'],
   ],
   notebook: [
-    ['01','# RESUMEN EJECUTIVO — TAXONOMÍA AUDIT','Score de salud + top 3 problemas críticos'],
-    ['02','# INVENTARIO DE EVENTOS','Total, activos, inactivos, sin descripción'],
-    ['03','# CALIDAD DE PROPIEDADES','Sin tipo, sin descripción, alta cardinalidad'],
-    ['04','# NAMING & CONSISTENCIA','Inconsistencias detectadas + ejemplos'],
-    ['05','# EVENTOS PROBLEMÁTICOS','Bajo volumen, deprecated, test en producción'],
-    ['06','# PROPIEDADES HUÉRFANAS','Sin evento activo asociado'],
-    ['07','# PLAN DE LIMPIEZA PRIORIZADO','Por hallazgo: acción, owner, esfuerzo, impacto'],
-    ['08','# PROMPTS DE FOLLOW-UP','Uno por área de acción identificada'],
+    ['01','# RESUMEN EJECUTIVO — TAXONOMÍA AUDIT','Score ponderado (6 dimensiones) + naming detectado + top 3 críticos'],
+    ['02','# INVENTARIO DE EVENTOS','Vol. Ingestado + Query Vol. + Ratio Q/I + semáforo por fila'],
+    ['03','# CALIDAD DE PROPIEDADES','Event props (3A) y User props (3B) con flags automáticos'],
+    ['04','# NAMING & CONSISTENCIA','Inconsistencias detectadas + nombre sugerido + acción'],
+    ['05','# EVENTOS PROBLEMÁTICOS','Bajo volumen / fantasma / deprecated / test / anomalías 5A–5E'],
+    ['06','# PROPIEDADES HUÉRFANAS','Sin evento activo o sin uso en 90 días'],
+    ['07','# PLAN DE LIMPIEZA PRIORIZADO','Quick Wins primero · owner · esfuerzo · impacto · prompt'],
+    ['08','# PROMPTS DE FOLLOW-UP','Numerados y listos para copiar/pegar por hallazgo'],
+    ['09','# METADATA DEL ANÁLISIS','Proyecto · App ID · fecha · score final · totales'],
   ],
   checklist: [
-    ['Inventario','Lista completa de eventos activos vs inactivos. Link en el hilo.'],
-    ['Score salud','Porcentaje de eventos con descripción, propiedades tipadas.'],
-    ['Plan limpieza','Tabla priorizada con owner y esfuerzo por hallazgo.'],
-    ['Notebook','8 secciones verificadas con get_notebook. Link en el hilo.'],
-    ['Follow-ups','Prompt exacto por cada área de acción crítica.'],
+    ['Fase 0','Naming convention detectado y declarado antes de ejecutar secciones.'],
+    ['Inventario','Ratio Q/I calculado por evento. Semáforo por columna.'],
+    ['Score salud','6 dimensiones con peso. Score total y por dimensión en Sección 1.'],
+    ['Plan limpieza','Quick Wins identificados. Al menos 1 por análisis.'],
+    ['Follow-ups','Prompts numerados, ejecutables tal como están. Sin edición necesaria.'],
+    ['Checkpoint extendido','5 checks superados antes de publicar el notebook.'],
+    ['Notebook','9 secciones verificadas con get_notebook. Link en el hilo.'],
   ],
   phases: [
-    { title: 'Semana 1 — Diagnóstico', items: ['Inventario completo de eventos','Clasificar sin descripción / sin owner','Detectar naming inconsistente'] },
-    { title: 'Semana 2–3 — Limpieza', items: ['Archivar eventos deprecados','Agregar descripciones faltantes','Fusionar eventos duplicados','Corregir naming'] },
-    { title: 'Semana 4 — Proceso', items: ['Definir naming conventions','Crear checklist de revisión','Establecer owner por dominio'] },
+    { title: 'Fase 0 — Naming', items: ['Analizar 50 eventos + 50 event props + 50 user props','Detectar patrón dominante real','Declarar naming esperado antes de continuar'] },
+    { title: 'Semanas 1–2 — Diagnóstico', items: ['Inventario con Vol. Ingestado y Query Vol.','Detectar eventos fantasma (Ratio Q/I < 0.01)','Clasificar propiedades con flags automáticos','Identificar anomalías de volumen 30d vs 30d'] },
+    { title: 'Semanas 3–4 — Limpieza', items: ['Ejecutar Quick Wins primero','Archivar deprecated y fantasmas sin valor','Corregir naming y agregar descripciones','Establecer owner por dominio de eventos'] },
   ],
   prompt: `⚠️ INSTRUCCIONES DE COMPORTAMIENTO — LEER ANTES DE EJECUTAR ⚠️
 Structured Execution Contract. Reglas OBLIGATORIAS:
@@ -1269,98 +1274,187 @@ Structured Execution Contract. Reglas OBLIGATORIAS:
 2. ORDEN FIJO: No reordenar, no fusionar, no omitir.
 3. VERIFICACIÓN: get_notebook antes de compartir el link.
 4. SIN INTERPRETACIÓN LIBRE: Preguntá si hay dudas.
-5. CHECKPOINT: Listar las 8 filas y esperar confirmación.
+5. CHECKPOINT: Listar las 9 filas y esperar confirmación.
 6. DATOS FALTANTES: "⚠️ Sin datos disponibles — [razón]"
 7. TONO: Ejecutivo, directo. Tablas con datos reales o "N/D".
+8. NUNCA publicar el notebook sin pasar el Checkpoint Extendido.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 VARIABLES — DECLARAR AL INICIO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- Proyecto: [NOMBRE_PROYECTO]
-- App ID: [APP_ID]
+- Proyecto: [auto-detectar desde contexto de sesión; si no es posible, preguntar]
+- App ID: [auto-detectar desde contexto de sesión; si no es posible, preguntar]
 - Período: últimos 90 días
-- Umbral bajo volumen: < 10 ocurrencias en 90 días
+- Umbral bajo volumen ingestado: < 10 ocurrencias en 90 días
+- Umbral bajo query volume: < 5 consultas en 90 días
+- Umbral evento fantasma: Ratio Query/Ingestado < 0.01
 - Alta cardinalidad: > 1.000 valores únicos
-- Naming esperado: snake_case
+- Naming esperado: [a determinar en Fase 0 — NO asumir snake_case]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 PERSONA Y OBJETIVO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Actuás como Senior Data Engineer y Data Governance expert.
 OBJETIVO: Realizá un análisis exhaustivo de la taxonomía del proyecto
-[NOMBRE_PROYECTO] para evaluar calidad de datos, consistencia de naming
-y generar un plan de limpieza accionable y priorizado.
+para evaluar calidad de datos, consistencia de naming, uso analítico
+real de eventos y propiedades, y generar un plan de limpieza accionable
+y priorizado con Quick Wins identificados.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FASE 0 — DETECCIÓN DE NAMING CONVENTION
+(Ejecutar ANTES de cualquier sección. Resultado define "Naming esperado".)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Analizar los primeros 50 eventos activos, 50 event properties y
+50 user properties para detectar el patrón dominante real.
+Clasificar cada nombre en:
+  snake_case | camelCase | PascalCase | Title Case | mixto | otro
+
+| Entidad      | Patrón dominante | % conformidad | Ejemplos representativos |
+| Eventos      |                  |               |                          |
+| Event Props  |                  |               |                          |
+| User Props   |                  |               |                          |
+
+→ Declarar el patrón dominante como "Naming esperado" para el análisis.
+→ Si eventos, event props y user props tienen patrones distintos,
+  reportar cada uno por separado y alertar la inconsistencia.
+→ Si el usuario declaró un naming distinto al detectado, alertar
+  la discrepancia antes de continuar.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 1 — RESUMEN EJECUTIVO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Score de salud de taxonomía (0–100):
-- % eventos con descripción
-- % propiedades tipadas y con descripción
-- % eventos con naming consistente (snake_case)
-- % eventos activos con owner asignado
-Top 3 problemas críticos detectados.
+Score de salud de taxonomía (0–100), promedio ponderado de:
+  - % eventos con descripción                      (peso: 20%)
+  - % propiedades tipadas y con descripción        (peso: 20%)
+  - % eventos con naming consistente               (peso: 20%)
+  - % eventos activos con owner asignado           (peso: 15%)
+  - % eventos con query volume > 0 en 90d          (peso: 15%)
+  - % eventos sin anomalía de volumen detectada    (peso: 10%)
+Mostrar score total y score por dimensión.
+Top 3 problemas críticos con impacto estimado.
+Naming convention detectado (resultado de Fase 0).
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 2 — INVENTARIO DE EVENTOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-| Evento | Estado | Volumen 90d | Descripción | Owner | Naming |
-Clasificar en: Activo / Inactivo / Deprecated / Sin descripción
-Total por categoría. Semáforo por columna.
+| Evento | Estado | Vol. Ingestado 90d | Query Vol. 90d | Ratio Q/I | Descripción | Owner | Naming |
+
+Definiciones:
+  - Vol. Ingestado 90d: ocurrencias reales del evento en el período
+  - Query Vol. 90d: veces consultado en charts o análisis
+  - Ratio Q/I: Query Volume / Vol. Ingestado
+      🔴 < 0.01 → Evento fantasma (se trackea, nadie analiza)
+      🟡 0.01–0.1 → Bajo uso analítico
+      🟢 > 0.1 → Activamente analizado
+  - Estado: Activo / Inactivo / Deprecated / Sin descripción
+  - Naming: ✅ Correcto / ⚠️ Desviación / ❌ Incorrecto
+
+Totales por categoría de Estado y por categoría de Ratio Q/I.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 3 — CALIDAD DE PROPIEDADES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-| Propiedad | Tipo definido | Descripción | Cardinalidad | Estado |
-Listar propiedades sin tipo, sin descripción, con alta cardinalidad.
-Indicar el evento al que pertenece.
+3A — EVENT PROPERTIES
+| Propiedad | Evento padre | Tipo definido | Descripción | Cardinalidad | Query Vol. 90d | Estado |
+
+3B — USER PROPERTIES
+| Propiedad | Tipo definido | Descripción | Cardinalidad | Último uso | Query Vol. 90d | Estado |
+
+Flags automáticos por fila:
+  🔴 Alta cardinalidad (> 1.000 valores únicos)
+  🟡 Sin tipo definido
+  🟡 Sin descripción
+  🔴 Nunca consultada en 90d (Query Vol. = 0)
+  🔴 User property sin uso en eventos activos
+Totales por flag al pie de cada subtabla.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 4 — NAMING & CONSISTENCIA
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Detectar:
-- Mezcla de snake_case, camelCase, PascalCase, espacios
-- Prefijos o sufijos inconsistentes
-- Eventos semánticamente similares con nombres distintos
-Tabla: Evento actual | Problema | Nombre sugerido | Acción
+  - Mezcla de convenciones en el mismo dominio
+  - Prefijos o sufijos inconsistentes entre eventos relacionados
+  - Eventos semánticamente similares con nombres distintos
+  - Propiedades con el mismo concepto nombradas distinto en distintos eventos
+
+| Nombre actual | Tipo (evento/prop) | Problema | Nombre sugerido | Acción |
+Acción: Renombrar / Documentar / Deprecar / Investigar
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 5 — EVENTOS PROBLEMÁTICOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- Bajo volumen (< 10 ocurrencias en 90 días): ¿ruido o válido?
-- Deprecated activos: ¿se puede archivar?
-- Nombres que sugieren test/dev en producción
-- Eventos con pico o caída anómala (>50% vs promedio)
-Para cada uno: acción recomendada (archivar/documentar/investigar)
+5A — Bajo volumen ingestado (< 10 ocurrencias en 90d)
+     → ¿Ruido, evento roto o válido pero poco frecuente?
+5B — Eventos fantasma (Ratio Q/I < 0.01)
+     → Se trackea pero nadie analiza. ¿Vale la pena mantenerlo?
+5C — Deprecated activos → ¿Se puede archivar de forma segura?
+5D — Nombres que sugieren test/dev/staging en producción → Acción inmediata.
+5E — Anomalías de volumen (últimos 30d vs 30d anteriores)
+     → Pico: delta > +100% | Caída: delta < -50%
+
+| Evento | Categoría | Vol. 30d actual | Vol. 30d anterior | Delta % | Hipótesis | Acción |
+Acción por fila: Archivar / Documentar / Investigar / Alertar
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 6 — PROPIEDADES HUÉRFANAS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Propiedades que no tienen evento activo asociado.
-| Propiedad | Último uso | Acción sugerida |
+Propiedades (event y user) sin evento activo asociado o sin uso
+en los últimos 90 días.
+| Propiedad | Tipo (event/user) | Último uso | Query Vol. 90d | Acción sugerida |
+Acción: Archivar / Documentar / Investigar dependencias
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECCIÓN 7 — PLAN DE LIMPIEZA PRIORIZADO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-| Hallazgo | Acción concreta | Owner sugerido | Esfuerzo | Impacto |
-Ordenado por: Impacto Alto primero, luego por Esfuerzo Bajo.
-Incluí el prompt exacto de follow-up para ejecutar cada acción en un
-nuevo hilo de Amplitude Chat.
+Ordenamiento:
+  1. Quick Wins primero (Impacto Alto o Medio + Esfuerzo Bajo)
+  2. Luego por Impacto Alto → Esfuerzo Bajo
+
+| Hallazgo | Acción concreta | Owner sugerido | Esfuerzo (A/M/B) | Impacto (A/M/B) | Quick Win | Prompt de follow-up |
+Quick Win = SÍ cuando Esfuerzo=Bajo AND Impacto=Alto o Medio.
+Prompt de follow-up: texto exacto y ejecutable para un nuevo hilo
+de Amplitude Chat. Sin edición necesaria antes de pegar.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-SECCIÓN 8 — ENTREGA EN NOTEBOOK
+SECCIÓN 8 — PROMPTS DE FOLLOW-UP
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-CHECKPOINT: Listar las 8 filas en el hilo y esperar confirmación.
-Fila 1 → # RESUMEN EJECUTIVO — TAXONOMÍA AUDIT
-Fila 2 → # INVENTARIO DE EVENTOS
-Fila 3 → # CALIDAD DE PROPIEDADES
-Fila 4 → # NAMING & CONSISTENCIA
-Fila 5 → # EVENTOS PROBLEMÁTICOS
-Fila 6 → # PROPIEDADES HUÉRFANAS
-Fila 7 → # PLAN DE LIMPIEZA PRIORIZADO
-Fila 8 → # PROMPTS DE FOLLOW-UP
+Listar todos los prompts del Plan de Limpieza como sección independiente,
+numerados y listos para copiar/pegar directamente en Amplitude Chat.
+Formato:
+  [N] ACCIÓN: [nombre del hallazgo]
+  PROMPT: "[texto exacto ejecutable]"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECCIÓN 9 — ENTREGA EN NOTEBOOK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CHECKPOINT PREVIO — Listar las 9 filas en el hilo y esperar confirmación:
+  Fila 1 → # RESUMEN EJECUTIVO — TAXONOMÍA AUDIT
+  Fila 2 → # INVENTARIO DE EVENTOS
+  Fila 3 → # CALIDAD DE PROPIEDADES
+  Fila 4 → # NAMING & CONSISTENCIA
+  Fila 5 → # EVENTOS PROBLEMÁTICOS
+  Fila 6 → # PROPIEDADES HUÉRFANAS
+  Fila 7 → # PLAN DE LIMPIEZA PRIORIZADO
+  Fila 8 → # PROMPTS DE FOLLOW-UP
+  Fila 9 → # METADATA DEL ANÁLISIS
+
+CHECKPOINT EXTENDIDO — Verificar antes de publicar:
+  □ ¿Todas las tablas tienen datos reales (no más del 30% en "N/D")?
+  □ ¿El naming detectado en Fase 0 está declarado en Sección 1?
+  □ ¿El Plan de Limpieza tiene al menos 1 Quick Win identificado?
+  □ ¿Los prompts de follow-up son ejecutables tal como están escritos?
+  □ ¿Las anomalías de volumen (Sección 5E) tienen hipótesis asignada?
+  Si algún check falla → reportar en el hilo antes de compartir el link.
+
+Fila 9 — METADATA DEL ANÁLISIS:
+  - Proyecto analizado y App ID
+  - Fecha de ejecución y período analizado
+  - Naming convention detectado (por entidad)
+  - Score de salud final (total y por dimensión)
+  - Total eventos analizados / Total propiedades analizadas
+
 Verificar con get_notebook. Corregir con set_rows si es necesario.
-Compartir link solo después de verificar.`
+Compartir link SOLO después de pasar ambos checkpoints.`
 },
 
 experiment: {
