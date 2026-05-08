@@ -274,7 +274,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
     <div class="hero-sub">PROMPT LIBRARY</div>
     <div class="hero-desc">Prompts estructurados con Structured Execution Contract para ejecutar análisis, diagnósticos y estrategias de adopción directamente en Amplitude Chat.</div>
     <div class="hero-stats">
-      <div><div class="stat-num" style="color:var(--accent)">9</div><div class="stat-lbl">Prompts</div></div>
+      <div><div class="stat-num" style="color:var(--accent)">10</div><div class="stat-lbl">Prompts</div></div>
       <div><div class="stat-num" style="color:var(--text)">SEC</div><div class="stat-lbl">Metodología</div></div>
       <div><div class="stat-num" style="color:var(--accent2)">100%</div><div class="stat-lbl">Copy-paste ready</div></div>
     </div>
@@ -387,7 +387,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
       <div class="card-arrow">↗</div>
     </div>
 
-    <div class="card-coming"><div class="card-coming-text">10 — Próximamente</div></div>
+    <div class="prompt-card" style="--card-color:#f59e0b;--card-colorbg:#1a1000" onclick="openDetail('rice')">
+      <div class="card-num">10 <span class="card-tag" style="background:#1a1000;color:#f59e0b">Framework</span></div>
+      <div class="card-icon">🧪</div>
+      <div class="card-title">Experimentation Framework</div>
+      <div class="card-desc">From Zero to Hero. Framework RICE + North Star Metric aplicado en Amplitude. Manual completo end-to-end: priorización, diseño, ejecución y repositorio de resultados.</div>
+      <div class="card-pills"><span class="card-pill">RICE + NSM</span><span class="card-pill">End-to-end</span><span class="card-pill">Manual aplicable</span></div>
+      <div class="card-arrow">↗</div>
+    </div>
 
   </div>
 </div>
@@ -401,7 +408,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
   <div class="footer-right">
     <a href="https://www.linkedin.com/in/cristian-vallon/" target="_blank" class="footer-link">LinkedIn ↗</a>
     <span class="footer-div">·</span>
-    <span class="footer-link">9 prompts</span>
+    <span class="footer-link">10 prompts</span>
   </div>
 </footer>
 </div>
@@ -430,6 +437,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
     </div>
   </div>
 </div>
+
 
 <script>
 const PROMPTS = {
@@ -2472,9 +2480,48 @@ Estructura de archivos resultante:
 },
 
 
+
+rice: {
+  num: '10',
+  title: 'Experimentation Framework',
+  subtitle: 'From Zero to Hero — RICE + North Star Metric en Amplitude',
+  desc: 'Manual completo de experimentación aplicada. Desde la idea hasta el repositorio de resultados. Framework RICE + North Star Metric, proceso end-to-end en Amplitude, plantillas copy-paste y guía de uso con LLMs para equipos que nunca experimentaron antes.',
+  color: '#f59e0b',
+  colorDim: '#1a1000',
+  tags: [{label:'RICE Framework',color:'#f59e0b'},{label:'North Star Metric',color:'#f59e0b'},{label:'End-to-end',color:'var(--muted)'},{label:'Zero to Hero',color:'var(--muted)'}],
+  vars: [
+    ['Audiencia','Equipos que nunca experimentaron + equipos intermedios'],
+    ['Herramienta de ejecución','Amplitude Experiments'],
+    ['Framework de priorización','RICE — Reach · Impact · Confidence · Effort'],
+    ['Métrica guía','North Star Metric + métricas de etapa (AARRR)'],
+    ['Output del proceso','Experimento documentado + resultado en repositorio'],
+  ],
+  notebook: [],
+  checklist: [
+    ['North Star','NSM definida y alineada al modelo de negocio.'],
+    ['Etapa AARRR','Cada experimento asignado a una etapa del funnel.'],
+    ['Score RICE','Puntaje calculado antes de priorizar cualquier iniciativa.'],
+    ['Definición','Brief completo del experimento (hipótesis, métricas, muestra, duración).'],
+    ['Ejecución','Experimento creado en Amplitude con todas las métricas configuradas.'],
+    ['Resultado','Documentado en el repositorio con decisión y aprendizaje.'],
+  ],
+  phases: [
+    { title: '1 — Definir Norte', items: ['Elegir la North Star Metric','Mapear etapas AARRR del producto','Identificar métricas por etapa'] },
+    { title: '2 — Priorizar', items: ['Generar lista de iniciativas','Calcular score RICE por iniciativa','Ordenar por score descendente'] },
+    { title: '3 — Diseñar', items: ['Completar el brief del experimento','Calcular tamaño de muestra y duración','Definir criterios de éxito y fallo'] },
+    { title: '4 — Ejecutar', items: ['Crear en Amplitude Experiments','Monitorear métricas de guardia','Leer resultados en la fecha definida'] },
+    { title: '5 — Documentar', items: ['Guardar resultado en el repositorio','Declarar la decisión (lanzar/iterar/descartar)','Compartir el aprendizaje con el equipo'] },
+  ],
+  prompt: `Este no es un prompt para pegar en Amplitude Chat.
+Es un manual interactivo de experimentación.
+Navegá las secciones del menú lateral para recorrerlo completo.`
+},
+
+
 };
 </script>
 <script>
+
 // ════════════════════════════════════════
 // PROMPT SWITCHER
 // ════════════════════════════════════════
@@ -2488,6 +2535,7 @@ const PROMPT_LIST = [
   {id:'dashboard', num:'07', title:'Dashboard Intelligence Analyst'},
   {id:'aictxglobal', num:'08', title:'AI Context Global'},
   {id:'aictxinitiative', num:'09', title:'AI Context por Iniciativas'},
+  {id:'rice', num:'10', title:'Experimentation Framework'},
 ];
 
 let currentPromptId = null;
@@ -2526,6 +2574,7 @@ document.addEventListener('click', function(e) {
 // NAVIGATION
 // ════════════════════════════════════════
 function openDetail(id) {
+  if (id === 'rice') { openRice(); return; }
   const p = PROMPTS[id];
   if (!p) return;
   currentPromptId = id;
@@ -2856,6 +2905,18 @@ Aquí está el contenido del notebook:
 // ════════════════════════════════════════
 // UTILS
 // ════════════════════════════════════════
+function copyEl(elId, btn) {
+  const el = document.getElementById(elId);
+  const clone = el.cloneNode(true);
+  const b = clone.querySelector('button');
+  if (b) b.remove();
+  navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
 function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
@@ -2878,6 +2939,760 @@ function copyBP(elId, btn) {
     setTimeout(() => btn.textContent = orig, 1800);
   });
 }
+
+
+// ════════════════════════════════════════
+// RICE FRAMEWORK BUILDER
+// ════════════════════════════════════════
+function openRice() {
+  const id = 'rice';
+  const p = PROMPTS[id];
+  currentPromptId = id;
+  document.getElementById('detail-breadcrumb-name').textContent = p.title;
+  document.getElementById('ps-label').textContent = p.title;
+  buildSwitcherMenu();
+
+  document.getElementById('detail-hero').innerHTML = `
+    <div class="detail-num">10 / 10</div>
+    <div class="detail-title" style="color:#f59e0b">Experimentation Framework</div>
+    <div class="detail-desc">From Zero to Hero — RICE + North Star Metric aplicado en Amplitude. Manual completo end-to-end: priorización, diseño, ejecución y repositorio de resultados.</div>
+    <div class="detail-tags">
+      <span class="dtag" style="background:#f59e0b18;color:#f59e0b;border-color:#f59e0b44">RICE Framework</span>
+      <span class="dtag" style="background:#f59e0b18;color:#f59e0b;border-color:#f59e0b44">North Star Metric</span>
+      <span class="dtag" style="background:#2a2a2a;color:#666;border-color:#333">End-to-end</span>
+      <span class="dtag" style="background:#2a2a2a;color:#666;border-color:#333">Zero to Hero</span>
+    </div>
+  `;
+
+  const sbItems = [
+    {key:'intro',    label:'01 — Introducción'},
+    {key:'nsm',      label:'02 — North Star Metric'},
+    {key:'aarrr',    label:'03 — Etapas del funnel'},
+    {key:'rice',     label:'04 — Framework RICE'},
+    {key:'matriz',   label:'05 — Matriz RICE (plantilla)'},
+    {key:'proceso',  label:'06 — Proceso end-to-end'},
+    {key:'brief',    label:'07 — Brief del experimento'},
+    {key:'amplitude',label:'08 — Ejecución en Amplitude'},
+    {key:'repo',     label:'09 — Repositorio de resultados'},
+    {key:'llms',     label:'10 — Usar Claude y LLMs'},
+    {key:'glosario', label:'11 — Glosario'},
+  ];
+
+  document.getElementById('detail-sidebar').innerHTML =
+    '<div class="dsb-label">Secciones del manual</div>' +
+    sbItems.map((item, i) =>
+      `<div class="dsb-item${i===0?' active':''}" id="sb-${id}-${item.key}" onclick="showSec('${id}','${item.key}')">${item.label}</div>`
+    ).join('');
+
+  document.getElementById('detail-sections').innerHTML =
+    riceIntro(id) + riceNSM(id) + riceAARRR(id) + riceFramework(id) +
+    riceMatriz(id) + riceProceso(id) + riceBrief(id) +
+    riceAmplitude(id) + riceRepo(id) + riceLLMs(id) + riceGlosario(id);
+
+  const first = document.getElementById(`dsec-${id}-intro`);
+  if (first) first.classList.add('active');
+
+  document.getElementById('landing').classList.remove('active');
+  document.getElementById('detail-page').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────
+function rH(id, key, title, tag, tagColor) {
+  return `<div id="dsec-${id}-${key}" class="dsec"><div class="dsec-header"><h2>${title}</h2><span class="dsec-tag" style="color:${tagColor||'#f59e0b'};border-color:${tagColor||'#f59e0b'}44">${tag}</span></div>`;
+}
+function rClose() { return `</div>`; }
+function rNote(txt, type) { return `<div class="note${type?' '+type:''}">${txt}</div>`; }
+function rSub(txt) { return `<div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin:18px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--border)">${txt}</div>`; }
+function rBox(title, content, accent) {
+  accent = accent || '#f59e0b';
+  return `<div style="background:var(--surface2);border:1px solid var(--border2);border-left:3px solid ${accent};border-radius:3px;padding:14px 16px;margin-bottom:12px">
+    ${title ? `<div style="font-family:var(--sans);font-size:12px;font-weight:600;color:var(--text);margin-bottom:6px">${title}</div>` : ''}
+    <div style="font-size:12px;color:var(--muted);line-height:1.7">${content}</div>
+  </div>`;
+}
+function rCode(txt) {
+  return `<div style="background:#0d0d0d;border:1px solid var(--border2);border-radius:3px;padding:12px 14px;font-family:var(--mono);font-size:11px;color:#d4d4d4;line-height:1.85;white-space:pre-wrap;margin-bottom:12px;position:relative">${txt}</div>`;
+}
+function rTable(headers, rows, colors) {
+  colors = colors || {};
+  return `<div style="overflow-x:auto;margin-bottom:16px"><table class="nb-table" style="min-width:100%">
+    <thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+    <tbody>${rows.map(row=>`<tr>${row.map((cell,i)=>`<td style="${i===0?'font-family:var(--mono);font-size:10.5px;color:'+(colors[0]||'var(--accent2)'):'color:var(--muted);font-size:12px'}">${cell}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table></div>`;
+}
+function rCopyBtn(id) {
+  return `<button onclick="copyEl('${id}',this)" style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:#fff;border:none;padding:5px 12px;border-radius:2px;cursor:pointer;margin-bottom:12px;transition:background .15s">Copiar plantilla</button>`;
+}
+
+// ── SECTIONS ──────────────────────────────────────────────────────
+
+function riceIntro(id) {
+  return rH(id,'intro','Introducción','¿Por qué experimentar?','#f59e0b') +
+  rNote('Experimentar no es lo que hacen las grandes empresas. Es lo que las hizo grandes.','warn') +
+  rBox('¿Qué es un experimento en producto?',
+    'Un experimento es una prueba controlada donde mostrás dos versiones de algo a grupos distintos de usuarios (A y B) y medís cuál produce un mejor resultado. No es una suposición. Es una pregunta con respuesta medible.') +
+  rBox('¿Por qué no alcanza con la intuición?',
+    'La intuición tiene un sesgo fundamental: confirmamos lo que ya creemos. Los experimentos eliminan ese sesgo. Una empresa que experimenta toma decisiones basadas en lo que realmente pasa, no en lo que cree que pasa. La diferencia entre ambas puede ser millones en revenue.') +
+  rSub('Qué vas a aprender en este manual') +
+  rTable(['Sección','Qué aprendés'],[
+    ['North Star Metric','Cómo definir la métrica que más importa para tu negocio'],
+    ['Etapas del funnel','Qué medir en cada momento del journey del usuario'],
+    ['Framework RICE','Cómo priorizar qué experimentos hacer primero'],
+    ['Matriz RICE','Plantilla lista para calcular y ordenar iniciativas'],
+    ['Proceso end-to-end','De la idea al resultado documentado, paso a paso'],
+    ['Brief del experimento','Cómo definir un experimento sin dejar nada al azar'],
+    ['Ejecución en Amplitude','Cómo correr el experimento en la herramienta'],
+    ['Repositorio de resultados','Dónde guardar todo para que el equipo aprenda'],
+    ['Usar Claude y LLMs','Cómo acelerar cada etapa con inteligencia artificial'],
+  ]) +
+  rNote('Este manual está diseñado para ser leído de principio a fin la primera vez. Después podés usarlo como referencia por sección.') +
+  rClose();
+}
+
+function riceNSM(id) {
+  return rH(id,'nsm','North Star Metric','La métrica que lo guía todo','#f59e0b') +
+  rNote('La North Star Metric (NSM) es el único número que captura el valor real que tu producto entrega a los usuarios. No es una métrica de negocio (revenue, usuarios registrados). Es una métrica de valor entregado.','warn') +
+  rSub('Cómo elegir tu North Star Metric') +
+  rBox('Pregunta fundamental', 'Si tu producto desapareciera mañana, ¿qué dejaría de pasar en la vida de tus usuarios? La respuesta a esa pregunta es tu NSM.') +
+  rTable(['Criterio','Descripción','Ejemplo'],[
+    ['Refleja valor real','Mide algo que el usuario valora, no algo que vos querés','Canciones escuchadas (no usuarios registrados)'],
+    ['Es accionable','Podés influenciarla con acciones concretas del equipo','Pedidos completados por semana'],
+    ['Es medible','Existe el tracking para medirla hoy o podés crearlo','Sesiones con ≥3 acciones de valor'],
+    ['Predice el futuro','Cuando sube, el negocio crece. Cuando baja, hay problema','Mensajes enviados por usuario activo'],
+    ['Une al equipo','Producto, marketing y datos la entienden igual','No es una fórmula compleja'],
+  ]) +
+  rSub('Ejemplos de NSM por tipo de producto') +
+  rTable(['Tipo de producto','North Star Metric'],[
+    ['E-commerce','Pedidos completados por usuario por mes'],
+    ['SaaS B2B','Usuarios activos semanales dentro de cuentas pagadoras'],
+    ['Marketplace','Transacciones exitosas entre comprador y vendedor'],
+    ['Media / Contenido','Minutos de contenido consumido por usuario activo'],
+    ['Fintech','Transacciones procesadas por usuario por mes'],
+    ['Educación online','Lecciones completadas por usuario activo semanal'],
+    ['App de salud','Días consecutivos de uso (streak activo)'],
+  ]) +
+  rSub('Fórmula para validar tu NSM') +
+  rBox(null,
+    '<strong style="color:var(--text)">Test de los 3 sí:</strong><br><br>' +
+    '1. ¿Cuando esta métrica sube, los usuarios están recibiendo más valor? → Sí<br>' +
+    '2. ¿Cuando esta métrica sube, el negocio crece de forma sostenible? → Sí<br>' +
+    '3. ¿Todo el equipo puede explicar esta métrica en una oración? → Sí<br><br>' +
+    'Si las 3 respuestas son sí, encontraste tu NSM.') +
+  rNote('Tip: empezá con una sola NSM. Tener varias NSMs es lo mismo que no tener ninguna.') +
+  rClose();
+}
+
+function riceAARRR(id) {
+  return rH(id,'aarrr','Etapas del funnel','AARRR — El mapa del journey del usuario','#3d8bff') +
+  rNote('AARRR (Acquisition, Activation, Retention, Revenue, Referral) es el mapa que te dice en qué etapa del journey de tus usuarios está el problema que querés resolver con un experimento.') +
+  rTable(['Etapa','Qué mide','Pregunta clave','Ejemplo de métrica','Color en dashboard'],[
+    ['🔵 Acquisition','Cómo los usuarios llegan a tu producto','¿De dónde vienen mis usuarios y cuánto me cuesta traerlos?','CAC, tasa de conversión de landing, visitas únicas','Azul'],
+    ['🟡 Activation','Si los usuarios viven el primer momento de valor','¿El usuario entendió qué hace el producto?','% que completa onboarding, time to first value','Amarillo'],
+    ['🟢 Retention','Si los usuarios vuelven después de la primera vez','¿Por qué se van y por qué se quedan?','Retención día 1 / día 7 / día 30, churn rate','Verde'],
+    ['🟠 Revenue','Si los usuarios pagan y cuánto','¿Cuánto vale un usuario y qué lo hace pagar más?','ARPU, conversión free→paid, LTV, MRR','Naranja'],
+    ['🟣 Referral','Si los usuarios traen a otros usuarios','¿Los usuarios recomiendan activamente el producto?','NPS, coeficiente viral, invitaciones enviadas','Violeta'],
+  ]) +
+  rSub('Cómo usar AARRR para ubicar tu experimento') +
+  rBox('Regla práctica',
+    'Antes de diseñar un experimento, preguntate: ¿en qué etapa está el problema que quiero resolver?<br><br>' +
+    '→ Si los usuarios llegan pero no se activan: experimentá en <strong style="color:#ffd24a">Activation</strong><br>' +
+    '→ Si se activan pero no vuelven: experimentá en <strong style="color:#00c853">Retention</strong><br>' +
+    '→ Si vuelven pero no pagan: experimentá en <strong style="color:#f59e0b">Revenue</strong><br><br>' +
+    'Experimentar en la etapa equivocada es el error más común. Optimizar Acquisition cuando el problema es Retention es desperdiciar recursos.') +
+  rSub('La relación entre AARRR y la North Star Metric') +
+  rBox(null,
+    'Tu NSM vive en una etapa específica del funnel. Todos los experimentos en esa etapa impactan directamente la NSM. Los experimentos en otras etapas la impactan de forma indirecta.<br><br>' +
+    'Ejemplo: si tu NSM es "pedidos completados por semana", vive en <strong style="color:#f59e0b">Revenue</strong>. Un experimento en <strong style="color:#ffd24a">Activation</strong> que mejora el onboarding va a aumentar la NSM, pero el camino es más largo.') +
+  rNote('Tip: en cada experimento anotá la etapa AARRR. Después vas a poder ver en qué etapa experimenta más tu equipo y si está balanceado con dónde están los problemas reales.') +
+  rClose();
+}
+
+function riceFramework(id) {
+  return rH(id,'rice','Framework RICE','Priorización basada en datos, no en opiniones','#f59e0b') +
+  rNote('RICE es un framework de priorización que convierte la discusión "¿qué hacemos primero?" en un cálculo objetivo. Elimina la política y los hipotéticos del proceso de decisión.','warn') +
+  rSub('Las 4 variables del RICE') +
+  rBox('R — Reach (Alcance)',
+    '<strong style="color:var(--text)">¿A cuántos usuarios impacta este experimento en un período dado?</strong><br><br>' +
+    'Unidad: número de usuarios, sesiones o eventos por período (generalmente por mes o por trimestre).<br><br>' +
+    'Fuente: datos reales de Amplitude. Buscá el evento o pantalla que vas a experimentar y anotá cuántos usuarios únicos lo tocan por mes.<br><br>' +
+    'Ejemplos: 50.000 usuarios por mes tocan el checkout → Reach = 50.000','#3d8bff') +
+  rBox('I — Impact (Impacto)',
+    '<strong style="color:var(--text)">¿Cuánto va a mover la aguja en la NSM si el experimento gana?</strong><br><br>' +
+    'Escala estándar de 0.25 a 3:<br>' +
+    '→ 3 = Impacto masivo (mueve la NSM >20%)<br>' +
+    '→ 2 = Impacto alto (mueve la NSM 10–20%)<br>' +
+    '→ 1 = Impacto medio (mueve la NSM 5–10%)<br>' +
+    '→ 0.5 = Impacto bajo (mueve la NSM 1–5%)<br>' +
+    '→ 0.25 = Impacto mínimo (<1%)<br><br>' +
+    'Esta es la variable más subjetiva. Usá datos históricos si tenés. Si no, el equipo vota y promedia.','#f59e0b') +
+  rBox('C — Confidence (Confianza)',
+    '<strong style="color:var(--text)">¿Qué tan seguros estamos de que este experimento va a funcionar?</strong><br><br>' +
+    'Escala de 0% a 100%:<br>' +
+    '→ 100% = Tenemos datos cuantitativos y cualitativos sólidos que lo soportan<br>' +
+    '→ 80% = Tenemos datos de Amplitude o research de usuarios<br>' +
+    '→ 50% = Solo tenemos intuición del equipo o benchmarks de industria<br>' +
+    '→ 20% = Es una apuesta sin evidencia<br><br>' +
+    'Convertir a decimal para el cálculo: 80% → 0.80','#00c853') +
+  rBox('E — Effort (Esfuerzo)',
+    '<strong style="color:var(--text)">¿Cuánto tiempo/recursos necesita el equipo para ejecutarlo?</strong><br><br>' +
+    'Unidad: personas-semana (suma de todas las personas × semanas que necesitan para lanzar el experimento)<br><br>' +
+    '→ 1 persona × 1 semana = 1 persona-semana<br>' +
+    '→ 2 personas × 3 semanas = 6 personas-semana<br><br>' +
+    'Incluí: diseño, desarrollo, QA, configuración en Amplitude y revisión de datos.<br>' +
+    'Un esfuerzo alto NO significa que no hay que hacerlo. Significa que el score va a ser más bajo.','#e8420a') +
+  rSub('La fórmula RICE') +
+  `<div style="background:var(--surface2);border:2px solid #f59e0b;border-radius:4px;padding:20px;text-align:center;margin-bottom:14px">
+    <div style="font-family:var(--mono);font-size:22px;font-weight:600;color:#f59e0b;letter-spacing:.04em">
+      RICE Score = (Reach × Impact × Confidence) ÷ Effort
+    </div>
+    <div style="font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:8px">
+      El número resultante no tiene unidad. Solo sirve para comparar iniciativas entre sí.
+    </div>
+  </div>` +
+  rSub('Ejemplo de cálculo') +
+  rTable(['Variable','Valor','Razonamiento'],[
+    ['Reach','40.000','40.000 usuarios tocan el checkout por mes (dato de Amplitude)'],
+    ['Impact','2','Estimamos que mejora la conversión un 15%, impacto alto en NSM'],
+    ['Confidence','0.80','Tenemos datos de session replay que muestran fricción en el paso de dirección'],
+    ['Effort','3','1 diseñador × 1 sem + 2 devs × 1 sem = 3 personas-semana'],
+    ['RICE Score','21.333','(40.000 × 2 × 0.80) ÷ 3 = 21.333'],
+  ]) +
+  rNote('Regla de oro: nunca tomes una decisión de priorización con un solo score. El valor del RICE es cuando comparás 5, 10 o 20 iniciativas entre sí. El número con mayor score va primero.') +
+  rClose();
+}
+
+function riceMatriz(id) {
+  const template = `MATRIZ DE PRIORIZACIÓN RICE
+Producto: [nombre del producto]
+Período de análisis: [mes/trimestre]
+North Star Metric: [definición de la NSM]
+Etapa NSM: [Acquisition / Activation / Retention / Revenue / Referral]
+Actualizado: [fecha]
+Actualizado por: [nombre]
+─────────────────────────────────────────────────────────────────────
+INSTRUCCIONES DE LLENADO
+─────────────────────────────────────────────────────────────────────
+REACH:   Usuarios únicos que tocan el área del experimento por mes.
+         Fuente: Amplitude → Event Segmentation → Unique Users.
+
+IMPACT:  Estimación del impacto en la NSM si el experimento gana.
+         Escala: 3 (>20%) / 2 (10-20%) / 1 (5-10%) / 0.5 (1-5%) / 0.25 (<1%)
+
+CONFIDENCE: % de certeza basado en evidencia disponible.
+            100% = datos cuanti + cuali / 80% = datos Amplitude o research
+            50% = intuición / 20% = apuesta sin evidencia
+            Convertir a decimal: 80% → 0.80
+
+EFFORT:  Personas-semana para lanzar el experimento.
+         Incluir: diseño + desarrollo + QA + configuración Amplitude.
+
+SCORE:   (Reach × Impact × Confidence) ÷ Effort
+
+ETAPA:   Acquisition / Activation / Retention / Revenue / Referral
+─────────────────────────────────────────────────────────────────────
+INICIATIVAS
+─────────────────────────────────────────────────────────────────────
+ID | Iniciativa                    | Etapa      | Reach  | Impact | Conf | Effort | SCORE | Prioridad
+───┼───────────────────────────────┼────────────┼────────┼────────┼──────┼────────┼───────┼──────────
+01 | [descripción de la iniciativa]| Activation |        |        |      |        |       |
+02 |                               |            |        |        |      |        |       |
+03 |                               |            |        |        |      |        |       |
+04 |                               |            |        |        |      |        |       |
+05 |                               |            |        |        |      |        |       |
+06 |                               |            |        |        |      |        |       |
+07 |                               |            |        |        |      |        |       |
+08 |                               |            |        |        |      |        |       |
+09 |                               |            |        |        |      |        |       |
+10 |                               |            |        |        |      |        |       |
+─────────────────────────────────────────────────────────────────────
+ORDENAR POR SCORE DESCENDENTE DESPUÉS DE COMPLETAR
+─────────────────────────────────────────────────────────────────────
+GANADORES DEL PERÍODO (top 3 por score):
+1. ID [  ] — [nombre] — Score: [  ]
+2. ID [  ] — [nombre] — Score: [  ]
+3. ID [  ] — [nombre] — Score: [  ]
+
+NOTAS DEL EQUIPO:
+[espacio para comentarios, contexto o restricciones que afectan la priorización]`;
+
+  return rH(id,'matriz','Matriz RICE','Plantilla copy-paste lista para usar','#f59e0b') +
+  rNote('Esta plantilla funciona en texto plano, en Notion, en Google Docs o en cualquier herramienta. Copiá el bloque completo y empezá a llenarla con tu equipo.') +
+  rSub('Paso a paso para completar la matriz') +
+  `<ol style="list-style:none;margin-bottom:16px">
+    ${[
+      ['1','Listar iniciativas','Juntá al equipo y escriban todas las ideas sin filtrar. Mínimo 5, máximo 15 por sesión. No juzguen todavía.'],
+      ['2','Buscar el Reach en Amplitude','Para cada iniciativa, buscá en Amplitude cuántos usuarios tocan esa área por mes. Event Segmentation → el evento correspondiente → Unique Users.'],
+      ['3','Votar el Impact juntos','Cada persona del equipo vota en privado (1–3 min). Promediás los votos. Si hay diferencia de más de 1 punto, discutan 5 minutos y voten de nuevo.'],
+      ['4','Determinar la Confidence','Revisá qué evidencia tenés: ¿session replays? ¿datos de funnel? ¿research de usuarios? Asignate el % honestamente.'],
+      ['5','Estimar el Effort','El equipo técnico estima. Incluí todo: diseño, desarrollo, QA, tracking. Expresalo en personas-semana.'],
+      ['6','Calcular el Score','Reach × Impact × Confidence ÷ Effort. Lo podés hacer en una calculadora o en una celda de Sheets.'],
+      ['7','Ordenar y decidir','Las 3 iniciativas con mayor score son las que entran al backlog de experimentación del período.'],
+    ].map(([n,t,d])=>`<li style="display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:12px">
+      <div style="width:22px;height:22px;background:#f59e0b;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;flex-shrink:0;margin-top:1px">${n}</div>
+      <div><strong style="color:var(--text);display:block;margin-bottom:2px">${t}</strong><span style="color:var(--muted)">${d}</span></div>
+    </li>`).join('')}
+  </ol>` +
+  rSub('Plantilla — copiar y pegar') +
+  rCopyBtn('rice-matrix-template') +
+  `<div id="rice-matrix-template" style="background:#0d0d0d;border:1px solid var(--border2);border-radius:3px;padding:14px 16px;font-family:var(--mono);font-size:11px;color:#d4d4d4;line-height:1.9;white-space:pre;overflow-x:auto;margin-bottom:12px">${escHtml(template)}</div>` +
+  rNote('Tip: si usás Google Sheets, creá una columna con la fórmula =(B*C*D)/E donde B=Reach, C=Impact, D=Confidence, E=Effort. El score se calcula solo.') +
+  rClose();
+}
+
+function riceProceso(id) {
+  return rH(id,'proceso','Proceso end-to-end','De la idea al resultado documentado','#00c853') +
+  rNote('Este es el proceso completo de experimentación. Cada etapa tiene un responsable, un entregable y una herramienta. No saltees pasos — cada uno existe por una razón.') +
+  `<div style="margin-bottom:20px">` +
+  [
+    {n:'01', title:'Descubrir la oportunidad', color:'#3d8bff',
+     owner:'Product Manager + Data Analyst',
+     herramienta:'Amplitude (Funnel, Session Replay, Retention)',
+     entregable:'Descripción del problema con datos',
+     detalle:'Antes de diseñar cualquier experimento, tenés que identificar un problema medible. Usá Amplitude para encontrarlo: ¿en qué paso del funnel se van más usuarios? ¿Qué hace diferente el usuario que convierte vs el que no? ¿Qué muestra el session replay en ese paso?'},
+    {n:'02', title:'Generar hipótesis', color:'#f59e0b',
+     owner:'Product Manager',
+     herramienta:'Notion / Google Docs / Claude',
+     entregable:'Hipótesis estructurada en formato estándar',
+     detalle:'La hipótesis es el corazón del experimento. Formato obligatorio: "Si [cambio] → entonces [métrica] mejora [X%] → porque [mecanismo causal]". Ejemplo: "Si simplificamos el formulario de dirección de 5 campos a 2 → entonces la conversión del checkout sube un 12% → porque reducimos la fricción cognitiva en el paso más crítico."'},
+    {n:'03', title:'Calcular el RICE Score', color:'#f59e0b',
+     owner:'Product Manager + Data Analyst',
+     herramienta:'Matriz RICE (sección 05)',
+     entregable:'Score numérico + posición en el backlog',
+     detalle:'Antes de invertir tiempo en el diseño detallado, calculá el RICE. Si el score es bajo comparado con otras iniciativas en el backlog, el experimento no entra al sprint. Esto evita diseñar experimentos que nunca van a ejecutarse.'},
+    {n:'04', title:'Completar el brief del experimento', color:'#a78bfa',
+     owner:'Product Manager',
+     herramienta:'Plantilla de brief (sección 07)',
+     entregable:'Brief completo y aprobado por el equipo',
+     detalle:'El brief es el documento que define el experimento completo antes de tocar código. Incluye hipótesis, métricas, diseño de variantes, tamaño de muestra, duración y criterios de decisión. Si el brief no está completo, el experimento no arranca.'},
+    {n:'05', title:'Configurar en Amplitude', color:'#06b6d4',
+     owner:'Data Analyst + Developer',
+     herramienta:'Amplitude Experiments',
+     entregable:'Experimento activo con métricas configuradas',
+     detalle:'Creá el experimento en Amplitude Experiments siguiendo el brief. Configurá la métrica primaria, secundarias y de guardia (guardrail metrics). Definí la fecha de inicio y la fecha de lectura de resultados. No arranques sin tener todo configurado — los datos de los primeros días son los más importantes.'},
+    {n:'06', title:'Monitorear durante el experimento', color:'#00c853',
+     owner:'Data Analyst',
+     herramienta:'Amplitude Experiments Dashboard',
+     entregable:'Alertas activas en métricas de guardia',
+     detalle:'Durante el experimento, revisá las métricas de guardia regularmente. Si alguna se rompe (ej. sube la tasa de error, baja el revenue), detenés el experimento inmediatamente. No mires los resultados de la métrica primaria antes de alcanzar el tamaño de muestra — eso es peeking y arruina la validez estadística.'},
+    {n:'07', title:'Leer e interpretar resultados', color:'#f59e0b',
+     owner:'Data Analyst + Product Manager',
+     herramienta:'Amplitude Experiments + Claude',
+     entregable:'Interpretación de resultados con decisión',
+     detalle:'En la fecha de lectura, revisá los resultados con el tamaño de muestra completo. Aplicá los criterios de decisión definidos en el brief. Decidí: lanzar (el tratamiento gana), iterar (resultado ambiguo) o descartar (el control gana o una guardia se rompió). Documentá el razonamiento, no solo la decisión.'},
+    {n:'08', title:'Documentar en el repositorio', color:'#e8420a',
+     owner:'Product Manager',
+     herramienta:'Repositorio de experimentos (sección 09)',
+     entregable:'Entrada completa en el repositorio',
+     detalle:'Cada experimento, sin importar el resultado, va al repositorio. Un resultado negativo es tan valioso como uno positivo — dice qué no hacer. Documentá la hipótesis, el resultado, el aprendizaje y la decisión. En 6 meses, ese registro va a ahorrarle horas a alguien del equipo.'},
+  ].map(e => `<div style="display:flex;gap:16px;margin-bottom:1px;background:var(--surface);border:1px solid var(--border2);padding:16px;border-left:3px solid ${e.color}">
+    <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:${e.color};opacity:.4;min-width:36px;line-height:1">${e.n}</div>
+    <div style="flex:1">
+      <div style="font-family:var(--sans);font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px">${e.title}</div>
+      <div style="display:grid;grid-template-columns:auto auto;gap:4px 16px;margin-bottom:8px">
+        <span style="font-family:var(--mono);font-size:9px;color:var(--muted2);text-transform:uppercase;letter-spacing:.08em">Owner</span>
+        <span style="font-size:11px;color:var(--muted)">${e.owner}</span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--muted2);text-transform:uppercase;letter-spacing:.08em">Herramienta</span>
+        <span style="font-size:11px;color:var(--muted)">${e.herramienta}</span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--muted2);text-transform:uppercase;letter-spacing:.08em">Entregable</span>
+        <span style="font-size:11px;color:${e.color};font-weight:500">${e.entregable}</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.65;border-top:1px solid var(--border);padding-top:8px">${e.detalle}</div>
+    </div>
+  </div>`).join('') + `</div>` +
+  rNote('El proceso completo dura entre 2 y 8 semanas según el tamaño del experimento. Los experimentos pequeños (copy, color, orden de elementos) pueden estar en producción en 1 semana. Los experimentos estructurales (nuevo flujo, nueva feature) necesitan más tiempo de desarrollo.') +
+  rClose();
+}
+
+function riceBrief(id) {
+  const brief = `BRIEF DEL EXPERIMENTO
+──────────────────────────────────────────────────────
+IDENTIFICACIÓN
+──────────────────────────────────────────────────────
+ID del experimento:    EXP-[número consecutivo]
+Nombre del experimento:[nombre descriptivo, máx 60 caracteres]
+Fecha de creación:     [DD/MM/YYYY]
+Owner:                 [nombre del PM responsable]
+RICE Score:            [número]
+Etapa AARRR:           [Acquisition / Activation / Retention / Revenue / Referral]
+Prioridad en backlog:  [alta / media / baja]
+
+──────────────────────────────────────────────────────
+EL PROBLEMA
+──────────────────────────────────────────────────────
+Descripción del problema:
+[2-3 oraciones que expliquen qué está pasando y por qué es un problema]
+
+Evidencia que soporta el problema:
+- Cuantitativa: [dato de Amplitude, ej: "El 68% de los usuarios abandona en el paso 3 del checkout"]
+- Cualitativa:  [session replay, feedback, research, ej: "El replay muestra que los usuarios hacen clic 3+ veces en el campo de dirección"]
+
+──────────────────────────────────────────────────────
+LA HIPÓTESIS
+──────────────────────────────────────────────────────
+Hipótesis estructurada:
+"Si [cambio implementado en el tratamiento]
+→ entonces [métrica] mejora [X%]
+→ porque [mecanismo causal específico]"
+
+──────────────────────────────────────────────────────
+EL DISEÑO
+──────────────────────────────────────────────────────
+Tipo de test:          A/B / A/B/n / Multi-armed bandit
+Unidad de aleatorización: Usuario / Sesión / Dispositivo
+
+Control (A):
+[descripción exacta de la experiencia actual]
+
+Tratamiento (B):
+[descripción exacta del cambio que se va a probar]
+
+Audiencia objetivo:
+[criterios de elegibilidad: plataforma, plan, comportamiento, etc.]
+
+Porcentaje de tráfico:
+[100% del tráfico elegible / X% — justificar si es menos del 100%]
+
+──────────────────────────────────────────────────────
+LAS MÉTRICAS
+──────────────────────────────────────────────────────
+Métrica primaria (decide el ganador):
+Nombre en Amplitude: [nombre exacto del evento]
+Tipo:                [conversión / retención / revenue]
+Dirección esperada:  [↑ queremos que suba / ↓ queremos que baje]
+
+Métricas secundarias (señales de soporte):
+1. [nombre] — [dirección esperada] — [por qué es relevante]
+2. [nombre] — [dirección esperada] — [por qué es relevante]
+3. [nombre] — [dirección esperada] — [por qué es relevante]
+
+Métricas de guardia (no deben empeorar):
+1. [nombre] — Umbral: si baja más de [X%] → detener el experimento
+2. [nombre] — Umbral: si sube más de [X%] → detener el experimento
+
+──────────────────────────────────────────────────────
+EL CÁLCULO
+──────────────────────────────────────────────────────
+Tasa base actual de la métrica primaria: [X%]
+MDE mínimo detectable:                   [Y%] ([Y% relativo sobre la tasa base])
+Nivel de confianza:                      95%
+Poder estadístico:                       80%
+Tamaño de muestra requerido por variante:[N usuarios]
+Tráfico disponible por semana:           [N usuarios/semana en el área del experimento]
+Duración estimada:                       [N semanas]
+Fecha de inicio:                         [DD/MM/YYYY]
+Fecha de lectura de resultados:          [DD/MM/YYYY]
+
+⚠️ NO evaluar resultados antes de la fecha de lectura (anti-peeking)
+
+──────────────────────────────────────────────────────
+CRITERIOS DE DECISIÓN
+──────────────────────────────────────────────────────
+Escenario             Condición                              Decisión
+──────────────────    ─────────────────────────────────      ──────────────
+Éxito claro           p<0.05 + mejora ≥ MDE + guardias OK   Lanzar al 100%
+Resultado nulo        p>0.05 + intervalo incluye 0           Descartar cambio
+Resultado ambiguo     p>0.05 pero tendencia positiva         Iterar y re-test
+Guardia rota          Cualquier guardia supera umbral        Detener inmediato
+Fallo claro           p<0.05 + dirección negativa            Descartar cambio
+
+──────────────────────────────────────────────────────
+IMPLEMENTACIÓN
+──────────────────────────────────────────────────────
+Equipo responsable:   [PM / Diseño / Frontend / Backend / QA]
+Esfuerzo estimado:    [N personas-semana]
+Dependencias:         [si el experimento depende de otro equipo o sistema]
+Riesgos conocidos:    [qué podría salir mal y cómo se mitiga]
+
+──────────────────────────────────────────────────────
+APROBACIONES
+──────────────────────────────────────────────────────
+PM:         [nombre] — Fecha: [DD/MM/YYYY]
+Tech Lead:  [nombre] — Fecha: [DD/MM/YYYY]
+Data:       [nombre] — Fecha: [DD/MM/YYYY]`;
+
+  return rH(id,'brief','Brief del experimento','El documento que define todo antes de tocar código','#a78bfa') +
+  rNote('El brief es el contrato del experimento. Si no está completo, el experimento no arranca. Cada campo existe porque alguna vez un experimento falló por no tenerlo definido.','warn') +
+  rBox('Por qué el brief es obligatorio',
+    'Un experimento sin brief es una feature, no un experimento. Sin brief: los criterios de éxito se deciden después de ver los resultados (HiPPO effect), las métricas de guardia no están configuradas y el resultado no se puede documentar ni aprender de él.') +
+  rSub('Match con Experiment Kickstart (prompt 03)') +
+  rNote('El brief de esta sección es compatible 100% con el prompt Experiment Kickstart (prompt 03 del playbook). Podés completar el brief acá y luego usarlo como input para Experiment Kickstart que lo convierte en un experimento configurado en Amplitude paso a paso.','info') +
+  rSub('Plantilla del brief — copiar y pegar') +
+  rCopyBtn('rice-brief-template') +
+  `<div id="rice-brief-template" style="background:#0d0d0d;border:1px solid var(--border2);border-radius:3px;padding:14px 16px;font-family:var(--mono);font-size:10.5px;color:#d4d4d4;line-height:1.9;white-space:pre;overflow-x:auto;margin-bottom:12px;max-height:400px;overflow-y:auto">${escHtml(brief)}</div>` +
+  rClose();
+}
+
+function riceAmplitude(id) {
+  return rH(id,'amplitude','Ejecución en Amplitude','Paso a paso para crear el experimento en la plataforma','#06b6d4') +
+  rNote('Esta sección es el complemento del prompt Experiment Kickstart (sección 07 del playbook). Usá el prompt para que Amplitude Chat te guíe. Esta sección te explica el proceso manualmente para que entiendas qué está pasando.') +
+  rSub('Requisitos previos antes de crear el experimento') +
+  rTable(['Requisito','Cómo verificarlo'],[
+    ['Feature Flags / Experiments habilitado','Ir a Settings → Plans → verificar que Experiments esté activo'],
+    ['Los eventos de las métricas existen en Amplitude','Event Taxonomy → buscar el nombre exacto del evento'],
+    ['El tracking del experimento está implementado','El evento de exposición al experimento debe llegar a Amplitude antes de lanzar'],
+    ['El brief está completo y aprobado','Todos los campos del brief tienen valor real, no placeholder'],
+  ]) +
+  rSub('Paso a paso en Amplitude Experiments') +
+  `<div style="margin-bottom:16px">` +
+  [
+    {n:1, title:'Crear el experimento', detalle:'Ir a Experiments → New Experiment → A/B Test (o el tipo definido en el brief). Completar: nombre (usar el mismo del brief, ej: EXP-042 — Simplificación formulario dirección), descripción (copiar la hipótesis del brief), owner.'},
+    {n:2, title:'Configurar las variantes', detalle:'Agregar las variantes exactamente como están en el brief. Control = la experiencia actual. Tratamiento = el cambio. Distribución por defecto: 50/50. Si el brief define otro porcentaje, aplicarlo acá.'},
+    {n:3, title:'Definir la audiencia', detalle:'Unidad de aleatorización: usuario (en casi todos los casos). Filtros de elegibilidad: los criterios del brief (plataforma, plan, comportamiento). Porcentaje de tráfico: el definido en el brief. Si es menor al 100%, configurar el holdout correctamente.'},
+    {n:4, title:'Configurar las métricas', detalle:'Métrica primaria: buscar el nombre exacto del evento del brief. ⚠️ Si el evento no existe, crear la métrica antes de continuar. Métricas secundarias: agregar en el mismo orden del brief. Guardrail metrics: configurar con el umbral exacto del brief. Si una guardrail metric se rompe, Amplitude puede alertar automáticamente.'},
+    {n:5, title:'Configurar la duración y el análisis', detalle:'Fecha de inicio: la del brief. Fecha de análisis (equivalente a fecha de lectura): la del brief. Tamaño de muestra objetivo por variante: el del brief. Sequential testing: si Amplitude lo ofrece, activarlo. Nivel de confianza: 95%.'},
+    {n:6, title:'Revisión final antes de activar', detalle:'Revisar el checklist: ¿Hipótesis documentada? ¿Variantes correctas? ¿Audiencia bien definida? ¿Métrica primaria configurada? ¿Guardias con umbrales? ¿Fechas definidas? ¿El equipo fue notificado? Solo después activar el experimento.'},
+  ].map(e=>`<div style="display:flex;gap:14px;margin-bottom:1px;background:var(--surface);border:1px solid var(--border2);padding:14px">
+    <div style="width:28px;height:28px;background:#06b6d4;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">${e.n}</div>
+    <div>
+      <div style="font-family:var(--sans);font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px">${e.title}</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.65">${e.detalle}</div>
+    </div>
+  </div>`).join('') + `</div>` +
+  rNote('Anti-peeking: una vez lanzado el experimento, NO mires los resultados de la métrica primaria hasta la fecha de lectura. Podés monitorear las métricas de guardia, pero la métrica primaria solo se lee una vez, al final.','warn') +
+  rClose();
+}
+
+function riceRepo(id) {
+  const repoEntry = `REPOSITORIO DE EXPERIMENTOS
+══════════════════════════════════════════════════════════════════
+
+EXP-[ID] — [NOMBRE DEL EXPERIMENTO]
+══════════════════════════════════════════════════════════════════
+
+DATOS GENERALES
+──────────────────────────────────────────────────────
+ID:                   EXP-[número]
+Nombre:               [nombre descriptivo]
+Owner:                [nombre del PM]
+Etapa AARRR:          [etapa]
+RICE Score:           [número]
+Fecha de inicio:      [DD/MM/YYYY]
+Fecha de lectura:     [DD/MM/YYYY]
+Duración real:        [N días/semanas]
+Estado:               [Completado / Detenido / En curso]
+
+EL PROBLEMA Y LA HIPÓTESIS
+──────────────────────────────────────────────────────
+Problema identificado:
+[2-3 oraciones del brief]
+
+Hipótesis:
+"Si [cambio] → entonces [métrica mejora X%] → porque [mecanismo]"
+
+EL EXPERIMENTO
+──────────────────────────────────────────────────────
+Control (A):     [descripción]
+Tratamiento (B): [descripción]
+Audiencia:       [criterios de elegibilidad]
+Tráfico:         [% del tráfico incluido]
+Muestra real:    [N usuarios por variante al momento de lectura]
+
+LOS RESULTADOS
+──────────────────────────────────────────────────────
+Métrica primaria:  [nombre]
+  Control:         [valor]    Tratamiento: [valor]    Variación: [+/-X%]
+  p-value:         [número]   Significativo: [Sí / No]
+  Resultado:       [el tratamiento ganó / perdió / resultado ambiguo]
+
+Métricas secundarias:
+  [nombre 1]:      Control [valor] vs Tratamiento [valor] — [+/-X%]
+  [nombre 2]:      Control [valor] vs Tratamiento [valor] — [+/-X%]
+
+Métricas de guardia:
+  [nombre 1]:      [sin cambio / alerta disparada — descripción]
+  [nombre 2]:      [sin cambio / alerta disparada — descripción]
+
+Link al experimento en Amplitude: [URL]
+
+LA DECISIÓN
+──────────────────────────────────────────────────────
+Decisión:         [LANZAR / ITERAR / DESCARTAR]
+Fecha de decisión:[DD/MM/YYYY]
+Decidido por:     [nombre/s]
+
+Razonamiento:
+[3-5 oraciones explicando por qué se tomó esta decisión con este resultado]
+
+EL APRENDIZAJE
+──────────────────────────────────────────────────────
+¿Qué aprendimos?
+[Lo más importante que el equipo aprendió, independientemente del resultado]
+
+¿Qué haríamos diferente?
+[Si fuera a repetir este experimento, ¿qué cambiaría?]
+
+¿Genera nuevas hipótesis?
+[Sí / No] — [si sí, describir las hipótesis que nacen de este resultado]
+
+Próximo experimento sugerido (si aplica):
+ID: [EXP-siguiente] — [nombre tentativo]
+
+──────────────────────────────────────────────────────`;
+
+  return rH(id,'repo','Repositorio de resultados','El archivo que convierte experimentos en conocimiento','#e8420a') +
+  rNote('El repositorio de experimentos es la memoria del equipo. Cada experimento documentado evita cometer el mismo error dos veces y acumula conocimiento sobre qué funciona con tus usuarios específicos.') +
+  rBox('¿Qué es el repositorio?',
+    'Es un archivo (puede ser Notion, Google Docs, Confluence, GitHub o incluso un Google Sheet) donde cada experimento tiene su propia entrada con los datos completos. El repositorio permite responder preguntas como: "¿Ya probamos esto antes?", "¿Qué sabemos sobre los usuarios en el checkout?", "¿Cuántos experimentos lanzamos este trimestre?"') +
+  rSub('Estructura recomendada del repositorio') +
+  rTable(['Nivel','Descripción','Herramienta sugerida'],[
+    ['Índice general','Una tabla con todos los experimentos: ID, nombre, estado, resultado, fecha','Google Sheets / Notion Database'],
+    ['Entrada por experimento','El documento completo de cada experimento (plantilla abajo)','Notion / Confluence / GitHub'],
+    ['Carpeta de activos','Screenshots, mockups, links a Amplitude, grabaciones del análisis','Google Drive / Notion'],
+    ['Resumen trimestral','Análisis de qué se aprendió en el trimestre, win rate, velocity','Notion / Documento compartido'],
+  ]) +
+  rSub('Métricas del repositorio que valen la pena trackear') +
+  rTable(['Métrica','Qué mide','Frecuencia'],[
+    ['Experiment velocity','Cuántos experimentos se lanzan por mes','Mensual'],
+    ['Win rate','% de experimentos que resultan en "lanzar"','Trimestral'],
+    ['Time to launch','Días desde que se aprueba el brief hasta que el experimento está activo','Por experimento'],
+    ['Etapa coverage','% de experimentos por etapa AARRR — para ver si hay un sesgo hacia una etapa','Trimestral'],
+    ['Hipótesis to insight ratio','Cuántas hipótesis nuevas genera cada experimento completado','Trimestral'],
+  ]) +
+  rSub('Plantilla de entrada al repositorio — copiar y pegar') +
+  rCopyBtn('rice-repo-template') +
+  `<div id="rice-repo-template" style="background:#0d0d0d;border:1px solid var(--border2);border-radius:3px;padding:14px 16px;font-family:var(--mono);font-size:10.5px;color:#d4d4d4;line-height:1.9;white-space:pre;overflow-x:auto;margin-bottom:12px;max-height:420px;overflow-y:auto">${escHtml(repoEntry)}</div>` +
+  rNote('Tip de implementación: empezá simple. Un Google Sheet con las columnas ID, Nombre, Etapa, Score, Resultado, Decisión y Aprendizaje ya es un repositorio funcional. No necesitás una herramienta sofisticada el primer día.') +
+  rClose();
+}
+
+function riceLLMs(id) {
+  const prompts = [
+    {title:'Generar hipótesis desde datos', color:'#3d8bff', prompt:`Actuás como Senior Product Analyst especializado en experimentación.
+
+Tengo los siguientes datos de Amplitude:
+- Funnel: [describir el funnel y las tasas de conversión por paso]
+- Session replay observation: [describir lo que viste en los replays]
+- Etapa con mayor drop: [paso específico]
+- North Star Metric: [definición]
+
+Generá 5 hipótesis de experimentos para mejorar la conversión en el paso [X].
+Para cada hipótesis usá el formato:
+"Si [cambio] → entonces [métrica] mejora [X%] → porque [mecanismo causal]"
+Ordenalas de mayor a menor impacto potencial y justificá el razonamiento.`},
+    {title:'Calcular el RICE Score', color:'#f59e0b', prompt:`Actuás como Senior Product Analyst especializado en experimentación.
+
+Tengo las siguientes iniciativas para priorizar:
+[pegar la lista de iniciativas con descripción breve]
+
+Para cada iniciativa:
+1. Preguntame los datos que necesitás para calcular el RICE (Reach, Impact, Confidence, Effort)
+2. Calculá el RICE Score usando la fórmula: (Reach × Impact × Confidence) ÷ Effort
+3. Ordenalas de mayor a menor score
+4. Recomendá las top 3 para el próximo sprint con justificación
+
+Si no tenés algún dato, pedímelo antes de calcular. No asumas valores.`},
+    {title:'Completar el brief del experimento', color:'#a78bfa', prompt:`Actuás como Senior Experimentation Analyst con expertise en diseño estadístico.
+
+Voy a darte los datos del experimento que quiero diseñar:
+- Hipótesis: [copiar la hipótesis]
+- Métrica primaria: [nombre del evento en Amplitude]
+- Tasa base actual: [X%] (dato de Amplitude)
+- MDE esperado: [Y%]
+- Tráfico disponible por semana: [N usuarios]
+
+Tu tarea:
+1. Calculá el tamaño de muestra necesario por variante (α=0.05, poder=80%)
+2. Calculá la duración estimada del experimento
+3. Sugerí 2-3 métricas secundarias relevantes para esta hipótesis
+4. Sugerí 2 métricas de guardia con umbrales específicos
+5. Completá los criterios de decisión (éxito / nulo / ambiguo / guardia rota / fallo)`},
+    {title:'Interpretar resultados del experimento', color:'#00c853', prompt:`Actuás como Senior Data Scientist especializado en interpretación de experimentos A/B.
+
+Los resultados del experimento [ID] son:
+- Métrica primaria: Control [X%] vs Tratamiento [Y%], variación [+/-Z%], p-value [valor]
+- Métricas secundarias: [pegar los resultados]
+- Métricas de guardia: [pegar el estado de cada guardia]
+- Tamaño de muestra por variante: [N usuarios]
+- Duración del experimento: [N días]
+
+Tu tarea:
+1. Interpretá los resultados estadísticamente (¿es significativo? ¿el efecto es real?)
+2. Identificá si hay señales de preocupación en las métricas secundarias o guardias
+3. Recomendá la decisión: Lanzar / Iterar / Descartar con justificación
+4. Identificá qué aprendimos sobre el comportamiento de los usuarios
+5. Sugerí 1-2 hipótesis de próximos experimentos basadas en estos resultados`},
+    {title:'Generar el aprendizaje del experimento', color:'#e8420a', prompt:`Actuás como Senior Product Manager con experiencia en cultura de experimentación.
+
+El experimento [ID — nombre] tuvo el siguiente resultado: [Lanzado / Iterado / Descartado]
+
+Contexto:
+- Hipótesis original: [copiar]
+- Resultado: [descripción del resultado]
+- Decisión tomada: [y el razonamiento breve]
+
+Tu tarea:
+1. Sintetizá el aprendizaje principal en 2-3 oraciones (sin jerga técnica, para toda la empresa)
+2. Identificá si el resultado refuta o confirma la hipótesis original
+3. Generá 2 hipótesis nuevas que nacen de este resultado
+4. Redactá la entrada del repositorio en formato ejecutivo para compartir con el equipo
+5. Sugería si este aprendizaje debería cambiar algún aspecto del producto`},
+  ];
+
+  return rH(id,'llms','Usar Claude y LLMs','Acelerá cada etapa del proceso con inteligencia artificial','#f59e0b') +
+  rNote('Los LLMs no reemplazan el pensamiento crítico del equipo. Lo amplifican. Usados bien, pueden ahorrarte horas en cada experimento. Usados mal, te dan respuestas que parecen bien pero están vacías de datos reales.') +
+  rBox('Regla de oro para usar LLMs en experimentación',
+    '<strong style="color:var(--text)">Garbage in, garbage out.</strong> Un LLM es tan bueno como los datos que le das. Siempre dale datos reales de Amplitude, no descripciones vagas. El mejor prompt incluye números reales, contexto específico y una pregunta clara.') +
+  rSub('Cuándo usar un LLM y cuándo no') +
+  rTable(['Tarea','¿Usar LLM?','Por qué'],[
+    ['Generar hipótesis a partir de datos','✅ Sí','Excelente para brainstorm estructurado. Dale los datos y pedile 5 hipótesis.'],
+    ['Calcular el tamaño de muestra','✅ Sí','Podés pedirle que haga el cálculo estadístico con los datos del brief.'],
+    ['Redactar el brief','✅ Sí','Puede completar secciones enteras si le das los inputs correctos.'],
+    ['Interpretar resultados estadísticos','✅ Con cuidado','Útil para interpretar, pero vos tomás la decisión final con contexto de negocio.'],
+    ['Decidir si lanzar o descartar','❌ No','La decisión es tuya. El LLM puede ayudarte a pensar, no a decidir.'],
+    ['Reemplazar los datos de Amplitude','❌ No','Nunca. Los datos deben venir de la fuente real, no de un LLM.'],
+  ]) +
+  rSub('5 prompts listos para usar — copiar y pegar') +
+  prompts.map((p,i) => `
+    <div style="margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <div style="width:22px;height:22px;background:${p.color};color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;flex-shrink:0">${i+1}</div>
+        <div style="font-family:var(--sans);font-size:13px;font-weight:600;color:var(--text)">${p.title}</div>
+      </div>
+      <div style="position:relative">
+        <div style="background:#0d0d0d;border:1px solid var(--border2);border-left:2px solid ${p.color};border-radius:3px;padding:12px 14px;font-family:var(--mono);font-size:11px;color:#d4d4d4;line-height:1.8;white-space:pre-wrap;max-height:180px;overflow-y:auto" id="llm-prompt-${i}">${escHtml(p.prompt)}</div>
+        <button onclick="copyEl('llm-prompt-${i}',this)" style="position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.08em;background:${p.color};color:#000;border:none;padding:3px 9px;border-radius:2px;cursor:pointer;text-transform:uppercase">Copiar</button>
+      </div>
+    </div>
+  `).join('') +
+  rClose();
+}
+
+function riceGlosario(id) {
+  const terms = [
+    ['A/B Test','Experimento donde el 50% de los usuarios ve la versión original (Control) y el 50% ve la versión modificada (Tratamiento). El grupo con mejor resultado en la métrica primaria gana.'],
+    ['Anti-peeking','No mirar los resultados del experimento antes de alcanzar el tamaño de muestra definido. Mirar antes infla la tasa de falsos positivos y arruina la validez del experimento.'],
+    ['Confidence interval','Rango de valores donde está el efecto real del experimento con el nivel de confianza definido (ej: 95%). Si el intervalo incluye el cero, el efecto puede ser positivo o negativo: resultado ambiguo.'],
+    ['Control','El grupo de usuarios que ve la experiencia actual, sin cambios. Es el punto de referencia contra el que se mide el Tratamiento.'],
+    ['Falso positivo (Error tipo I)','El experimento dice que el Tratamiento ganó, pero en realidad no hay diferencia real. Ocurre cuando se hace peeking o cuando el nivel de confianza es muy bajo.'],
+    ['Falso negativo (Error tipo II)','El experimento dice que no hay diferencia, pero en realidad el Tratamiento sí es mejor. Ocurre cuando el tamaño de muestra es muy pequeño.'],
+    ['Feature flag','Interruptor en el código que permite activar o desactivar una funcionalidad para grupos específicos de usuarios sin hacer un nuevo despliegue.'],
+    ['Guardrail metric / Guardia','Métrica que no puede empeorar durante el experimento. Si se rompe, el experimento se detiene inmediatamente independientemente del resultado de la métrica primaria.'],
+    ['HiPPO effect','Highest Paid Person\'s Opinion Effect. El sesgo de decidir basándose en la opinión de la persona de mayor jerarquía en lugar de en datos. La experimentación elimina este sesgo.'],
+    ['MDE — Minimum Detectable Effect','El efecto mínimo que el experimento puede detectar con el nivel de confianza y poder definidos. Si el efecto real es menor que el MDE, el experimento no tiene suficiente sensibilidad para detectarlo.'],
+    ['North Star Metric (NSM)','La única métrica que captura el valor real que el producto entrega a los usuarios. Todos los experimentos, directa o indirectamente, deben impactar la NSM.'],
+    ['Novelty effect','El comportamiento de los usuarios cambia simplemente porque algo es nuevo, no porque sea mejor. Puede inflar los resultados al inicio del experimento. Se controla corriendo el experimento por al menos 2 semanas.'],
+    ['p-value','La probabilidad de que el resultado observado ocurra por azar, asumiendo que el Control y el Tratamiento son iguales. Un p-value < 0.05 indica que el resultado es estadísticamente significativo al 95% de confianza.'],
+    ['Poder estadístico','La probabilidad de detectar un efecto real cuando existe. Estándar: 80%. Un poder bajo significa que el experimento puede no detectar diferencias reales.'],
+    ['RICE','Framework de priorización: Reach × Impact × Confidence ÷ Effort. Convierte la discusión subjetiva sobre prioridades en un cálculo objetivo y comparable.'],
+    ['Sample ratio mismatch (SRM)','Error donde la distribución real de usuarios entre Control y Tratamiento es diferente a la distribución esperada. Indica un problema técnico en la aleatorización. Si ocurre, los resultados son inválidos.'],
+    ['Significancia estadística','Un resultado es estadísticamente significativo cuando el p-value es menor al umbral definido (generalmente 0.05). Significa que el efecto observado probablemente no es producto del azar.'],
+    ['Tamaño de muestra','El número mínimo de usuarios por variante necesarios para que el experimento tenga suficiente poder estadístico para detectar el MDE definido.'],
+    ['Tratamiento','El grupo de usuarios que ve la versión modificada (el cambio que se está probando). También llamado variante o variación.'],
+    ['Unidad de aleatorización','El nivel al que se asignan los usuarios a Control o Tratamiento. Casi siempre es el usuario. En algunos casos puede ser la sesión o el dispositivo.'],
+  ];
+
+  return rH(id,'glosario','Glosario','Todos los términos que vas a necesitar para no perderte','var(--muted)') +
+  rNote('Este glosario está ordenado alfabéticamente. Si escuchás un término en una reunión de análisis de experimentos y no sabés qué significa, buscalo acá.') +
+  `<div style="margin-bottom:16px">` +
+  terms.map(([t,d]) => `<div style="border-bottom:1px solid var(--border);padding:10px 0;display:grid;grid-template-columns:200px 1fr;gap:16px">
+    <div style="font-family:var(--mono);font-size:11px;font-weight:600;color:#f59e0b">${t}</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.65">${d}</div>
+  </div>`).join('') +
+  `</div>` +
+  rClose();
+}
+
 </script>
 </body>
 </html>
