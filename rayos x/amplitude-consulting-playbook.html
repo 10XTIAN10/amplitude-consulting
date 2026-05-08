@@ -399,176 +399,35 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
   </div>
 </div>
 
-<!-- ══ CLAUDE SKILLS SECTION ══ -->
+<!-- ══ CLAUDE SKILLS LANDING ══ -->
 <div style="max-width:1060px;margin:0 auto;padding:0 40px 56px">
-
   <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)">
-    <div>
-      <div style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">// Claude Skills</div>
-    </div>
-    <div style="font-family:var(--mono);font-size:9px;color:var(--muted2)">skills para replicar en otras cuentas →</div>
+    <div style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">// Claude Skills</div>
+    <div style="font-family:var(--mono);font-size:9px;color:var(--muted2)">click para ver el detalle →</div>
   </div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border)">
 
-  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:4px;padding:14px 18px;margin-bottom:16px">
-    <div style="font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.8">
-      <span style="color:#f59e0b;font-weight:600">¿Qué son las Claude Skills?</span>
-      &nbsp;Son archivos <code style="background:var(--surface2);border:1px solid var(--border2);padding:1px 5px;border-radius:2px;font-size:10px;color:#3d8bff">SKILL.md</code> que le enseñan a Claude cómo ejecutar una tarea específica de forma consistente y reproducible.
-      Una vez instalada, la skill se activa con frases naturales y Claude sigue el flujo definido sin necesidad de prompts largos.
-      Podés replicar estas skills en cualquier cuenta de Claude Pro o Team copiando el archivo en la carpeta de skills de tu instalación de Claude Desktop.
-    </div>
-  </div>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
-
-    <!-- SKILL 1: amplitude-demo-generator -->
-    <div style="background:var(--surface);padding:0">
-      <div style="background:var(--surface2);border-bottom:1px solid var(--border2);padding:16px 20px;display:flex;align-items:center;gap:12px">
-        <div style="font-size:22px">🌐</div>
-        <div>
-          <div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#3d8bff;margin-bottom:2px">Skill 01</div>
-          <div style="font-family:var(--sans);font-size:15px;font-weight:600;color:var(--text)">/amplitude-demo-generator</div>
-        </div>
-      </div>
-      <div style="padding:18px 20px">
-        <div style="font-size:12px;color:var(--muted);line-height:1.75;margin-bottom:14px;font-weight:300">
-          Genera una web demo funcional con Amplitude Analytics completamente integrado, adaptada visualmente a cualquier industria y marca de referencia. Produce un único archivo <code style="background:var(--surface2);border:1px solid var(--border2);padding:1px 5px;border-radius:2px;font-size:10px;color:#3d8bff">index.html</code> listo para abrir en el browser o publicar en GitHub Pages.
-        </div>
-
-        <div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px">Qué genera</div>
-        <div style="margin-bottom:14px">
-          ${['SPA visualmente convincente basada en una marca de referencia (ej: Rappi → "QuickMart")',
-             'SDK de Amplitude integrado con Analytics, Session Replay y Web Experimentation',
-             'Eventos trackeados: Page Viewed, Signup Completed, Checkout Started, y más por industria',
-             'Identificación de usuario en Amplitude al completar el registro',
-             'Badge flotante de estado (verde = activo, rojo = offline)',
-             'Deploy automático a GitHub Pages si el usuario lo solicita'].map(t =>
-            '<div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--muted)">' +
-            '<span style="color:#3d8bff;flex-shrink:0">›</span>' + t + '</div>'
-          ).join('')}
-        </div>
-
-        <div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px">Frases que la activan</div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px">
-          ${['"demo de amplitude"', '"web demo para cliente"', '"demo para industria fintech"',
-             '"sitio de prueba para amplitude"', '"web dummy con tracking"',
-             '"session replay demo"', '"demo para [industria] con analytics"'].map(f =>
-            '<span style="font-family:var(--mono);font-size:10px;background:var(--surface2);border:1px solid var(--border2);padding:2px 8px;border-radius:2px;color:#3d8bff">' + f + '</span>'
-          ).join('')}
-        </div>
-
-        <div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px">Flujo de ejecución</div>
-        <div style="margin-bottom:14px">
-          ${[
-            ['1','Preguntas de configuración','Industria, marca de referencia, flujos a profundizar (signup, checkout, onboarding), API Key de Amplitude, Session Replay y Web Experimentation'],
-            ['2','Selección de carpeta','Claude te pide dónde guardar el proyecto via Cowork'],
-            ['3','Generación del HTML','Crea el index.html completo con SDK integrado, todos los eventos y diseño adaptado a la industria'],
-            ['4','Cierre y deploy','Lista los eventos implementados y pregunta si querés publicar en GitHub Pages para usar el Visual Editor de Web Experimentation'],
-          ].map(([n,t,d]) =>
-            '<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">' +
-            '<div style="width:20px;height:20px;background:#3d8bff;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;flex-shrink:0;margin-top:1px">' + n + '</div>' +
-            '<div><div style="font-size:11.5px;font-weight:600;color:var(--text);margin-bottom:2px">' + t + '</div>' +
-            '<div style="font-size:11px;color:var(--muted)">' + d + '</div></div></div>'
-          ).join('')}
-        </div>
-
-        <div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px">Cómo instalar la skill</div>
-        <div style="background:var(--surface2);border:1px solid var(--border2);border-left:2px solid #3d8bff;border-radius:2px;padding:10px 12px;font-family:var(--mono);font-size:10.5px;color:#d4d4d4;line-height:1.9">
-1. Abrí Claude Desktop → Settings → Skills<br>
-2. Creá una carpeta llamada <span style="color:#3d8bff">amplitude-demo-generator</span><br>
-3. Pegá el contenido del SKILL.md en esa carpeta<br>
-4. Reiniciá Claude Desktop<br>
-5. Probá con: <span style="color:#f59e0b">"generá una demo de amplitude para fintech"</span>
-        </div>
-      </div>
+    <div class="prompt-card" style="--card-color:#3d8bff;--card-colorbg:#040d1a" onclick="openSkill('demo')">
+      <div class="card-num">01 <span class="card-tag" style="background:#040d1a;color:#3d8bff">Claude Desktop</span></div>
+      <div class="card-icon">🌐</div>
+      <div class="card-title">/amplitude-demo-generator</div>
+      <div class="card-desc">Genera una web demo funcional con Amplitude Analytics integrado, adaptada a cualquier industria y marca de referencia. Produce un index.html listo para abrir o publicar en GitHub Pages con SDK, eventos y Session Replay configurados.</div>
+      <div class="card-pills"><span class="card-pill">SPA funcional</span><span class="card-pill">SDK integrado</span><span class="card-pill">GitHub Pages</span></div>
+      <div class="card-arrow">↗</div>
     </div>
 
-    <!-- SKILL 2: amplitude-data-seeder -->
-    <div style="background:var(--surface);padding:0">
-      <div style="background:var(--surface2);border-bottom:1px solid var(--border2);padding:16px 20px;display:flex;align-items:center;gap:12px">
-        <div style="font-size:22px">🌱</div>
-        <div>
-          <div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#00c853;margin-bottom:2px">Skill 02</div>
-          <div style="font-family:var(--sans);font-size:15px;font-weight:600;color:var(--text)">/amplitude-data-seeder</div>
-        </div>
-      </div>
-      <div style="padding:18px 20px">
-        <div style="font-size:12px;color:var(--muted);line-height:1.75;margin-bottom:14px;font-weight:300">
-          Lee el tracking plan del proyecto de Amplitude vía MCP, genera eventos sintéticos con funnels realistas y los carga directamente al proyecto vía Batch API. Ideal para poblar proyectos demo, sandbox o de desarrollo con datos creíbles antes de una presentación.
-        </div>
-
-        <div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px">Qué genera</div>
-        <div style="margin-bottom:14px">
-          ${['Lectura automática del tracking plan del proyecto vía MCP',
-             'Eventos dummy con funnels realistas basados en los eventos reales del proyecto',
-             'Carga directa vía Amplitude Batch API (sin archivos intermedios)',
-             'Script Python descargable para repetir el seeding cuando se necesite',
-             'Configuración de usuarios sintéticos con user properties coherentes',
-             'Respeta la taxonomía existente del proyecto (nombres de eventos y propiedades)'].map(t =>
-            '<div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--muted)">' +
-            '<span style="color:#00c853;flex-shrink:0">›</span>' + t + '</div>'
-          ).join('')}
-        </div>
-
-        <div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px">Frases que la activan</div>
-        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px">
-          ${['"generar datos demo"', '"seed eventos amplitude"', '"poblar proyecto amplitude"',
-             '"datos sintéticos amplitude"', '"amplitude data seeder"',
-             '"cargar eventos de prueba"', '"generar demo data"'].map(f =>
-            '<span style="font-family:var(--mono);font-size:10px;background:var(--surface2);border:1px solid var(--border2);padding:2px 8px;border-radius:2px;color:#00c853">' + f + '</span>'
-          ).join('')}
-        </div>
-
-        <div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px">Flujo de ejecución</div>
-        <div style="margin-bottom:14px">
-          ${[
-            ['1','Lectura del tracking plan','Claude lee los eventos y propiedades del proyecto vía MCP para entender la taxonomía real'],
-            ['2','Configuración del seed','Definís el App ID, cantidad de usuarios sintéticos, rango de fechas y densidad de eventos'],
-            ['3','Generación y carga','Claude genera los eventos con funnels realistas y los carga directo vía Amplitude Batch API'],
-            ['4','Script descargable','Entrega un script Python listo para repetir el proceso cuando lo necesites'],
-          ].map(([n,t,d]) =>
-            '<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">' +
-            '<div style="width:20px;height:20px;background:#00c853;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;flex-shrink:0;margin-top:1px">' + n + '</div>' +
-            '<div><div style="font-size:11.5px;font-weight:600;color:var(--text);margin-bottom:2px">' + t + '</div>' +
-            '<div style="font-size:11px;color:var(--muted)">' + d + '</div></div></div>'
-          ).join('')}
-        </div>
-
-        <div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px">Requisitos</div>
-        <div style="margin-bottom:14px">
-          ${[
-            'MCP de Amplitude conectado en Claude Desktop',
-            'API Key del proyecto y API Secret (para Batch API)',
-            'Claude Desktop con acceso a bash / Python para ejecutar el script',
-          ].map(t =>
-            '<div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--muted)">' +
-            '<span style="color:#f59e0b;flex-shrink:0">⚠</span>' + t + '</div>'
-          ).join('')}
-        </div>
-
-        <div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px">Cómo instalar la skill</div>
-        <div style="background:var(--surface2);border:1px solid var(--border2);border-left:2px solid #00c853;border-radius:2px;padding:10px 12px;font-family:var(--mono);font-size:10.5px;color:#d4d4d4;line-height:1.9">
-1. Abrí Claude Desktop → Settings → Skills<br>
-2. Creá una carpeta llamada <span style="color:#00c853">amplitude-data-seeder</span><br>
-3. Pegá el contenido del SKILL.md en esa carpeta<br>
-4. Asegurate de tener el MCP de Amplitude conectado<br>
-5. Probá con: <span style="color:#f59e0b">"seed eventos amplitude en el proyecto 123456"</span>
-        </div>
-      </div>
+    <div class="prompt-card" style="--card-color:#00c853;--card-colorbg:#001a09" onclick="openSkill('seeder')">
+      <div class="card-num">02 <span class="card-tag" style="background:#001a09;color:#00c853">Claude Desktop</span></div>
+      <div class="card-icon">🌱</div>
+      <div class="card-title">/amplitude-data-seeder</div>
+      <div class="card-desc">Lee el tracking plan del proyecto vía MCP, genera eventos sintéticos con funnels realistas y los carga directamente vía Amplitude Batch API. Ideal para poblar proyectos demo o sandbox con datos creíbles antes de una presentación.</div>
+      <div class="card-pills"><span class="card-pill">MCP required</span><span class="card-pill">Batch API</span><span class="card-pill">Script Python</span></div>
+      <div class="card-arrow">↗</div>
     </div>
 
   </div>
-
-  <!-- Common note -->
-  <div style="background:var(--surface2);border:1px solid var(--border2);border-top:none;padding:12px 18px;display:flex;gap:14px;align-items:center">
-    <div style="font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);white-space:nowrap">Dónde conseguir los archivos</div>
-    <div style="font-family:var(--mono);font-size:10.5px;color:var(--muted)">
-      Los archivos SKILL.md están disponibles en el repositorio de este playbook:
-      <a href="https://github.com/10XTIAN10/amplitude-consulting" target="_blank" style="color:#3d8bff;text-decoration:none">github.com/10XTIAN10/amplitude-consulting ↗</a>
-      &nbsp;·&nbsp; Carpeta: <span style="color:var(--text)">/skills/</span>
-    </div>
-  </div>
-
 </div>
+
 
 <footer class="land-footer">
   <div class="footer-left">
@@ -3864,6 +3723,273 @@ function riceGlosario(id) {
   rClose();
 }
 
+
+// ════════════════════════════════════════
+// SKILLS DATA
+// ════════════════════════════════════════
+const SKILLS = {
+
+demo: {
+  id: 'demo',
+  num: '01',
+  title: '/amplitude-demo-generator',
+  subtitle: 'Web demo funcional con Amplitude integrado — lista en minutos',
+  desc: 'Genera una SPA completamente funcional con Amplitude Analytics, Session Replay y Web Experimentation integrados, adaptada visualmente a la industria y marca de referencia que elijas. Produce un único index.html listo para abrir en el browser o publicar en GitHub Pages.',
+  color: '#3d8bff',
+  tags: ['Claude Desktop', 'Cowork', 'GitHub Pages'],
+  triggers: ['"demo de amplitude"', '"web demo para cliente"', '"demo para industria fintech"', '"sitio de prueba para amplitude"', '"web dummy con tracking"', '"session replay demo"', '"demo para [industria] con analytics"', '"generar demo"'],
+  requires: ['Claude Desktop instalado', 'API Key de Amplitude (Browser SDK)', 'Cowork habilitado (para seleccionar carpeta de destino)', 'GitHub Personal Access Token (solo si querés publicar en GitHub Pages)'],
+  what: [
+    'SPA visualmente convincente basada en una marca de referencia real (ej: Rappi → "QuickMart")',
+    'SDK de Amplitude con Analytics, Session Replay y Web Experimentation integrados y funcionales',
+    'Eventos trackeados en todos los puntos de interacción: Page Viewed, Signup Completed, Checkout Started, y más según la industria',
+    'Flujos profundizados según lo que el usuario elija: Signup (3 pasos), Onboarding (3 pasos), Checkout, Carga de productos',
+    'Identificación de usuario en Amplitude al completar el registro (userId + user properties)',
+    'Badge flotante de estado de Amplitude (verde = activo, rojo = offline)',
+    'Deploy automático a GitHub Pages si el usuario lo solicita (sin que el usuario cree el repo manualmente)',
+  ],
+  steps: [
+    { n:'1', title:'Preguntas de configuración', color:'#3d8bff', body:'Claude hace preguntas en dos rondas. <strong>Ronda 1</strong>: industria a emular, marca de referencia (nombre o URL), flujos especiales a profundizar (signup, onboarding, checkout, carga de productos). <strong>Ronda 2</strong>: Amplitude API Key, Session Replay (sí/no), Web Experimentation (sí/no).' },
+    { n:'2', title:'Selección de carpeta', color:'#3d8bff', body:'Claude usa Cowork para que selecciones la carpeta donde se va a guardar el index.html. No necesitás crear nada manualmente.' },
+    { n:'3', title:'Generación del HTML', color:'#3d8bff', body:'Crea el index.html completo: SPA con múltiples vistas, SDK de Amplitude configurado, todos los eventos implementados, diseño adaptado a la industria y la marca elegida.' },
+    { n:'4', title:'Resumen y deploy', color:'#3d8bff', body:'Claude lista los eventos implementados, da instrucciones de Session Replay y Web Experimentation si los pediste, y pregunta si querés publicar en GitHub Pages para obtener una URL pública.' },
+    { n:'5', title:'GitHub Pages (opcional)', color:'#3d8bff', body:'Si decís que sí: Claude crea el repositorio vía API de GitHub, hace el commit y push, activa GitHub Pages y te entrega la URL pública lista. Solo necesitás el Personal Access Token.' },
+  ],
+  notes: [
+    { type:'warn', text:'La API Key del Browser SDK es pública por diseño — no es una vulnerabilidad al estar en un repo público. La clave privada es la API Secret Key (solo server-side).' },
+    { type:'info', text:'El Visual Editor de Web Experimentation NO funciona con file://. Necesitás publicar en GitHub Pages u otra URL https para usarlo.' },
+    { type:'info', text:'La skill genera siempre la integración combinada (CDN síncrono + experiment.js async) para garantizar que funcione tanto en local como publicado.' },
+  ],
+  install: `1. Abrí Claude Desktop → Settings → Skills
+2. Creá una carpeta: amplitude-demo-generator/
+3. Dentro, creá el archivo SKILL.md con el contenido de la skill
+4. Reiniciá Claude Desktop
+5. Probá con: "generá una demo de amplitude para una fintech"
+
+El archivo SKILL.md está disponible en:
+github.com/10XTIAN10/amplitude-consulting → /skills/amplitude-demo-generator/SKILL.md`,
+},
+
+seeder: {
+  id: 'seeder',
+  num: '02',
+  title: '/amplitude-data-seeder',
+  subtitle: 'Datos sintéticos realistas en tu proyecto Amplitude — vía MCP y Batch API',
+  desc: 'Lee el tracking plan del proyecto vía MCP para entender la taxonomía real, genera eventos sintéticos con funnels creíbles y los carga directamente en Amplitude vía Batch API. También produce un script Python descargable para repetir el proceso cuando lo necesites.',
+  color: '#00c853',
+  tags: ['Claude Desktop', 'MCP Amplitude', 'Batch API', 'Python'],
+  triggers: ['"generar datos demo"', '"seed eventos amplitude"', '"poblar proyecto amplitude"', '"datos sintéticos amplitude"', '"amplitude data seeder"', '"cargar eventos de prueba"', '"generar demo data"'],
+  requires: ['Claude Desktop instalado', 'MCP de Amplitude conectado y autenticado', 'API Key + API Secret del proyecto (para Batch API)', 'Python 3 disponible en el sistema (para ejecutar el script)'],
+  what: [
+    'Lectura automática del tracking plan del proyecto vía MCP (eventos, propiedades, taxonomía real)',
+    'Generación de eventos sintéticos con funnels realistas que respetan la secuencia lógica del producto',
+    'Usuarios sintéticos con user properties coherentes (plan, country, signup_date, etc.)',
+    'Carga directa en Amplitude vía Batch API — sin archivos intermedios, sin pasos manuales',
+    'Script Python descargable para repetir el seeding con los mismos parámetros cuando lo necesites',
+    'Respeta la taxonomía del proyecto: usa los nombres exactos de eventos y propiedades existentes',
+  ],
+  steps: [
+    { n:'1', title:'Lectura del tracking plan', color:'#00c853', body:'Claude usa el MCP de Amplitude para leer los eventos y propiedades del proyecto. Entiende la taxonomía real antes de generar nada.' },
+    { n:'2', title:'Configuración del seed', color:'#00c853', body:'Definís los parámetros: App ID del proyecto, cantidad de usuarios sintéticos a generar, rango de fechas, densidad de eventos (cuántos por usuario), y si querés enfatizar algún funnel en particular.' },
+    { n:'3', title:'Generación de datos', color:'#00c853', body:'Claude genera los eventos con funnels realistas. No son eventos aleatorios — siguen la lógica del producto (ej: no puede haber Purchase Completed sin que antes haya habido Add to Cart).' },
+    { n:'4', title:'Carga vía Batch API', color:'#00c853', body:'Sube los eventos directamente a Amplitude usando la Batch API con tu API Secret. Los datos aparecen en el proyecto en minutos.' },
+    { n:'5', title:'Script Python descargable', color:'#00c853', body:'Entrega un script .py con todos los parámetros preconfigurados para que puedas repetir el proceso sin necesitar a Claude.' },
+  ],
+  notes: [
+    { type:'warn', text:'Requiere el MCP de Amplitude conectado en Claude Desktop. Sin el MCP, Claude no puede leer el tracking plan del proyecto.' },
+    { type:'warn', text:'El API Secret es una credencial privada — no la compartas ni la subas a repositorios públicos.' },
+    { type:'info', text:'Los datos generados son sintéticos y no representan usuarios reales. Usá esta skill solo en proyectos de desarrollo, sandbox o demo.' },
+  ],
+  install: `1. Abrí Claude Desktop → Settings → Skills
+2. Creá una carpeta: amplitude-data-seeder/
+3. Dentro, creá el archivo SKILL.md con el contenido de la skill
+4. Asegurate de tener el MCP de Amplitude conectado y autenticado
+5. Probá con: "seed eventos amplitude en el proyecto [APP_ID]"
+
+El archivo SKILL.md está disponible en:
+github.com/10XTIAN10/amplitude-consulting → /skills/amplitude-data-seeder/SKILL.md`,
+},
+
+};
+
+// ════════════════════════════════════════
+// SKILL NAVIGATION
+// ════════════════════════════════════════
+function openSkill(id) {
+  const s = SKILLS[id];
+  if (!s) return;
+
+  document.getElementById('skill-breadcrumb-name').textContent = s.title;
+
+  document.getElementById('skill-hero').innerHTML = `
+    <div class="detail-num">${s.num} / 02 — Claude Skill</div>
+    <div class="detail-title" style="color:${s.color}">${s.title}</div>
+    <div class="detail-desc">${s.subtitle}</div>
+    <div class="detail-tags">
+      ${s.tags.map(t => `<span class="dtag" style="background:${s.color}18;color:${s.color};border-color:${s.color}44">${t}</span>`).join('')}
+    </div>
+  `;
+
+  const sbItems = [
+    {key:'overview',  label:'Vista general'},
+    {key:'que',       label:'Qué genera'},
+    {key:'triggers',  label:'Cómo activarla'},
+    {key:'pasos',     label:'Flujo paso a paso'},
+    {key:'requiere',  label:'Requisitos'},
+    {key:'notas',     label:'Notas técnicas'},
+    {key:'instalar',  label:'Cómo instalarla'},
+  ];
+
+  document.getElementById('skill-sidebar').innerHTML =
+    '<div class="dsb-label">Secciones</div>' +
+    sbItems.map((item, i) =>
+      `<div class="dsb-item${i===0?' active':''}" id="skb-${id}-${item.key}" onclick="showSkillSec('${id}','${item.key}')">${item.label}</div>`
+    ).join('');
+
+  document.getElementById('skill-sections').innerHTML =
+    skillOverview(s) + skillQue(s) + skillTriggers(s) +
+    skillPasos(s) + skillRequiere(s) + skillNotas(s) + skillInstalar(s);
+
+  document.getElementById('skill-sections').querySelector('.dsec').classList.add('active');
+
+  document.getElementById('landing').classList.remove('active');
+  document.getElementById('skill-page').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function goBackSkill() {
+  document.getElementById('skill-page').classList.remove('active');
+  document.getElementById('landing').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showSkillSec(id, key) {
+  document.querySelectorAll(`#skill-sections .dsec`).forEach(s => s.classList.remove('active'));
+  const target = document.getElementById(`sk-${id}-${key}`);
+  if (target) target.classList.add('active');
+  document.querySelectorAll('#skill-sidebar .dsb-item').forEach(i => i.classList.remove('active'));
+  const sbItem = document.getElementById(`skb-${id}-${key}`);
+  if (sbItem) sbItem.classList.add('active');
+}
+
+// ════════════════════════════════════════
+// SKILL SECTION BUILDERS
+// ════════════════════════════════════════
+function skillSec(id, key, title, tag, tagColor, body) {
+  return `<div id="sk-${id}-${key}" class="dsec">
+    <div class="dsec-header">
+      <h2>${title}</h2>
+      <span class="dsec-tag" style="color:${tagColor};border-color:${tagColor}44">${tag}</span>
+    </div>
+    ${body}
+  </div>`;
+}
+
+function skillOverview(s) {
+  const cards = [
+    {n: s.what.length, l:'Entregables', d:'Outputs que genera la skill', c: s.color},
+    {n: s.steps.length, l:'Pasos', d:'Flujo de ejecución', c: s.color},
+    {n: s.triggers.length, l:'Activadores', d:'Frases que la disparan', c:'#3d8bff'},
+    {n: s.requires.length, l:'Requisitos', d:'Lo que necesitás antes de usarla', c:'#f59e0b'},
+  ];
+  return skillSec(s.id, 'overview', 'Vista general', 'Skill', s.color,
+    `<div class="ov-grid" style="grid-template-columns:repeat(4,1fr)">
+      ${cards.map(c=>`<div class="ov-card">
+        <div class="ov-num" style="color:${c.c}">${c.n}</div>
+        <div class="ov-lbl">${c.l}</div>
+        <div class="ov-desc">${c.d}</div>
+      </div>`).join('')}
+    </div>
+    <div class="note">${s.desc}</div>
+    <div class="note info" style="border-left-color:#f59e0b;background:#1a1000">
+      <strong style="color:#f59e0b">¿Cómo funciona una Claude Skill?</strong><br>
+      Es un archivo SKILL.md que le enseña a Claude cómo ejecutar una tarea específica. Una vez instalado en Claude Desktop, se activa automáticamente cuando usás alguna de las frases clave. No necesitás escribir prompts largos — Claude reconoce la intención y sigue el flujo definido.
+    </div>`
+  );
+}
+
+function skillQue(s) {
+  return skillSec(s.id, 'que', 'Qué genera', 'Output', s.color,
+    `<div class="note">Todo lo que esta skill produce cuando la activás.</div>
+    ${s.what.map(w => `<div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--muted)">
+      <span style="color:${s.color};font-size:14px;flex-shrink:0;line-height:1.4">›</span>
+      <span>${w}</span>
+    </div>`).join('')}`
+  );
+}
+
+function skillTriggers(s) {
+  return skillSec(s.id, 'triggers', 'Cómo activarla', 'Frases clave', s.color,
+    `<div class="note">Escribí cualquiera de estas frases en Claude Desktop y la skill se activa automáticamente.</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+      ${s.triggers.map(t => `<span style="font-family:var(--mono);font-size:11px;background:var(--surface2);border:1px solid var(--border2);border-left:2px solid ${s.color};padding:6px 12px;border-radius:2px;color:${s.color}">${t}</span>`).join('')}
+    </div>
+    <div class="note info" style="border-left-color:${s.color};background:${s.color}0a">
+      También podés combinar con contexto específico, por ejemplo:<br>
+      <span style="font-family:var(--mono);font-size:11px;color:${s.color}">"${s.triggers[0].replace(/"/g,'')} para una empresa de salud similar a [marca]"</span>
+    </div>`
+  );
+}
+
+function skillPasos(s) {
+  return skillSec(s.id, 'pasos', 'Flujo paso a paso', `${s.steps.length} pasos`, s.color,
+    `<div class="note">Así ejecuta Claude esta skill de principio a fin.</div>
+    ${s.steps.map(step => `<div style="display:flex;gap:14px;padding:16px;background:var(--surface);border:1px solid var(--border2);border-left:3px solid ${step.color};margin-bottom:1px">
+      <div style="width:28px;height:28px;background:${step.color};color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">${step.n}</div>
+      <div>
+        <div style="font-family:var(--sans);font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px">${step.title}</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.65">${step.body}</div>
+      </div>
+    </div>`).join('')}`
+  );
+}
+
+function skillRequiere(s) {
+  return skillSec(s.id, 'requiere', 'Requisitos', 'Antes de usar', '#f59e0b',
+    `<div class="note warn">Verificá que tenés todo esto antes de activar la skill.</div>
+    ${s.requires.map(r => `<div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--muted)">
+      <span style="color:#f59e0b;flex-shrink:0">⚠</span>
+      <span>${r}</span>
+    </div>`).join('')}`
+  );
+}
+
+function skillNotas(s) {
+  return skillSec(s.id, 'notas', 'Notas técnicas', 'Producción', s.color,
+    s.notes.map(n => `<div class="note${n.type==='warn'?' warn':' info'}" style="${n.type==='warn'?'border-left-color:var(--accent);background:#140a04':'border-left-color:'+s.color+';background:'+s.color+'0a'}">${n.text}</div>`).join('')
+  );
+}
+
+function skillInstalar(s) {
+  return skillSec(s.id, 'instalar', 'Cómo instalarla', 'Setup', s.color,
+    `<div class="note">Seguí estos pasos para tener la skill activa en tu Claude Desktop.</div>
+    <div style="background:#0d0d0d;border:1px solid var(--border2);border-left:3px solid ${s.color};border-radius:3px;padding:16px 18px;font-family:var(--mono);font-size:12px;color:#d4d4d4;line-height:2;white-space:pre-wrap;margin-bottom:16px">${s.install}</div>
+    <div class="note info" style="border-left-color:${s.color};background:${s.color}0a">
+      Los archivos SKILL.md de ambas skills están disponibles en el repositorio del playbook:
+      <a href="https://github.com/10XTIAN10/amplitude-consulting" target="_blank" style="color:${s.color};text-decoration:none">github.com/10XTIAN10/amplitude-consulting ↗</a>
+    </div>`
+  );
+}
+
 </script>
+
+<!-- ══ SKILL DETAIL PAGE ══ -->
+<div id="skill-page" class="page">
+  <nav class="detail-nav">
+    <button class="back-btn" onclick="goBackSkill()">← Volver</button>
+    <div class="detail-crumb">
+      <span>Claude Skills</span><span class="sep">/</span>
+      <span class="cur" id="skill-breadcrumb-name"></span>
+    </div>
+  </nav>
+  <div class="detail-layout">
+    <aside class="detail-sidebar" id="skill-sidebar"></aside>
+    <div class="detail-content">
+      <div class="detail-hero" id="skill-hero"></div>
+      <div id="skill-sections"></div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
