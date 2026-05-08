@@ -3,452 +3,578 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amplitude Consulting Playbook</title>
+<title>Amplitude Consulting Playbook — Cristian Vallon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Syne:wght@400;600;700;800&family=Syne+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0a0a;
-  --surface: #111111;
-  --surface2: #181818;
-  --border: #222222;
-  --border2: #2a2a2a;
-  --text: #e8e8e8;
-  --muted: #666;
-  --muted2: #444;
-  --green: #00e87a;
-  --green-dim: #00e87a22;
-  --orange: #ff6b1a;
-  --orange-dim: #ff6b1a18;
-  --blue: #3d8bff;
-  --blue-dim: #3d8bff18;
-  --yellow: #ffd24a;
-  --yellow-dim: #ffd24a18;
-  --red: #ff4444;
-  --mono: 'IBM Plex Mono', monospace;
-  --display: 'Syne', sans-serif;
+  --navy: #1B3A6B;
+  --navy-light: #2A5298;
+  --coral: #E8450A;
+  --coral-light: #F26B3A;
+  --cream: #FAFAF7;
+  --warm-white: #FFFFFF;
+  --slate: #4A5568;
+  --slate-light: #718096;
+  --border: #E2E8F0;
+  --border-strong: #CBD5E0;
+  --accent-bg: #EBF1FA;
+  --green: #1A7A45;
+  --green-bg: #E6F4ED;
+  --amber: #92610A;
+  --amber-bg: #FEF3CD;
+  --display: 'Playfair Display', Georgia, serif;
+  --body: 'DM Sans', system-ui, sans-serif;
+  --mono: 'DM Mono', 'Courier New', monospace;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--mono);
-  font-size: 13px;
-  line-height: 1.6;
-  min-height: 100vh;
-  overflow-x: hidden;
+  background: var(--cream);
+  color: #1A202C;
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.65;
 }
 
-/* ── SCROLLBAR ── */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
 
 /* ── PAGES ── */
 .page { display: none; min-height: 100vh; }
 .page.active { display: block; }
 
 /* ══════════════════════════════════════
-   LANDING PAGE
+   LANDING
 ══════════════════════════════════════ */
-.land-header {
+.land-nav {
+  background: var(--warm-white);
   border-bottom: 1px solid var(--border);
-  padding: 0 40px;
-}
-
-.land-topbar {
+  padding: 0 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
-.topbar-brand {
-  font-family: var(--display);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--green);
-}
-
-.topbar-meta {
-  font-size: 10px;
-  color: var(--muted);
-  display: flex;
-  gap: 24px;
-}
-
-.topbar-meta span::before { content: '// '; color: var(--muted2); }
-
-.land-hero {
-  padding: 60px 0 48px;
-  position: relative;
-}
-
-.land-hero::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -40px; right: -40px; bottom: 0;
-  background: radial-gradient(ellipse 60% 100% at 20% 50%, #00e87a08 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 16px;
+.nav-brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
-.hero-label::before {
-  content: '';
-  display: inline-block;
-  width: 24px; height: 1px;
-  background: var(--green);
+.nav-logo {
+  width: 32px; height: 32px;
+  background: var(--navy);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.nav-name {
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-link {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--slate-light);
+  text-decoration: none;
+  transition: color .15s;
+}
+.nav-link:hover { color: var(--navy); }
+
+.nav-badge {
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--accent-bg);
+  color: var(--navy);
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid #C3D5F0;
+}
+
+/* ── HERO ── */
+.land-hero {
+  padding: 64px 48px 48px;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 48px;
+  align-items: start;
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--coral);
+  margin-bottom: 12px;
 }
 
 .hero-title {
   font-family: var(--display);
-  font-size: 72px;
-  font-weight: 800;
-  line-height: .9;
-  letter-spacing: -.02em;
-  color: var(--text);
-  margin-bottom: 24px;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.08;
+  color: var(--navy);
+  margin-bottom: 16px;
+  letter-spacing: -.01em;
 }
 
-.hero-title .accent { color: var(--green); }
-
-.hero-desc {
-  font-size: 13px;
-  color: var(--muted);
-  max-width: 560px;
-  line-height: 1.8;
-  margin-bottom: 32px;
+.hero-subtitle {
+  font-size: 16px;
+  color: var(--slate);
+  line-height: 1.7;
+  margin-bottom: 28px;
+  max-width: 480px;
+  font-weight: 300;
 }
 
 .hero-stats {
   display: flex;
-  gap: 32px;
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.stat-num {
-  font-family: var(--display);
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1;
-}
-
-.stat-label {
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-
-/* ── GRID ── */
-.land-grid-header {
-  padding: 32px 40px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  gap: 28px;
+  padding-top: 20px;
   border-top: 1px solid var(--border);
 }
 
-.grid-title {
+.hero-stat-num {
+  font-family: var(--display);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+}
+
+.hero-stat-lbl {
+  font-size: 11px;
+  color: var(--slate-light);
+  margin-top: 2px;
+  letter-spacing: .04em;
+}
+
+/* Author card */
+.author-card {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(27,58,107,.06);
+}
+
+.author-label {
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: .2em;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--slate-light);
+  margin-bottom: 14px;
+}
+
+.author-name {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.author-role {
+  font-size: 12px;
+  color: var(--slate-light);
+  margin-bottom: 16px;
+  font-weight: 400;
+}
+
+.author-linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--navy-light);
+  text-decoration: none;
+  padding: 6px 12px;
+  background: var(--accent-bg);
+  border: 1px solid #C3D5F0;
+  border-radius: 6px;
+  transition: all .15s;
+}
+.author-linkedin:hover { background: var(--navy); color: white; border-color: var(--navy); }
+
+.author-tags {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.author-tag {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--slate);
+  background: var(--cream);
+  border: 1px solid var(--border);
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+
+/* ── PLAYBOOK GRID ── */
+.grid-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px 64px;
+}
+
+.grid-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.grid-title {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--navy);
 }
 
 .grid-hint {
-  font-size: 10px;
-  color: var(--muted2);
+  font-size: 12px;
+  color: var(--slate-light);
 }
 
 .prompt-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  background: var(--border);
-  margin: 0 40px 40px;
+  gap: 16px;
 }
 
 .prompt-card {
-  background: var(--surface);
-  padding: 28px 28px 24px;
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 24px 20px;
   cursor: pointer;
-  transition: background .15s;
-  position: relative;
-  overflow: hidden;
+  transition: all .2s;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
 
-.prompt-card::before {
+.prompt-card::after {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--card-color, var(--green));
+  height: 3px;
+  background: var(--card-color, var(--navy));
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform .2s;
+  transition: transform .22s ease;
 }
 
-.prompt-card:hover { background: var(--surface2); }
-.prompt-card:hover::before { transform: scaleX(1); }
+.prompt-card:hover {
+  border-color: var(--card-color, var(--navy));
+  box-shadow: 0 4px 20px rgba(27,58,107,.1);
+  transform: translateY(-2px);
+}
+.prompt-card:hover::after { transform: scaleX(1); }
 
 .card-num {
+  font-family: var(--mono);
   font-size: 10px;
-  color: var(--muted2);
-  letter-spacing: .1em;
-  margin-bottom: 16px;
+  color: var(--slate-light);
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .card-tag {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: .12em;
+  letter-spacing: .08em;
   text-transform: uppercase;
-  padding: 2px 8px;
-  border-radius: 2px;
-  background: var(--card-color-dim, var(--green-dim));
-  color: var(--card-color, var(--green));
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: var(--card-bg, var(--accent-bg));
+  color: var(--card-color, var(--navy));
 }
 
-.card-icon {
-  font-size: 28px;
-  margin-bottom: 12px;
-  line-height: 1;
-}
+.card-icon { font-size: 26px; margin-bottom: 10px; line-height: 1; }
 
 .card-title {
   font-family: var(--display);
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--navy);
   margin-bottom: 8px;
-  color: var(--text);
+  line-height: 1.25;
 }
 
 .card-desc {
-  font-size: 11.5px;
-  color: var(--muted);
-  line-height: 1.7;
+  font-size: 12.5px;
+  color: var(--slate);
+  line-height: 1.65;
   flex: 1;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  font-weight: 300;
 }
 
-.card-meta {
+.card-pills {
   display: flex;
-  gap: 12px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .card-pill {
-  font-size: 9px;
-  color: var(--muted);
-  border: 1px solid var(--border2);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--slate-light);
+  border: 1px solid var(--border);
   padding: 2px 8px;
-  border-radius: 2px;
-  letter-spacing: .08em;
+  border-radius: 4px;
 }
 
 .card-arrow {
   position: absolute;
-  bottom: 24px;
-  right: 24px;
-  font-size: 18px;
-  color: var(--muted2);
+  bottom: 20px;
+  right: 20px;
+  font-size: 16px;
+  color: var(--border-strong);
   transition: all .15s;
 }
+.prompt-card:hover .card-arrow { color: var(--card-color, var(--navy)); transform: translate(2px,-2px); }
 
-.prompt-card:hover .card-arrow {
-  color: var(--card-color, var(--green));
-  transform: translate(2px, -2px);
-}
-
-/* ── LAND FOOTER ── */
-.land-footer {
-  border-top: 1px solid var(--border);
-  padding: 16px 40px;
+.card-coming {
+  background: var(--cream);
+  border: 1px dashed var(--border-strong);
+  border-radius: 12px;
+  padding: 24px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  min-height: 180px;
 }
 
-.land-footer-l { font-size: 10px; color: var(--muted2); }
-.land-footer-r { font-size: 10px; color: var(--muted2); }
+.card-coming-text {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--border-strong);
+}
+
+/* ── FOOTER ── */
+.land-footer {
+  background: var(--navy);
+  padding: 28px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-name {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+}
+
+.footer-meta {
+  font-size: 11px;
+  color: rgba(255,255,255,.5);
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-link {
+  font-size: 11px;
+  color: rgba(255,255,255,.6);
+  text-decoration: none;
+  transition: color .15s;
+}
+.footer-link:hover { color: white; }
+
+.footer-divider { color: rgba(255,255,255,.2); font-size: 11px; }
 
 /* ══════════════════════════════════════
    DETAIL PAGE
 ══════════════════════════════════════ */
-.detail-topbar {
+.detail-nav {
+  background: var(--warm-white);
   border-bottom: 1px solid var(--border);
-  padding: 10px 32px;
+  padding: 0 32px;
   display: flex;
   align-items: center;
   gap: 16px;
-  background: var(--bg);
+  height: 52px;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 50;
 }
 
 .back-btn {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--slate);
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 10px;
-  border: 1px solid var(--border2);
-  border-radius: 2px;
-  transition: all .15s;
+  gap: 5px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
   background: none;
+  transition: all .15s;
 }
+.back-btn:hover { color: var(--navy); border-color: var(--navy); }
 
-.back-btn:hover { color: var(--text); border-color: var(--muted); }
-
-.detail-breadcrumb {
-  font-size: 10px;
-  color: var(--muted2);
+.detail-crumb {
+  font-size: 12px;
+  color: var(--slate-light);
   display: flex;
   align-items: center;
   gap: 8px;
 }
-
-.detail-breadcrumb .sep { color: var(--muted2); }
-.detail-breadcrumb .current { color: var(--text); }
+.detail-crumb .sep { color: var(--border-strong); }
+.detail-crumb .cur { color: var(--navy); font-weight: 500; }
 
 .detail-layout {
   display: grid;
-  grid-template-columns: 200px 1fr;
-  min-height: calc(100vh - 45px);
+  grid-template-columns: 210px 1fr;
+  min-height: calc(100vh - 52px);
 }
 
-/* Detail sidebar */
+/* Sidebar */
 .detail-sidebar {
+  background: var(--warm-white);
   border-right: 1px solid var(--border);
   padding: 24px 0;
   position: sticky;
-  top: 45px;
-  height: calc(100vh - 45px);
+  top: 52px;
+  height: calc(100vh - 52px);
   overflow-y: auto;
-  background: var(--surface);
 }
 
-.dsb-section {
-  font-size: 9px;
+.dsb-label {
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: .16em;
+  letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--muted2);
-  padding: 12px 20px 4px;
+  color: var(--slate-light);
+  padding: 0 20px 8px;
+  margin-bottom: 4px;
 }
 
 .dsb-item {
-  font-size: 10.5px;
-  padding: 7px 20px;
-  color: var(--muted);
+  font-size: 12.5px;
+  padding: 8px 20px;
+  color: var(--slate);
   cursor: pointer;
   border-left: 2px solid transparent;
   transition: all .12s;
+  font-weight: 400;
 }
+.dsb-item:hover { color: var(--navy); background: var(--accent-bg); }
+.dsb-item.active { color: var(--navy); border-left-color: var(--coral); background: #FEF1EC; font-weight: 500; }
 
-.dsb-item:hover { color: var(--text); background: var(--surface2); }
-.dsb-item.active { color: var(--green); border-left-color: var(--green); background: var(--green-dim); }
-
-/* Detail content */
+/* Content */
 .detail-content {
-  padding: 32px 40px;
-  max-width: 840px;
+  padding: 36px 48px;
+  max-width: 820px;
+  background: var(--cream);
 }
 
-/* Detail header */
+.section { display: none; }
+.section.active { display: block; animation: fadeUp .18s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Detail hero */
 .detail-hero {
   border-bottom: 1px solid var(--border);
   padding-bottom: 24px;
   margin-bottom: 28px;
-  position: relative;
 }
 
-.detail-hero-num {
-  font-size: 10px;
-  color: var(--muted2);
-  letter-spacing: .1em;
-  margin-bottom: 8px;
+.detail-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--slate-light);
+  margin-bottom: 6px;
 }
 
-.detail-hero-title {
+.detail-title {
   font-family: var(--display);
-  font-size: 40px;
-  font-weight: 800;
-  line-height: 1;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.1;
   margin-bottom: 10px;
-  letter-spacing: -.01em;
 }
 
-.detail-hero-desc {
-  font-size: 12.5px;
-  color: var(--muted);
-  line-height: 1.8;
+.detail-desc {
+  font-size: 13px;
+  color: var(--slate);
+  line-height: 1.75;
   max-width: 560px;
-  margin-bottom: 16px;
+  font-weight: 300;
+  margin-bottom: 14px;
 }
 
-.detail-tags {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+.detail-tags { display: flex; gap: 8px; flex-wrap: wrap; }
 
 .dtag {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: .1em;
+  letter-spacing: .08em;
   text-transform: uppercase;
   padding: 3px 10px;
-  border-radius: 2px;
+  border-radius: 4px;
+  border: 1px solid;
 }
 
-/* ── SECTION BLOCKS ── */
-.dsec { display: none; }
-.dsec.active { display: block; animation: fadeUp .2s ease; }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
+/* Section headers */
 .dsec-header {
   display: flex;
   align-items: center;
@@ -461,162 +587,149 @@ body {
 .dsec-header h2 {
   font-family: var(--display);
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
+  color: var(--navy);
 }
 
 .dsec-tag {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: .1em;
+  letter-spacing: .08em;
   text-transform: uppercase;
-  padding: 2px 8px;
-  border-radius: 2px;
-  background: var(--surface2);
-  color: var(--muted);
-  border: 1px solid var(--border2);
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: var(--accent-bg);
+  color: var(--navy);
+  border: 1px solid #C3D5F0;
 }
 
-/* ── PROMPT BLOCK ── */
+/* Prompt block */
 .prompt-wrap { margin-bottom: 20px; }
 
 .prompt-topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  border-bottom: none;
-  padding: 8px 14px;
+  background: var(--navy);
+  border-radius: 8px 8px 0 0;
+  padding: 9px 16px;
 }
 
 .prompt-toplabel {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: .14em;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .1em;
   text-transform: uppercase;
-  color: var(--green);
+  color: rgba(255,255,255,.7);
   display: flex;
   align-items: center;
   gap: 6px;
 }
+.prompt-toplabel::before { content: '▶'; font-size: 8px; color: var(--coral); }
 
-.prompt-toplabel::before {
-  content: '▶';
-  font-size: 7px;
-}
-
-.prompt-lines {
-  font-size: 9px;
-  color: var(--muted2);
-}
+.prompt-lines { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,.35); }
 
 .prompt-body {
-  background: #0d0d0d;
-  border: 1px solid var(--border2);
-  border-bottom: none;
+  background: #F8F9FC;
+  border: 1px solid var(--border);
+  border-top: none;
   padding: 20px 24px;
+  font-family: var(--mono);
   font-size: 12px;
   line-height: 1.85;
-  color: #d4d4d4;
+  color: #2D3748;
   white-space: pre-wrap;
   word-break: break-word;
-  max-height: 580px;
+  max-height: 560px;
   overflow-y: auto;
-  counter-reset: line;
 }
 
 .prompt-footer {
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  padding: 8px 14px;
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 9px 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.prompt-hint { font-size: 9px; color: var(--muted2); }
+.prompt-hint { font-family: var(--mono); font-size: 10px; color: var(--slate-light); }
 
 .copy-btn {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  background: var(--green);
-  color: #000;
+  letter-spacing: .06em;
+  background: var(--navy);
+  color: white;
   border: none;
-  padding: 6px 16px;
+  padding: 7px 18px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all .15s;
-  border-radius: 2px;
+  transition: background .15s;
+  font-family: var(--body);
 }
+.copy-btn:hover { background: var(--coral); }
+.copy-btn.copied { background: var(--green); }
 
-.copy-btn:hover { background: #00ff88; }
-.copy-btn.copied { background: var(--muted2); color: var(--muted); }
-
-/* ── NOTEBOOK TABLE ── */
+/* Tables */
 .nb-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 24px;
-  font-size: 11.5px;
+  margin-bottom: 20px;
+  font-size: 12.5px;
+  background: var(--warm-white);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
 }
 
 .nb-table th {
-  background: var(--surface2);
-  color: var(--muted);
-  font-size: 9px;
+  background: var(--navy);
+  color: rgba(255,255,255,.85);
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: .12em;
+  letter-spacing: .1em;
   text-transform: uppercase;
-  padding: 8px 12px;
+  padding: 10px 14px;
   text-align: left;
-  border: 1px solid var(--border2);
 }
 
 .nb-table td {
-  padding: 9px 12px;
-  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
   vertical-align: top;
 }
 
-.nb-table tr:hover td { background: var(--surface2); }
+.nb-table tr:last-child td { border-bottom: none; }
+.nb-table tr:hover td { background: var(--accent-bg); }
 
-.nb-table td:first-child {
-  color: var(--muted2);
-  font-size: 10px;
-  white-space: nowrap;
-  width: 40px;
-}
+.nb-table td:first-child { font-family: var(--mono); font-size: 11px; color: var(--slate-light); width: 42px; }
+.nb-table td:nth-child(2) { font-family: var(--mono); font-size: 11px; color: var(--navy); font-weight: 500; }
 
-.nb-table td:nth-child(2) {
-  color: var(--green);
-  font-size: 10.5px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.nb-table td:nth-child(3) { color: var(--muted); font-size: 11px; }
-
-/* ── RULES ── */
+/* Rules */
 .rules-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--border);
+  gap: 12px;
   margin-bottom: 24px;
 }
 
 .rule-card {
-  background: var(--surface);
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
   padding: 16px 18px;
   position: relative;
 }
 
 .rule-n {
   font-family: var(--display);
-  font-size: 52px;
-  font-weight: 800;
-  color: var(--border2);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--accent-bg);
   position: absolute;
   top: 8px;
   right: 12px;
@@ -624,206 +737,289 @@ body {
 }
 
 .rule-title {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: .14em;
+  letter-spacing: .1em;
   text-transform: uppercase;
-  color: var(--orange);
-  margin-bottom: 8px;
+  color: var(--coral);
+  margin-bottom: 7px;
 }
 
 .rule-body {
-  font-size: 11.5px;
-  color: var(--muted);
-  line-height: 1.7;
+  font-size: 12px;
+  color: var(--slate);
+  line-height: 1.65;
   position: relative;
   z-index: 1;
 }
 
 .rule-body code {
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  padding: 1px 6px;
-  font-size: 10px;
-  color: var(--green);
+  font-family: var(--mono);
+  font-size: 11px;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--navy);
 }
 
-/* ── VARIABLES ── */
-.var-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
+/* Var table */
+.var-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
 .var-table tr { border-bottom: 1px solid var(--border); }
-.var-table tr:hover td { background: var(--surface2); }
-.var-table td { padding: 9px 12px; font-size: 11.5px; }
-.var-table td:first-child { color: var(--blue); width: 220px; font-size: 10.5px; }
-.var-table td:last-child { color: var(--muted); }
+.var-table tr:hover td { background: var(--accent-bg); }
+.var-table td { padding: 10px 12px; font-size: 12.5px; }
+.var-table td:first-child { font-family: var(--mono); font-size: 11px; color: var(--navy); width: 220px; font-weight: 500; }
+.var-table td:last-child { color: var(--slate); }
 
-/* ── CHECKLIST ── */
+/* Checklist */
 .checklist { list-style: none; margin-bottom: 20px; }
-.checklist li {
-  display: flex;
-  gap: 12px;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 12px;
-  align-items: flex-start;
-}
+.checklist li { display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13px; align-items: flex-start; }
 .checklist li:last-child { border-bottom: none; }
-.ch-box {
-  width: 14px; height: 14px;
-  border: 1px solid var(--border2);
-  flex-shrink: 0;
-  margin-top: 2px;
+.ch-box { width: 15px; height: 15px; border: 1.5px solid var(--border-strong); border-radius: 3px; flex-shrink: 0; margin-top: 2px; }
+.ch-lbl { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--slate-light); min-width: 100px; margin-top: 1px; font-family: var(--mono); }
+.ch-desc { color: var(--slate); line-height: 1.6; font-weight: 300; }
+
+/* Phases */
+.phases { display: grid; gap: 1px; background: var(--border); margin-bottom: 20px; border-radius: 8px; overflow: hidden; }
+.phase { background: var(--warm-white); padding: 16px 18px; }
+.phase-head { font-family: var(--display); font-size: 14px; font-weight: 600; color: var(--navy); border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 10px; }
+.phase-item { font-size: 12px; color: var(--slate); padding: 4px 0; border-bottom: 1px dashed var(--border); display: flex; gap: 7px; font-weight: 300; }
+.phase-item::before { content: '›'; color: var(--coral); flex-shrink: 0; font-weight: 600; }
+
+/* OV grid */
+.ov-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+.ov-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; }
+.ov-num { font-family: var(--display); font-size: 30px; font-weight: 700; line-height: 1; }
+.ov-lbl { font-size: 10px; color: var(--slate-light); letter-spacing: .08em; text-transform: uppercase; margin-top: 4px; font-family: var(--mono); }
+.ov-desc { font-size: 12px; color: var(--slate); margin-top: 6px; line-height: 1.55; font-weight: 300; }
+
+/* Note */
+.note {
+  font-size: 12.5px;
+  color: var(--slate);
+  line-height: 1.7;
+  padding: 12px 16px;
+  border-left: 3px solid var(--border-strong);
+  margin-bottom: 16px;
+  background: var(--warm-white);
+  border-radius: 0 6px 6px 0;
+  font-weight: 300;
 }
-.ch-lbl {
-  font-size: 9px;
+.note.coral { border-left-color: var(--coral); background: #FEF1EC; }
+.note.navy { border-left-color: var(--navy); background: var(--accent-bg); }
+
+/* Best practices subsection */
+.bp-section {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-top: 28px;
+  overflow: hidden;
+}
+
+.bp-header {
+  background: var(--accent-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bp-header-title {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.bp-header-tag {
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--muted2);
-  min-width: 90px;
-  margin-top: 1px;
+  background: var(--navy);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
 }
-.ch-desc { color: var(--muted); line-height: 1.6; }
 
-/* ── PHASES ── */
-.phases {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
-  margin-bottom: 20px;
-}
-.phase { background: var(--surface); padding: 16px; }
-.phase-head {
-  font-family: var(--display);
-  font-size: 13px;
-  font-weight: 700;
-  border-bottom: 1px solid var(--border2);
-  padding-bottom: 8px;
-  margin-bottom: 10px;
-  color: var(--text);
-}
-.phase-item {
+.bp-body { padding: 20px; }
+
+.bp-sub {
   font-size: 11px;
-  color: var(--muted);
-  padding: 4px 0;
-  border-bottom: 1px dashed var(--border);
-  display: flex;
-  gap: 6px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--slate-light);
+  margin-bottom: 10px;
+  margin-top: 18px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
 }
-.phase-item::before { content: '□'; color: var(--muted2); flex-shrink: 0; }
+.bp-sub:first-child { margin-top: 0; }
 
-/* ── OVERVIEW CARDS ── */
-.ov-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
-  margin-bottom: 24px;
-}
-.ov-card { background: var(--surface); padding: 16px 18px; }
-.ov-num {
-  font-family: var(--display);
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1;
-}
-.ov-lbl { font-size: 9px; color: var(--muted2); letter-spacing: .1em; text-transform: uppercase; margin-top: 4px; }
-.ov-desc { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+.bp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 6px; }
 
-/* ── NOTE ── */
-.note {
-  border-left: 2px solid var(--border2);
-  padding: 10px 14px;
+.bp-card {
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 12px 14px;
+}
+
+.bp-card-title { font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 5px; }
+.bp-card-desc { font-size: 11.5px; color: var(--slate); line-height: 1.6; font-weight: 300; }
+
+.bp-tree {
+  font-family: var(--mono);
   font-size: 11.5px;
-  color: var(--muted);
-  line-height: 1.7;
-  margin-bottom: 16px;
-  background: var(--surface);
+  background: #F1F5F9;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 14px 16px;
+  color: #2D3748;
+  line-height: 1.9;
+  margin-bottom: 10px;
+  white-space: pre;
 }
 
-.warn-note {
-  border-left: 2px solid var(--orange);
-  background: var(--orange-dim);
-  color: var(--muted);
+.bp-steps { list-style: none; }
+.bp-steps li {
+  display: flex;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12.5px;
+  align-items: flex-start;
+}
+.bp-steps li:last-child { border-bottom: none; }
+.step-num {
+  width: 22px; height: 22px;
+  background: var(--navy);
+  color: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+  flex-shrink: 0; margin-top: 1px;
+  font-family: var(--mono);
+}
+.step-body { color: var(--slate); line-height: 1.6; font-weight: 300; }
+.step-body strong { color: var(--navy); font-weight: 600; }
+
+.bp-prompt-block {
+  background: #F8F9FC;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: #2D3748;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  position: relative;
 }
 
-/* responsive */
+.bp-copy-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  font-size: 10px; font-weight: 600;
+  background: var(--navy); color: white;
+  border: none; padding: 4px 10px; border-radius: 4px;
+  cursor: pointer; transition: background .15s;
+  font-family: var(--body);
+}
+.bp-copy-btn:hover { background: var(--coral); }
+
+/* Responsive */
 @media (max-width: 768px) {
-  .prompt-grid { grid-template-columns: 1fr; margin: 0 20px 20px; }
+  .land-hero { grid-template-columns: 1fr; gap: 24px; padding: 32px 20px 24px; }
+  .grid-section { padding: 0 20px 40px; }
+  .prompt-grid { grid-template-columns: 1fr; }
+  .land-nav { padding: 0 20px; }
   .detail-layout { grid-template-columns: 1fr; }
   .detail-sidebar { display: none; }
-  .land-header, .land-grid-header, .land-footer { padding-left: 20px; padding-right: 20px; }
-  .hero-title { font-size: 40px; }
-  .rules-grid { grid-template-columns: 1fr; }
-  .phases { grid-template-columns: 1fr; }
-  .ov-grid { grid-template-columns: 1fr 1fr; }
   .detail-content { padding: 20px; }
+  .rules-grid { grid-template-columns: 1fr; }
+  .ov-grid { grid-template-columns: 1fr 1fr; }
+  .bp-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 36px; }
+  .land-footer { flex-direction: column; gap: 12px; text-align: center; padding: 20px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     LANDING PAGE
-══════════════════════════════════════ -->
+<!-- ══ LANDING ══ -->
 <div id="landing" class="page active">
 
-  <div class="land-header">
-    <div class="land-topbar">
-      <div class="topbar-brand">Amplitude Consulting Playbook</div>
-      <div class="topbar-meta">
-        <span>7 prompts</span>
-        <span>Structured Execution Contract</span>
-        <span>v1.0</span>
+<nav class="land-nav">
+  <div class="nav-brand">
+    <div class="nav-logo">C</div>
+    <div class="nav-name">Cristian Vallon</div>
+  </div>
+  <div class="nav-right">
+    <a href="https://www.linkedin.com/in/cristian-vallon/" target="_blank" class="nav-link">LinkedIn ↗</a>
+    <span class="nav-badge">Amplitude Consulting Playbook</span>
+  </div>
+</nav>
+
+<div class="land-hero">
+  <div>
+    <div class="hero-eyebrow">Amplitude Consulting Playbook</div>
+    <div class="hero-title">Prompt library<br>para consultores<br>de Amplitude</div>
+    <div class="hero-subtitle">Prompts estructurados con Structured Execution Contract para ejecutar análisis, diagnósticos y estrategias de adopción directamente en Amplitude Chat.</div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num" style="color:var(--coral)">9</div>
+        <div class="hero-stat-lbl">Prompts</div>
       </div>
-    </div>
-    <div class="land-hero">
-      <div class="hero-label">Prompt Library</div>
-      <div class="hero-title">
-        AMPLITUDE<br><span class="accent">CONSULTING</span><br>PLAYBOOK
+      <div>
+        <div class="hero-stat-num" style="color:var(--navy)">SEC</div>
+        <div class="hero-stat-lbl">Metodología</div>
       </div>
-      <div class="hero-desc">
-        Biblioteca de prompts de consultoría para Amplitude. Cada prompt sigue un Structured Execution Contract: variables declaradas, checkpoint antes del notebook y verificación obligatoria del resultado.
+      <div>
+        <div class="hero-stat-num" style="color:var(--navy-light)">180d</div>
+        <div class="hero-stat-lbl">Ventana análisis</div>
       </div>
-      <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-num" style="color:var(--green)">7</div>
-          <div class="stat-label">Prompts</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num" style="color:var(--orange)">8</div>
-          <div class="stat-label">Reglas</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num" style="color:var(--blue)">180d</div>
-          <div class="stat-label">Ventana</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num" style="color:var(--yellow)">100%</div>
-          <div class="stat-label">Copy-paste ready</div>
-        </div>
+      <div>
+        <div class="hero-stat-num" style="color:var(--green)">100%</div>
+        <div class="hero-stat-lbl">Copy-paste ready</div>
       </div>
     </div>
   </div>
-
-  <div class="land-grid-header">
-    <div class="grid-title">// Seleccioná un prompt para ver el detalle</div>
-    <div class="grid-hint">click para abrir →</div>
+  <div class="author-card">
+    <div class="author-label">Autor del playbook</div>
+    <div class="author-name">Cristian Vallon</div>
+    <div class="author-role">Senior Martech Analyst &amp; Amplitude Strategist</div>
+    <a href="https://www.linkedin.com/in/cristian-vallon/" target="_blank" class="author-linkedin">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      linkedin.com/in/cristian-vallon
+    </a>
+    <div class="author-tags">
+      <span class="author-tag">Amplitude</span>
+      <span class="author-tag">Braze</span>
+      <span class="author-tag">Segment</span>
+      <span class="author-tag">Snowflake</span>
+      <span class="author-tag">Martech</span>
+      <span class="author-tag">Data Analytics</span>
+    </div>
   </div>
+</div>
 
+<div class="grid-section">
+  <div class="grid-header">
+    <div class="grid-title">Prompts del playbook</div>
+    <div class="grid-hint">Hacé click en un prompt para ver el detalle completo →</div>
+  </div>
   <div class="prompt-grid">
 
-    <div class="prompt-card" style="--card-color:var(--orange);--card-color-dim:var(--orange-dim)" onclick="openDetail('rayosx')">
+    <div class="prompt-card" style="--card-color:#E8450A;--card-bg:#FEF1EC" onclick="openDetail('rayosx')">
       <div class="card-num">01 <span class="card-tag">Diagnóstico</span></div>
       <div class="card-icon">🔬</div>
       <div class="card-title">Rayos X</div>
       <div class="card-desc">Auditoría exhaustiva de salud de cuenta. Scoring 0–100, champions, governance, features, AI tools y roadmap de 90 días. El punto de partida de cualquier engagement.</div>
-      <div class="card-meta">
+      <div class="card-pills">
         <span class="card-pill">180 días</span>
         <span class="card-pill">12 filas notebook</span>
         <span class="card-pill">Admin access</span>
@@ -831,25 +1027,25 @@ body {
       <div class="card-arrow">↗</div>
     </div>
 
-    <div class="prompt-card" style="--card-color:var(--blue);--card-color-dim:var(--blue-dim)" onclick="openDetail('taxonomia')">
-      <div class="card-num">02 <span class="card-tag" style="background:var(--blue-dim);color:var(--blue)">Governance</span></div>
+    <div class="prompt-card" style="--card-color:#2A5298;--card-bg:#EBF1FA" onclick="openDetail('taxonomia')">
+      <div class="card-num">02 <span class="card-tag" style="background:#EBF1FA;color:#2A5298">Governance</span></div>
       <div class="card-icon">🗂️</div>
       <div class="card-title">Taxonomía Audit</div>
-      <div class="card-desc">Análisis quirúrgico de eventos, propiedades y naming conventions. Genera un plan de limpieza priorizado con owner sugerido, esfuerzo e impacto por hallazgo.</div>
-      <div class="card-meta">
+      <div class="card-desc">Análisis quirúrgico de eventos, propiedades y naming. Detecta eventos fantasma con Ratio Q/I, anomalías de volumen y genera plan de limpieza con Quick Wins.</div>
+      <div class="card-pills">
         <span class="card-pill">Por proyecto</span>
-        <span class="card-pill">8 filas notebook</span>
+        <span class="card-pill">9 filas notebook</span>
         <span class="card-pill">Data Engineer</span>
       </div>
       <div class="card-arrow">↗</div>
     </div>
 
-    <div class="prompt-card" style="--card-color:var(--yellow);--card-color-dim:var(--yellow-dim)" onclick="openDetail('experiment')">
-      <div class="card-num">03 <span class="card-tag" style="background:var(--yellow-dim);color:var(--yellow)">Experimentos</span></div>
+    <div class="prompt-card" style="--card-color:#92610A;--card-bg:#FEF3CD" onclick="openDetail('experiment')">
+      <div class="card-num">03 <span class="card-tag" style="background:#FEF3CD;color:#92610A">Experimentos</span></div>
       <div class="card-icon">⚗️</div>
       <div class="card-title">Experiment Kickstart</div>
-      <div class="card-desc">Dado un feature o flujo, diseña el experimento completo: hipótesis, métricas, tamaño de muestra, duración y lo crea en Amplitude. De la idea al experimento activo en minutos.</div>
-      <div class="card-meta">
+      <div class="card-desc">Diseña el experimento completo con hipótesis, métricas, MDE y duración, y documenta el paso a paso para crearlo manualmente en Amplitude.</div>
+      <div class="card-pills">
         <span class="card-pill">Feature-level</span>
         <span class="card-pill">6 filas notebook</span>
         <span class="card-pill">Product + Data</span>
@@ -857,12 +1053,12 @@ body {
       <div class="card-arrow">↗</div>
     </div>
 
-    <div class="prompt-card" style="--card-color:#a78bfa;--card-color-dim:#a78bfa18" onclick="openDetail('funnel')">
-      <div class="card-num">04 <span class="card-tag" style="background:#a78bfa18;color:#a78bfa">Análisis</span></div>
+    <div class="prompt-card" style="--card-color:#553C9A;--card-bg:#EDE9FE" onclick="openDetail('funnel')">
+      <div class="card-num">04 <span class="card-tag" style="background:#EDE9FE;color:#553C9A">Análisis</span></div>
       <div class="card-icon">📉</div>
       <div class="card-title">Funnel Diagnosis</div>
-      <div class="card-desc">Analiza drops por segmento, cruza con session replay y prioriza los próximos experimentos por impacto esperado. Convierte un funnel estático en un plan de acción.</div>
-      <div class="card-meta">
+      <div class="card-desc">Diagnostica drops por segmento con outlier ≥1.5×, cruza con session replay y prioriza los próximos 3 experimentos por impacto × esfuerzo.</div>
+      <div class="card-pills">
         <span class="card-pill">Funnel existente</span>
         <span class="card-pill">7 filas notebook</span>
         <span class="card-pill">PM + Analytics</span>
@@ -870,12 +1066,12 @@ body {
       <div class="card-arrow">↗</div>
     </div>
 
-    <div class="prompt-card" style="--card-color:var(--green);--card-color-dim:var(--green-dim)" onclick="openDetail('ai')">
-      <div class="card-num">05 <span class="card-tag">AI Adoption</span></div>
+    <div class="prompt-card" style="--card-color:#1A7A45;--card-bg:#E6F4ED" onclick="openDetail('ai')">
+      <div class="card-num">05 <span class="card-tag" style="background:#E6F4ED;color:#1A7A45">AI Adoption</span></div>
       <div class="card-icon">🤖</div>
       <div class="card-title">AI Adoption Accelerator</div>
-      <div class="card-desc">Analiza el uso real de AI Chat, Dashboard Agent, AI Visibility y AI Feedback. Genera los mejores prompts personalizados para cada usuario basados en sus datos reales.</div>
-      <div class="card-meta">
+      <div class="card-desc">Analiza uso real de AI Chat, Dashboard Agent, AI Visibility y Feedback. Detecta barreras, calcula correlación AI↔output y genera prompts basados en datos reales.</div>
+      <div class="card-pills">
         <span class="card-pill">AI features</span>
         <span class="card-pill">8 filas notebook</span>
         <span class="card-pill">Todos los roles</span>
@@ -883,24 +1079,25 @@ body {
       <div class="card-arrow">↗</div>
     </div>
 
-    <div class="prompt-card" style="--card-color:#f472b6;--card-color-dim:#f472b618" onclick="openDetail('newsletter')">
-      <div class="card-num">06 <span class="card-tag" style="background:#f472b618;color:#f472b6">Contenido</span></div>
+    <div class="prompt-card" style="--card-color:#97266D;--card-bg:#FDE8F3" onclick="openDetail('newsletter')">
+      <div class="card-num">06 <span class="card-tag" style="background:#FDE8F3;color:#97266D">Contenido</span></div>
       <div class="card-icon">📰</div>
       <div class="card-title">Insights Newsletter</div>
-      <div class="card-desc">Genera el newsletter de insights del período desde adentro de la cuenta. Extrae los 3 hallazgos más relevantes, detecta anomalías y produce un resumen ejecutivo listo para enviar.</div>
-      <div class="card-meta">
+      <div class="card-desc">Prompt auto-ejecutado. Recolecta datos reales antes de redactar, detecta anomalías >15% y produce resumen ejecutivo listo para email o Slack.</div>
+      <div class="card-pills">
         <span class="card-pill">Semanal / mensual</span>
         <span class="card-pill">5 filas notebook</span>
         <span class="card-pill">Liderazgo</span>
       </div>
       <div class="card-arrow">↗</div>
-    
-    <div class="prompt-card" style="--card-color:#06b6d4;--card-color-dim:#06b6d418" onclick="openDetail('dashboard')">
-      <div class="card-num">07 <span class="card-tag" style="background:#06b6d418;color:#06b6d4">Dashboard Agent</span></div>
+    </div>
+
+    <div class="prompt-card" style="--card-color:#0E7490;--card-bg:#CFFAFE" onclick="openDetail('dashboard')">
+      <div class="card-num">07 <span class="card-tag" style="background:#CFFAFE;color:#0E7490">Dashboard Agent</span></div>
       <div class="card-icon">🧠</div>
       <div class="card-title">Dashboard Intelligence Analyst</div>
-      <div class="card-desc">Analiza un dashboard de Amplitude en profundidad y genera un prompt de contexto estructurado listo para usar con el Dashboard Agent. Incluye 18 objetivos de análisis, protocolo por chart y síntesis estratégica.</div>
-      <div class="card-meta">
+      <div class="card-desc">Analiza un dashboard en profundidad y genera un prompt de contexto estructurado listo para el Dashboard Agent. 18 objetivos de análisis, protocolo por chart.</div>
+      <div class="card-pills">
         <span class="card-pill">Dashboard Agent</span>
         <span class="card-pill">Output prompt</span>
         <span class="card-pill">Todos los roles</span>
@@ -908,38 +1105,62 @@ body {
       <div class="card-arrow">↗</div>
     </div>
 
-    <div class="prompt-card" style="cursor:default;pointer-events:none;background:var(--surface);opacity:0.3">
-      <div style="flex:1;display:flex;align-items:center;justify-content:center">
-        <div style="font-family:var(--mono);font-size:10px;color:var(--muted2);letter-spacing:.12em;text-transform:uppercase">Próximamente</div>
+    <div class="prompt-card" style="--card-color:#6B46C1;--card-bg:#F3EEFF" onclick="openDetail('aictxglobal')">
+      <div class="card-num">08 <span class="card-tag" style="background:#F3EEFF;color:#6B46C1">AI Context</span></div>
+      <div class="card-icon">🗃️</div>
+      <div class="card-title">AI Context Global</div>
+      <div class="card-desc">Deep Audit del proyecto para generar un AI Context estructurado. Produce un notebook con 5 archivos listos para subir al AI Context de Amplitude Chat.</div>
+      <div class="card-pills">
+        <span class="card-pill">Deep Research Mode</span>
+        <span class="card-pill">Notebook → archivos</span>
+        <span class="card-pill">Amplitude Chat</span>
       </div>
+      <div class="card-arrow">↗</div>
     </div>
 
-</div>
+    <div class="prompt-card" style="--card-color:#276749;--card-bg:#E6FFFA" onclick="openDetail('aictxinitiative')">
+      <div class="card-num">09 <span class="card-tag" style="background:#E6FFFA;color:#276749">AI Context</span></div>
+      <div class="card-icon">📁</div>
+      <div class="card-title">AI Context por Iniciativas</div>
+      <div class="card-desc">Deep Audit organizado por iniciativas de negocio. Genera hasta 5 archivos por iniciativa más archivos globales y cross-initiative para un contexto de IA granular.</div>
+      <div class="card-pills">
+        <span class="card-pill">Deep Research Mode</span>
+        <span class="card-pill">Multi-iniciativa</span>
+        <span class="card-pill">Amplitude Chat</span>
+      </div>
+      <div class="card-arrow">↗</div>
+    </div>
+
+    <div class="card-coming">
+      <div class="card-coming-text">10 — Próximamente</div>
+    </div>
 
   </div>
-
-  <div class="land-footer">
-    <div class="land-footer-l">Amplitude Consulting Playbook · v1.0 · Structured Execution Contract</div>
-    <div class="land-footer-r">Todos los prompts requieren acceso Admin en Amplitude</div>
-  </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     DETAIL PAGES
-══════════════════════════════════════ -->
+<footer class="land-footer">
+  <div class="footer-left">
+    <div class="footer-name">Cristian Vallon</div>
+    <div class="footer-meta">Amplitude Consulting Playbook · v2.0 · Structured Execution Contract</div>
+  </div>
+  <div class="footer-right">
+    <a href="https://www.linkedin.com/in/cristian-vallon/" target="_blank" class="footer-link">LinkedIn ↗</a>
+    <span class="footer-divider">·</span>
+    <span class="footer-link">9 prompts · 180d analysis window</span>
+  </div>
+</footer>
+</div>
 
-<!-- ── TEMPLATE DETAIL (JS genera las páginas dinámicamente) ── -->
+<!-- ══ DETAIL PAGE ══ -->
 <div id="detail-page" class="page">
-
-  <div class="detail-topbar">
-    <button class="back-btn" onclick="goBack()">← Volver</button>
-    <div class="detail-breadcrumb">
+  <nav class="detail-nav">
+    <button class="back-btn" onclick="goBack()">← Volver al playbook</button>
+    <div class="detail-crumb">
       <span>Playbook</span>
       <span class="sep">/</span>
-      <span class="current" id="detail-breadcrumb-name"></span>
+      <span class="cur" id="detail-breadcrumb-name"></span>
     </div>
-  </div>
-
+  </nav>
   <div class="detail-layout">
     <aside class="detail-sidebar" id="detail-sidebar"></aside>
     <div class="detail-content">
@@ -947,14 +1168,10 @@ body {
       <div id="detail-sections"></div>
     </div>
   </div>
-
 </div>
 
-<script>
-// ══════════════════════════════════════
-// PROMPT DATA
-// ══════════════════════════════════════
 
+<script>
 const PROMPTS = {
 
 rayosx: {
@@ -2624,78 +2841,468 @@ PRÓXIMO PASO:  Bloque 2 — Análisis del Dashboard (se activa con el link)`
 },
 
 
+aictxglobal: {
+  num: '08',
+  title: 'AI Context Global',
+  subtitle: 'Deep Audit — Notebook con 5 archivos listos para AI Context',
+  desc: 'Deep Audit del proyecto para generar un AI Context estructurado. Produce un notebook con 5 archivos (index, project overview, event dictionary, dashboard map, AI query logic) listos para subir manualmente al AI Context de Amplitude Chat.',
+  color: '#6B46C1',
+  colorDim: '#F3EEFF',
+  tags: [{label:'Deep Research Mode',color:'#6B46C1'},{label:'Amplitude Chat',color:'var(--muted)'},{label:'Notebook to archivos',color:'var(--muted)'}],
+  vars: [
+    ['Proyecto','Auto-detectado desde el contexto de la sesion'],
+    ['Activos analizados','10 dashboards con mas charts + 5 notebooks recientes'],
+    ['Naming inferido','[INFERRED_DEF] para eventos sin descripcion oficial'],
+    ['Output','Notebook de Amplitude con 5 celdas de texto (una por archivo)'],
+    ['Post-proceso','Copiar manualmente cada celda al AI Context como archivo .md'],
+  ],
+  notebook: [
+    ['FILE 00','index.md','Mapa de navegacion, guia de archivos, relaciones entre secciones'],
+    ['FILE 01','project_overview.md','Industria, modelo de producto, North Star Metric, objetivos inferidos'],
+    ['FILE 02','event_dictionary.md','Tabla de eventos con descripcion, propiedades y contexto de uso'],
+    ['FILE 03','dashboard_and_insights_map.md','Dashboards analizados con pregunta de negocio, charts clave y links'],
+    ['FILE 04','ai_query_logic.md','Filtros estandar, convenciones, flujos criticos, propiedades por caso de uso'],
+  ],
+  checklist: [
+    ['Deep Research','Amplitude Chat en modo Deep Research. Requerido para este prompt.'],
+    ['Dashboards','10 dashboards con mas charts identificados y analizados.'],
+    ['Taxonomia','Eventos con descripcion oficial usados textualmente. Inferidos marcados [INFERRED_DEF].'],
+    ['Flujos','Cadenas de eventos criticos documentadas con dependencias.'],
+    ['Notebook','5 celdas en orden correcto. Link compartido en el hilo.'],
+    ['Post-proceso','Validar [INFERRED_DEF] con el equipo antes de subir al AI Context.'],
+  ],
+  phases: [
+    { title: 'Analisis (Paso 1)', items: ['Listar dashboards por numero de charts','Identificar 5 notebooks recientes','Extraer eventos del Data Taxonomy','Identificar flujos criticos de negocio'] },
+    { title: 'Generacion (Pasos 2-3)', items: ['Generar FILE 00 a FILE 04 con datos reales','Crear notebook en Amplitude','Una celda por archivo en Markdown limpio'] },
+    { title: 'Validacion + Post-proceso', items: ['Verificar orden y completitud de celdas','Validar links a charts/dashboards','Revisar [INFERRED_DEF] con el equipo','Subir archivos al AI Context manualmente'] },
+  ],
+  prompt: `ROLE
+Eres un Senior Data Strategist & Amplitude Architect especializado en auditorías de datos y construcción de contextos de IA de alto rendimiento.
+
+OBJETIVO
+Realizar un Deep Audit del proyecto actual de Amplitude para generar un AI Project Context estructurado que elimine ambigüedades y optimice las interacciones futuras con Amplitude Chat.
+
+Entregable: Un Notebook de Amplitude organizado en secciones (celdas de texto) que representan archivos independientes listos para subir al AI Context.
+
+METODOLOGÍA: Structured Execution Contract (SEC)
+
+REGLA 01 - Selección de Activos
+Identifica y analiza los 10 Dashboards con más visualizaciones (charts)
+Identifica los 5 Notebooks más recientes con hallazgos clave
+Prioriza activos que reflejen flujos críticos de negocio
+
+REGLA 02 - Inferencia de Taxonomía
+Si un evento tiene descripción oficial en el Data Taxonomy, úsala textualmente
+Si NO tiene descripción, genera una definición lógica basada en:
+  Nombre del evento
+  Propiedades asociadas
+  Contexto de uso (dashboards, funnels, flujos)
+Etiqueta las definiciones inferidas como [INFERRED_DEF]
+
+REGLA 03 - Mapeo de Relaciones
+Identifica cadenas de eventos que forman flujos críticos
+(ej: view_product → add_to_cart → purchase_complete)
+Documenta dependencias entre eventos, propiedades y métricas clave
+
+REGLA 04 - Formato de Salida
+El output debe ser un Notebook de Amplitude con celdas de texto
+Cada celda representa un archivo del AI Context
+Usa formato Markdown con estructura clara y navegable
+
+REGLA 05 - Validación Pre-Entrega
+Verifica el orden lógico de las secciones antes de compartir
+Asegúrate de que cada archivo tenga contenido completo y accionable
+Valida que los links a charts/dashboards funcionen correctamente
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ESTRUCTURA DEL NOTEBOOK A GENERAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FILE 00: index.md (Mapa de Navegación)
+  - Lista de todos los archivos con descripción breve
+  - Mapa de relaciones: qué archivo consultar según el tipo de pregunta
+  - Guía de navegación para la IA
+
+FILE 01: project_overview.md (Contexto de Negocio)
+  - Industria detectada: análisis del sector basado en eventos y propiedades
+  - Modelo de producto: B2C, B2B, SaaS, Marketplace, etc.
+  - Ecosistema de usuarios: tipos de usuarios, segmentos clave
+  - North Star Metric: métrica principal identificada
+  - Objetivos de negocio inferidos
+
+FILE 02: event_dictionary.md (Glosario Semántico)
+  Tabla estructurada:
+  | Evento | Descripción | Fuente | Propiedades Críticas | Contexto de Uso |
+  Priorización:
+    - Eventos en funnels de conversión principales
+    - Eventos con mayor frecuencia en dashboards top
+    - Eventos relacionados con la North Star Metric
+
+FILE 03: dashboard_and_insights_map.md (Directorio de Valor)
+  Tabla de dashboards analizados:
+  | Dashboard ID | Nombre | Pregunta de Negocio | Charts Clave | Link |
+  Incluir: insights principales, métricas monitoreadas, frecuencia de uso
+
+FILE 04: ai_query_logic.md (Buenas Prácticas para IA)
+  - Filtros estándar por caso de uso
+  - Convenciones de nomenclatura
+  - Flujos críticos documentados
+  - Propiedades clave por caso de uso (retención, monetización, etc.)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INSTRUCCIONES DE EJECUCIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASO 1: Analiza el proyecto usando las herramientas disponibles:
+  - Listar dashboards ordenados por número de charts
+  - Identificar notebooks recientes
+  - Extraer eventos del Data Taxonomy
+
+PASO 2: Genera el contenido detallado de cada archivo (FILE 00 a FILE 04)
+
+PASO 3: Crea un Notebook de Amplitude con:
+  - Título: "AI Project Context - [Nombre del Proyecto]"
+  - Una celda de texto por cada archivo
+  - Formato Markdown limpio y navegable
+
+PASO 4: Validación pre-entrega:
+  ✅ Todas las secciones completas
+  ✅ Links a charts/dashboards funcionando
+  ✅ Orden lógico de celdas correcto
+  ✅ Definiciones inferidas marcadas como [INFERRED_DEF]
+
+PASO 5: Comparte el link del Notebook en este chat
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FORMATO DE RESPUESTA ESPERADO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+He completado el Deep Audit del proyecto.
+
+Resumen del análisis:
+- Dashboards analizados: [número]
+- Eventos documentados: [número]
+- Flujos críticos identificados: [número]
+
+Notebook generado: [Link al Notebook]
+
+Próximos pasos:
+1. Revisar definiciones [INFERRED_DEF] con el equipo
+2. Subir cada sección como archivo independiente al AI Context
+3. Testear consultas de IA con el nuevo contexto
+
+⚠️ NOTAS IMPORTANTES
+- Diseñado para Amplitude Chat en Deep Research Mode
+- Requiere acceso a dashboards, notebooks y Data Taxonomy
+- El output es un Notebook — NO archivos descargables directamente
+- Las secciones deben copiarse manualmente al AI Context tras revisión
+`
+},
+
+
+aictxinitiative: {
+  num: '09',
+  title: 'AI Context por Iniciativas',
+  subtitle: 'Deep Audit por iniciativas — hasta 5 archivos por iniciativa',
+  desc: 'Deep Audit organizado por iniciativas de negocio. Genera archivos globales + hasta 5 archivos por iniciativa (overview, events, flows, dashboards, AI logic) + analisis cross-initiative. El contexto mas granular para equipos por area.',
+  color: '#276749',
+  colorDim: '#E6FFFA',
+  tags: [{label:'Deep Research Mode',color:'#276749'},{label:'Multi-iniciativa',color:'var(--muted)'},{label:'Amplitude Chat',color:'var(--muted)'}],
+  vars: [
+    ['Proyecto','Auto-detectado desde el contexto de la sesion'],
+    ['Iniciativas','Identificadas automaticamente desde dashboards, eventos y notebooks'],
+    ['Archivos por iniciativa','5 archivos (overview, events, flows, dashboards, AI logic)'],
+    ['Archivos globales','index.md + project_overview.md'],
+    ['Archivo cross-initiative','cross_initiative_analysis.md'],
+    ['Naming inferido','[INFERRED_DEF] para eventos sin descripcion oficial'],
+  ],
+  notebook: [
+    ['S0 FILE 00','index.md','Mapa global, todas las iniciativas, guia de navegacion, eventos compartidos'],
+    ['S0 FILE 01','project_overview.md','Contexto global, North Star, resumen de iniciativas con objetivos'],
+    ['S1 FILE N_01','[ini]_overview.md','Objetivo, metricas clave, North Star de la iniciativa, equipos, dashboards'],
+    ['S1 FILE N_02','[ini]_event_dictionary.md','Eventos core, entrada, exito, abandono. Compartidos marcados claramente'],
+    ['S1 FILE N_03','[ini]_flows_and_funnels.md','Happy path, flujos alternativos, friccion, tasas de conversion, segmentos'],
+    ['S1 FILE N_04','[ini]_dashboards_and_insights.md','Dashboards, insights, experimentos, cohorts, anomalias'],
+    ['S1 FILE N_05','[ini]_ai_query_logic.md','Filtros, consultas comunes, convenciones, caveats y gaps de datos'],
+    ['S2 FILE 99','cross_initiative_analysis.md','Eventos compartidos, journeys multi-iniciativa, dependencias, oportunidades'],
+  ],
+  checklist: [
+    ['Iniciativas','Identificadas desde dashboards, eventos y notebooks. Lista confirmada.'],
+    ['Archivos globales','FILE 00 y FILE 01 completos con resumen de todas las iniciativas.'],
+    ['Por iniciativa','5 archivos completos por cada iniciativa identificada.'],
+    ['Cross-initiative','FILE 99 con eventos compartidos y analisis de dependencias.'],
+    ['[INFERRED_DEF]','Todas las definiciones inferidas marcadas claramente.'],
+    ['Notebook','Celdas en orden por seccion (S0 to S1 por iniciativa to S2). Link compartido.'],
+    ['Post-proceso','Crear carpeta por iniciativa en AI Context antes de subir archivos.'],
+  ],
+  phases: [
+    { title: 'Identificacion (Paso 1)', items: ['Listar dashboards y notebooks','Inferir iniciativas desde activos','Clasificar cada activo en su iniciativa','Identificar eventos compartidos'] },
+    { title: 'Generacion (Pasos 2-4)', items: ['Archivos globales (S0)','5 archivos por iniciativa (S1)','Analisis cross-initiative (S2)','Notebook con secciones separadas por iniciativa'] },
+    { title: 'Validacion + Post-proceso', items: ['5 archivos completos por iniciativa','Validar eventos compartidos en multiples iniciativas','Revisar [INFERRED_DEF] con cada equipo','Subir al AI Context con estructura de carpetas'] },
+  ],
+  prompt: `ROLE
+Eres un Senior Data Strategist & Amplitude Architect especializado en auditorías de datos y construcción de contextos de IA de alto rendimiento.
+
+OBJETIVO
+Realizar un Deep Audit del proyecto actual de Amplitude para generar un AI Project Context estructurado por iniciativas de negocio que elimine ambigüedades y optimice las interacciones futuras con Amplitude Chat.
+
+Entregable: Un Notebook de Amplitude organizado en secciones que representan archivos independientes por iniciativa, listos para subir al AI Context.
+
+METODOLOGÍA: Structured Execution Contract (SEC)
+
+REGLA 01 - Identificación de Iniciativas
+Analiza dashboards, notebooks y eventos para identificar iniciativas de negocio
+(ej: Onboarding, Monetización, Retención, Engagement, Adquisición)
+Agrupa activos por iniciativa
+Identifica los 10 Dashboards con más visualizaciones y los 5 Notebooks más recientes
+Clasifica cada activo en su iniciativa correspondiente
+
+REGLA 02 - Inferencia de Taxonomía
+Si un evento tiene descripción oficial en el Data Taxonomy, úsala textualmente
+Si NO tiene descripción, genera una definición basada en:
+  Nombre del evento, propiedades asociadas, contexto de uso, iniciativa
+Etiqueta las definiciones inferidas como [INFERRED_DEF]
+
+REGLA 03 - Mapeo de Relaciones por Iniciativa
+Identifica cadenas de eventos que forman flujos críticos dentro de cada iniciativa
+Documenta dependencias entre eventos, propiedades y métricas por iniciativa
+Identifica eventos compartidos entre múltiples iniciativas
+
+REGLA 04 - Formato de Salida
+Output: Notebook de Amplitude con celdas de texto
+Cada celda = un archivo del AI Context
+Formato Markdown navegable, organizado por iniciativa
+
+REGLA 05 - Validación Pre-Entrega
+Verifica orden lógico de secciones
+Cada archivo con contenido completo y accionable
+Links a charts/dashboards funcionando
+Cada iniciativa con su conjunto completo de archivos
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ESTRUCTURA DEL NOTEBOOK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECCIÓN 0: ARCHIVOS GLOBALES
+
+FILE 00: index.md (Mapa de Navegación Global)
+  - Lista de todas las iniciativas identificadas
+  - Todos los archivos organizados por iniciativa
+  - Mapa de relaciones y guía de navegación para la IA
+  - Tabla de eventos compartidos entre iniciativas
+
+FILE 01: project_overview.md (Contexto de Negocio Global)
+  - Industria, modelo de producto, ecosistema de usuarios
+  - North Star Metric, objetivos de negocio inferidos
+  - Resumen de iniciativas con descripción y objetivos
+
+SECCIÓN 1: ARCHIVOS POR INICIATIVA
+Para cada iniciativa identificada, generar los siguientes 5 archivos:
+
+FILE [INI]_01: [iniciativa]_overview.md
+  - Nombre, objetivo de negocio, métricas clave, North Star
+  - Equipos responsables (si se puede inferir)
+  - Dashboards principales con links
+
+FILE [INI]_02: [iniciativa]_event_dictionary.md
+  Tabla: | Evento | Descripción | Fuente | Propiedades | Flujo | Frecuencia | Link |
+  Incluir: eventos core, de entrada, de éxito, de abandono
+  Marcar eventos compartidos con otras iniciativas
+
+FILE [INI]_03: [iniciativa]_flows_and_funnels.md
+  - Flujo principal (happy path)
+  - Flujos alternativos
+  - Puntos de fricción con tasas de conversión por paso
+  - Segmentos clave y diferencias de comportamiento
+  - Links a funnels en Amplitude
+
+FILE [INI]_04: [iniciativa]_dashboards_and_insights.md
+  Tabla: | Dashboard ID | Nombre | Pregunta | Charts Clave | Insights | Link |
+  Incluir: insights de notebooks relacionados, experimentos, cohorts, anomalías
+
+FILE [INI]_05: [iniciativa]_ai_query_logic.md
+  - Filtros estándar para esta iniciativa
+  - Consultas comunes con sintaxis correcta
+  - Convenciones específicas, propiedades y valores posibles
+  - Caveats: gaps de datos, eventos deprecados, calidad de datos
+
+SECCIÓN 2: ARCHIVO CROSS-INITIATIVE
+
+FILE 99: cross_initiative_analysis.md
+  - Eventos compartidos entre iniciativas (tabla)
+  - User journeys multi-iniciativa
+  - Dependencias entre iniciativas
+  - Métricas compuestas y oportunidades de optimización
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INSTRUCCIONES DE EJECUCIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASO 1: Analiza el proyecto para identificar iniciativas de negocio:
+  - Dashboards por número de charts
+  - Notebooks recientes
+  - Eventos del Data Taxonomy
+  - Iniciativas inferidas de nombres de dashboards, agrupaciones de eventos, objetivos de notebooks
+
+PASO 2: Clasifica todos los activos por iniciativa
+
+PASO 3: Genera el contenido de:
+  - Archivos globales (FILE 00, FILE 01)
+  - 5 archivos por cada iniciativa identificada
+  - Archivo cross-initiative (FILE 99)
+
+PASO 4: Crea Notebook en Amplitude:
+  - Título: "AI Project Context by Initiative - [Nombre del Proyecto]"
+  - Una celda por archivo, Markdown limpio
+
+PASO 5: Validación:
+  ✅ Todas las iniciativas completas (5 archivos cada una)
+  ✅ Links a charts/dashboards funcionando
+  ✅ Orden lógico de celdas
+  ✅ Definiciones [INFERRED_DEF] marcadas
+  ✅ Eventos compartidos documentados en múltiples iniciativas
+
+PASO 6: Comparte el link del Notebook en este chat
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FORMATO DE RESPUESTA ESPERADO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+He completado el Deep Audit organizado por iniciativas.
+
+Resumen:
+- Iniciativas identificadas: [número] ([lista])
+- Dashboards analizados: [número]
+- Eventos documentados: [número] ([X] únicos, [Y] compartidos)
+- Archivos generados: [total] ([X] globales + [Y] por iniciativa + 1 cross)
+
+Iniciativas detectadas:
+1. [Nombre]: [descripción breve] — [N eventos, M dashboards]
+...
+
+Notebook generado: [Link]
+
+Estructura del notebook:
+- Sección 0: Archivos Globales (2 archivos)
+- Sección 1: [Iniciativa 1] (5 archivos)
+- Sección 2: [Iniciativa 2] (5 archivos)
+- Sección Final: Cross-Initiative Analysis (1 archivo)
+
+Próximos pasos:
+1. Revisar definiciones [INFERRED_DEF] con los equipos de cada iniciativa
+2. Subir archivos al AI Context con estructura de carpetas por iniciativa
+3. Testear consultas de IA específicas por iniciativa
+4. Validar clasificación de eventos compartidos
+
+Estructura de archivos resultante:
+📁 AI Context Files/
+├── 📄 index.md
+├── 📄 project_overview.md
+├── 📁 Onboarding/
+│   ├── 📄 onboarding_overview.md
+│   ├── 📄 onboarding_event_dictionary.md
+│   ├── 📄 onboarding_flows_and_funnels.md
+│   ├── 📄 onboarding_dashboards_and_insights.md
+│   └── 📄 onboarding_ai_query_logic.md
+├── 📁 [Iniciativa N]/
+│   └── ...
+└── 📄 cross_initiative_analysis.md
+
+⚠️ NOTAS IMPORTANTES
+- Diseñado para Amplitude Chat en Deep Research Mode
+- Requiere acceso a dashboards, notebooks y Data Taxonomy
+- El output es un Notebook — copiar manualmente al AI Context tras revisión
+- Crear carpetas en el AI Context para mantener la estructura por iniciativa
+`
+},
+
+
 };
 
-// ══════════════════════════════════════
+// ════════════════════════════════════════
 // NAVIGATION
-// ══════════════════════════════════════
-
+// ════════════════════════════════════════
 function openDetail(id) {
   const p = PROMPTS[id];
   if (!p) return;
-
-  // Update breadcrumb
   document.getElementById('detail-breadcrumb-name').textContent = p.title;
-
-  // Build hero
+  
+  const colorDim = p.colorDim || '#EBF1FA';
+  const color = p.color || 'var(--navy)';
   const tagsHtml = p.tags.map(t =>
-    `<span class="dtag" style="background:${p.colorDim};color:${p.color};border:1px solid ${p.color}44">${t.label}</span>`
+    `<span class="dtag" style="background:${t.color}20;color:${t.color};border-color:${t.color}44">${t.label}</span>`
   ).join('');
-
   document.getElementById('detail-hero').innerHTML = `
-    <div class="detail-hero-num">${p.num} / 06</div>
-    <div class="detail-hero-title" style="color:${p.color}">${p.title}</div>
-    <div class="detail-hero-desc">${p.desc}</div>
+    <div class="detail-num">${p.num} / 09</div>
+    <div class="detail-title" style="color:${color}">${p.title}</div>
+    <div class="detail-desc">${p.desc}</div>
     <div class="detail-tags">${tagsHtml}</div>
   `;
 
-  // Build sidebar
+  const isAICtx = id === 'aictxglobal' || id === 'aictxinitiative';
   const isDashboard = id === 'dashboard';
-  const sbItems = isDashboard ? [
-    {key:'overview', label:'Vista general'},
-    {key:'prompt', label:'▶ Prompt completo'},
-    {key:'variables', label:'Variables'},
-    {key:'output', label:'Output — Dashboard Agent'},
-    {key:'reglas', label:'Reglas (8)'},
-    {key:'checklist', label:'Checklist'},
-    {key:'roadmap', label:'Bloques de ejecución'},
-  ] : [
-    {key:'overview', label:'Vista general'},
-    {key:'prompt', label:'▶ Prompt completo'},
-    {key:'variables', label:'Variables'},
-    {key:'notebook', label:'Estructura notebook'},
-    {key:'reglas', label:'Reglas (8)'},
-    {key:'checklist', label:'Checklist'},
-    {key:'roadmap', label:'Fases de ejecución'},
-  ];
+  
+  let sbItems;
+  if (isAICtx) {
+    sbItems = [
+      {key:'overview', label:'Vista general'},
+      {key:'prompt', label:'▶ Prompt completo'},
+      {key:'variables', label:'Variables'},
+      {key:'notebook', label:'Archivos del notebook'},
+      {key:'reglas', label:'Reglas SEC'},
+      {key:'checklist', label:'Checklist'},
+      {key:'roadmap', label:'Fases de ejecución'},
+      {key:'bestpractices', label:'📁 Gestión de archivos'},
+    ];
+  } else if (isDashboard) {
+    sbItems = [
+      {key:'overview', label:'Vista general'},
+      {key:'prompt', label:'▶ Prompt completo'},
+      {key:'variables', label:'Variables'},
+      {key:'output', label:'Output — Dashboard Agent'},
+      {key:'reglas', label:'Reglas (8)'},
+      {key:'checklist', label:'Checklist'},
+      {key:'roadmap', label:'Bloques de ejecución'},
+    ];
+  } else {
+    sbItems = [
+      {key:'overview', label:'Vista general'},
+      {key:'prompt', label:'▶ Prompt completo'},
+      {key:'variables', label:'Variables'},
+      {key:'notebook', label:'Estructura notebook'},
+      {key:'reglas', label:'Reglas SEC'},
+      {key:'checklist', label:'Checklist'},
+      {key:'roadmap', label:'Fases de ejecución'},
+    ];
+  }
+
   document.getElementById('detail-sidebar').innerHTML =
-    '<div class="dsb-section">Secciones</div>' +
-    sbItems.map((item,i) =>
+    '<div class="dsb-label">Secciones</div>' +
+    sbItems.map((item, i) =>
       `<div class="dsb-item${i===0?' active':''}" onclick="showDetailSec('${id}','${item.key}',this)">${item.label}</div>`
     ).join('');
 
-  // Build sections
-  const secHtml = id === 'dashboard'
-    ? buildOverview(id, p) + buildPromptSec(id, p) + buildVarsSec(id, p) +
-      buildOutputSec(id, p) + buildRulesSec(id) + buildChecklist(id, p) + buildPhases(id, p)
-    : buildOverview(id, p) + buildPromptSec(id, p) + buildVarsSec(id, p) +
-      buildNotebookSec(id, p) + buildRulesSec(id) + buildChecklist(id, p) + buildPhases(id, p);
+  let secHtml;
+  if (isAICtx) {
+    secHtml = buildOverview(id, p) + buildPromptSec(id, p) + buildVarsSec(id, p) +
+      buildNotebookSec(id, p) + buildRulesSec(id, p) + buildChecklist(id, p) +
+      buildPhases(id, p) + buildBestPractices(id);
+  } else if (isDashboard) {
+    secHtml = buildOverview(id, p) + buildPromptSec(id, p) + buildVarsSec(id, p) +
+      buildOutputSec(id, p) + buildRulesSec(id, p) + buildChecklist(id, p) + buildPhases(id, p);
+  } else {
+    secHtml = buildOverview(id, p) + buildPromptSec(id, p) + buildVarsSec(id, p) +
+      buildNotebookSec(id, p) + buildRulesSec(id, p) + buildChecklist(id, p) + buildPhases(id, p);
+  }
   document.getElementById('detail-sections').innerHTML = secHtml;
 
-  // Show first
   const first = document.getElementById(`dsec-${id}-overview`);
   if (first) first.classList.add('active');
 
-  // Switch pages
   document.getElementById('landing').classList.remove('active');
   document.getElementById('detail-page').classList.add('active');
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
 }
 
 function goBack() {
   document.getElementById('detail-page').classList.remove('active');
   document.getElementById('landing').classList.add('active');
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
 }
 
 function showDetailSec(id, key, el) {
@@ -2706,45 +3313,47 @@ function showDetailSec(id, key, el) {
   el.classList.add('active');
 }
 
-// ══════════════════════════════════════
+// ════════════════════════════════════════
 // SECTION BUILDERS
-// ══════════════════════════════════════
-
+// ════════════════════════════════════════
 function buildOverview(id, p) {
+  const color = p.color || 'var(--navy)';
+  const nbCount = p.notebook.length;
   const cards = [
-    {n: p.notebook.length, l:'Filas notebook', d:'Orden fijo verificado antes de publicar'},
-    {n: p.vars.length, l:'Variables', d:'Declaradas al inicio del análisis'},
-    {n: p.checklist.length, l:'Entregables', d:'Checklist de cierre obligatorio'},
-    {n: p.phases.length, l:'Fases', d:'Plan de ejecución estructurado'},
-    {n:'8', l:'Reglas', d:'Structured Execution Contract'},
-    {n:'100%', l:'Copy-paste ready', d:'Sin modificaciones necesarias'},
+    {n: nbCount || '—', l: nbCount ? 'Archivos/Filas' : 'Output', d: nbCount ? 'Orden fijo verificado antes de publicar' : 'Prompt copiable para Dashboard Agent', c: color},
+    {n: p.vars.length, l:'Variables', d:'Declaradas al inicio del análisis', c:'var(--navy-light)'},
+    {n: p.checklist.length, l:'Entregables', d:'Checklist de cierre obligatorio', c:'var(--green)'},
+    {n: p.phases.length, l:'Fases', d:'Plan de ejecución estructurado', c:'var(--coral)'},
+    {n:'SEC', l:'Metodología', d:'Structured Execution Contract', c:'var(--navy)'},
+    {n:'100%', l:'Copy-paste', d:'Sin modificaciones necesarias', c:'var(--navy-light)'},
   ];
   return `<div id="dsec-${id}-overview" class="dsec">
     <div class="dsec-header"><h2>Vista general</h2><span class="dsec-tag">Overview</span></div>
     <div class="ov-grid">
       ${cards.map(c=>`<div class="ov-card">
-        <div class="ov-num" style="color:${p.color}">${c.n}</div>
+        <div class="ov-num" style="color:${c.c}">${c.n}</div>
         <div class="ov-lbl">${c.l}</div>
         <div class="ov-desc">${c.d}</div>
       </div>`).join('')}
     </div>
-    <div class="note warn-note">⚠️ Este prompt requiere acceso Admin en Amplitude. El modelo declara las variables al inicio y hace checkpoint antes de crear cualquier artefacto.</div>
+    <div class="note coral">⚠️ Este prompt requiere acceso Admin en Amplitude. El modelo declara variables al inicio y hace checkpoint antes de crear cualquier artefacto.</div>
   </div>`;
 }
 
 function buildPromptSec(id, p) {
   const lines = p.prompt.split('\n').length;
+  const color = p.color || 'var(--navy)';
   return `<div id="dsec-${id}-prompt" class="dsec">
-    <div class="dsec-header"><h2>Prompt completo</h2><span class="dsec-tag" style="color:${p.color};border-color:${p.color}44">Copy &amp; paste</span></div>
-    <div class="note">Copiá el bloque completo y pegalo en el chat de Amplitude. No modificar. El modelo hace preguntas antes de ejecutar.</div>
+    <div class="dsec-header"><h2>Prompt completo</h2><span class="dsec-tag" style="background:${p.colorDim};color:${color};border-color:${color}44">Copy & paste</span></div>
+    <div class="note">Copiá el bloque completo y pegalo en el chat de Amplitude. No modificar.</div>
     <div class="prompt-wrap">
       <div class="prompt-topbar">
-        <div class="prompt-toplabel" style="color:${p.color}">${p.num} — ${p.title.toUpperCase()}</div>
+        <div class="prompt-toplabel">${p.num} — ${p.title.toUpperCase()}</div>
         <div class="prompt-lines">${lines} líneas</div>
       </div>
       <div class="prompt-body" id="pb-${id}">${escHtml(p.prompt)}</div>
       <div class="prompt-footer">
-        <div class="prompt-hint">// Structured Execution Contract · ${p.notebook.length} filas · verificación obligatoria</div>
+        <div class="prompt-hint">// Structured Execution Contract</div>
         <button class="copy-btn" id="cbtn-${id}" onclick="copyPr('${id}')">Copiar prompt</button>
       </div>
     </div>
@@ -2754,7 +3363,7 @@ function buildPromptSec(id, p) {
 function buildVarsSec(id, p) {
   return `<div id="dsec-${id}-variables" class="dsec">
     <div class="dsec-header"><h2>Variables</h2><span class="dsec-tag">Declarar al inicio</span></div>
-    <div class="note">El modelo declara estas variables en el hilo antes de iniciar el análisis y las usa de forma consistente en todo el proceso.</div>
+    <div class="note">El modelo declara estas variables antes de iniciar y las usa de forma consistente en todo el proceso.</div>
     <table class="var-table">
       ${p.vars.map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('')}
     </table>
@@ -2762,11 +3371,13 @@ function buildVarsSec(id, p) {
 }
 
 function buildNotebookSec(id, p) {
+  const label = (id === 'aictxglobal' || id === 'aictxinitiative') ? 'Archivos del notebook' : 'Estructura del notebook';
+  const sublabel = (id === 'aictxglobal' || id === 'aictxinitiative') ? 'Archivos · copiar manualmente al AI Context' : `${p.notebook.length} filas · orden fijo`;
   return `<div id="dsec-${id}-notebook" class="dsec">
-    <div class="dsec-header"><h2>Estructura del notebook</h2><span class="dsec-tag">${p.notebook.length} filas · orden fijo</span></div>
-    <div class="note">Los títulos son literales — copiados exactamente. El modelo hace checkpoint antes de crear el notebook y verifica con <code style="color:var(--green);background:var(--surface2);padding:1px 5px;font-size:10px">get_notebook</code> antes de compartir el link.</div>
+    <div class="dsec-header"><h2>${label}</h2><span class="dsec-tag">${sublabel}</span></div>
+    <div class="note">Los títulos son literales. El modelo hace checkpoint antes de crear el notebook y verifica con <code style="font-family:var(--mono);font-size:11px">get_notebook</code> antes de compartir el link.</div>
     <table class="nb-table">
-      <thead><tr><th>#</th><th>Título exacto (copiar literal)</th><th>Contenido</th></tr></thead>
+      <thead><tr><th>#</th><th>Archivo / Título exacto</th><th>Contenido</th></tr></thead>
       <tbody>
         ${p.notebook.map(([n,t,d])=>`<tr><td>${n}</td><td>${escHtml(t)}</td><td>${d}</td></tr>`).join('')}
       </tbody>
@@ -2774,41 +3385,27 @@ function buildNotebookSec(id, p) {
   </div>`;
 }
 
-
-function buildOutputSec(id, p) {
-  const rows = [
-    ['BLOQUE 1','Intake','Nombre + link + objetivo del usuario (18 opciones + libre)'],
-    ['BLOQUE 2','Análisis','Protocolo de 11 puntos por cada chart del dashboard'],
-    ['BLOQUE 3','Síntesis','Cobertura, gaps, audiencia inferida, cadencia de uso'],
-    ['BLOQUE 4','Output','Prompt copiable completo listo para Dashboard Agent'],
-  ];
-  return `<div id="dsec-${id}-output" class="dsec">
-    <div class="dsec-header"><h2>Output — Dashboard Agent</h2><span class="dsec-tag" style="color:#06b6d4;border-color:#06b6d444">Prompt copiable</span></div>
-    <div class="note">Este prompt no genera un notebook. El output es un <strong>prompt de contexto estructurado</strong> listo para pegar en el Dashboard Agent de Amplitude.</div>
-    <table class="nb-table">
-      <thead><tr><th>Bloque</th><th>Etapa</th><th>Contenido del output</th></tr></thead>
-      <tbody>
-        ${rows.map(([b,e,c])=>`<tr><td style="color:#06b6d4">${b}</td><td style="color:var(--muted);font-size:11px">${e}</td><td>${c}</td></tr>`).join('')}
-      </tbody>
-    </table>
-    <div class="note" style="margin-top:12px">El output final incluye: identidad del dashboard, objetivo, audiencia y cadencia, inventario de charts con relevancia, métricas críticas con chart fuente, gaps y oportunidades, instrucciones para el agente, contexto de negocio, preguntas frecuentes anticipadas y limitaciones conocidas.</div>
-  </div>`;
-}
-
-function buildRulesSec(id) {
-  const rules = [
-    ['1','Nombres exactos','Cada título copiado literalmente. ✅ "ÁREA 2 — CHARTS NO UTILIZADOS" ❌ "Área 2: Análisis"'],
-    ['2','Orden fijo','No reordenar, no fusionar, no omitir secciones del notebook.'],
-    ['3','Verificación obligatoria','Después de crear artefactos: get_notebook → verificar → set_rows si hay errores.'],
-    ['4','Sin interpretación libre','Si algo no está claro, preguntar antes de ejecutar.'],
-    ['5','Checkpoint','Listar todos los títulos en el hilo y esperar confirmación antes de crear el notebook.'],
+function buildRulesSec(id, p) {
+  const isAICtx = id === 'aictxglobal' || id === 'aictxinitiative';
+  const rules = isAICtx ? [
+    ['01','Selección de Activos','10 dashboards con más charts + 5 notebooks recientes. Priorizar flujos críticos de negocio.'],
+    ['02','Inferencia de Taxonomía','Descripción oficial si existe. Si no: definición lógica marcada como [INFERRED_DEF].'],
+    ['03','Mapeo de Relaciones','Cadenas de eventos que forman flujos críticos. Dependencias entre eventos y propiedades.'],
+    ['04','Formato de Salida','Notebook con celdas de texto. Una celda por archivo. Markdown limpio y navegable.'],
+    ['05','Validación Pre-Entrega','Orden lógico verificado. Links funcionando. Definiciones inferidas marcadas. Contenido completo.'],
+  ] : [
+    ['1','Nombres exactos','Cada título copiado literalmente. Sin parafrasear.'],
+    ['2','Orden fijo','No reordenar, no fusionar, no omitir secciones.'],
+    ['3','Verificación','get_notebook → verificar → set_rows si hay errores.'],
+    ['4','Sin interpretación libre','Preguntar antes de ejecutar si algo no está claro.'],
+    ['5','Checkpoint','Listar títulos en el hilo y esperar confirmación.'],
     ['6','Formato por sección','# [TÍTULO] → ## Contexto → ## Hallazgos → ## Recomendaciones'],
-    ['7','Datos faltantes','NO omitir, NO inventar. Escribir: "⚠️ Sin datos disponibles — [razón]"'],
-    ['8','Tono y densidad','Ejecutivo, directo. Tablas con datos reales o "N/D". Sin frases genéricas.'],
+    ['7','Datos faltantes','"⚠️ Sin datos disponibles — [razón]". No inventar valores.'],
+    ['8','Tono','Ejecutivo, directo. Tablas con datos reales o "N/D". Sin frases genéricas.'],
   ];
   return `<div id="dsec-${id}-reglas" class="dsec">
-    <div class="dsec-header"><h2>Reglas de ejecución</h2><span class="dsec-tag" style="color:var(--orange);border-color:#ff6b1a44">Structured Execution Contract</span></div>
-    <div class="rules-grid">
+    <div class="dsec-header"><h2>Reglas ${isAICtx ? 'SEC' : 'de ejecución'}</h2><span class="dsec-tag" style="background:#FEF1EC;color:var(--coral);border-color:#FBD5C5">Structured Execution Contract</span></div>
+    <div class="rules-grid" style="grid-template-columns:${isAICtx ? '1fr' : '1fr 1fr'}">
       ${rules.map(([n,t,b])=>`<div class="rule-card">
         <div class="rule-n">${n}</div>
         <div class="rule-title">${t}</div>
@@ -2820,8 +3417,8 @@ function buildRulesSec(id) {
 
 function buildChecklist(id, p) {
   return `<div id="dsec-${id}-checklist" class="dsec">
-    <div class="dsec-header"><h2>Checklist de entregables</h2><span class="dsec-tag" style="color:var(--green);border-color:#00e87a44">Al finalizar</span></div>
-    <div class="note">El modelo verifica que estén completos antes de dar el análisis por cerrado.</div>
+    <div class="dsec-header"><h2>Checklist de entregables</h2><span class="dsec-tag" style="background:var(--green-bg);color:var(--green);border-color:#9FD4B8">Al finalizar</span></div>
+    <div class="note">Verificar que estén completos antes de dar el análisis por cerrado.</div>
     <ul class="checklist">
       ${p.checklist.map(([l,d])=>`<li>
         <div class="ch-box"></div>
@@ -2833,9 +3430,10 @@ function buildChecklist(id, p) {
 }
 
 function buildPhases(id, p) {
+  const cols = p.phases.length <= 2 ? '1fr 1fr' : `repeat(${p.phases.length}, 1fr)`;
   return `<div id="dsec-${id}-roadmap" class="dsec">
     <div class="dsec-header"><h2>Fases de ejecución</h2><span class="dsec-tag">${p.phases.length} fases</span></div>
-    <div class="phases" style="grid-template-columns:repeat(${p.phases.length},1fr)">
+    <div class="phases" style="grid-template-columns:${cols}">
       ${p.phases.map(ph=>`<div class="phase">
         <div class="phase-head">${ph.title}</div>
         ${ph.items.map(i=>`<div class="phase-item">${i}</div>`).join('')}
@@ -2844,26 +3442,142 @@ function buildPhases(id, p) {
   </div>`;
 }
 
-// ══════════════════════════════════════
-// UTILS
-// ══════════════════════════════════════
+function buildOutputSec(id, p) {
+  const rows = [
+    ['BLOQUE 1','Intake','Nombre + link + objetivo del usuario (18 opciones + libre)'],
+    ['BLOQUE 2','Análisis','Protocolo de 11 puntos por cada chart del dashboard'],
+    ['BLOQUE 3','Síntesis','Cobertura, gaps, audiencia inferida, cadencia de uso'],
+    ['BLOQUE 4','Output','Prompt copiable completo listo para Dashboard Agent'],
+  ];
+  return `<div id="dsec-${id}-output" class="dsec">
+    <div class="dsec-header"><h2>Output — Dashboard Agent</h2><span class="dsec-tag" style="background:#CFFAFE;color:#0E7490;border-color:#67E8F9">Prompt copiable</span></div>
+    <div class="note navy">Este prompt no genera un notebook. El output es un prompt de contexto estructurado listo para pegar en el Dashboard Agent.</div>
+    <table class="nb-table">
+      <thead><tr><th>Bloque</th><th>Etapa</th><th>Contenido</th></tr></thead>
+      <tbody>
+        ${rows.map(([b,e,c])=>`<tr><td style="color:#0E7490">${b}</td><td>${e}</td><td>${c}</td></tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="note" style="margin-top:12px">El output incluye: identidad del dashboard, objetivo, audiencia, inventario de charts con relevancia, métricas críticas, gaps, instrucciones para el agente, contexto de negocio, preguntas anticipadas y limitaciones.</div>
+  </div>`;
+}
 
+function buildBestPractices(id) {
+  return `<div id="dsec-${id}-bestpractices" class="dsec">
+    <div class="dsec-header"><h2>Gestión de archivos</h2><span class="dsec-tag" style="background:#F3EEFF;color:#6B46C1;border-color:#C4B5FD">Post-proceso manual</span></div>
+    <div class="note navy">El notebook contiene el AI Context en celdas de texto. El siguiente paso manual es convertir cada celda en un archivo .md y subirlo al AI Context de Amplitude Chat.</div>
+
+    <div class="bp-section">
+      <div class="bp-header"><div class="bp-header-title">Editores recomendados</div><div class="bp-header-tag">Paso 1 — Crear archivos</div></div>
+      <div class="bp-body">
+        <div class="bp-sub">¿Dónde crear y editar los archivos .md?</div>
+        <div class="bp-grid">
+          <div class="bp-card"><div class="bp-card-title">VS Code ★ Recomendado</div><div class="bp-card-desc">Extensiones: Markdown Preview Enhanced, GitLens, Prettier. Abrí la carpeta del AI Context como workspace para ver todos los archivos juntos.</div></div>
+          <div class="bp-card"><div class="bp-card-title">Cursor</div><div class="bp-card-desc">Ideal si querés usar AI para editar. El modelo tiene contexto de carpeta completo, útil para revisar definiciones [INFERRED_DEF].</div></div>
+          <div class="bp-card"><div class="bp-card-title">Obsidian</div><div class="bp-card-desc">Excelente para navegar .md con vista de grafo de relaciones. Útil para visualizar dependencias entre archivos de iniciativas.</div></div>
+          <div class="bp-card"><div class="bp-card-title">Notepad++</div><div class="bp-card-desc">Opción liviana para Windows. Soporte de Markdown básico sin configuración. Bueno para edits rápidos.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bp-section" style="margin-top:16px">
+      <div class="bp-header"><div class="bp-header-title">Dónde guardar las versiones</div><div class="bp-header-tag">Paso 2 — Control de versiones</div></div>
+      <div class="bp-body">
+        <div class="bp-sub">Opción A — GitHub (recomendado para equipos)</div>
+        <div class="bp-tree">📁 amplitude-ai-context/
+├── 📄 README.md
+├── 📄 index.md
+├── 📄 project_overview.md
+├── 📁 global/
+│   ├── 📄 event_dictionary.md
+│   ├── 📄 dashboard_map.md
+│   └── 📄 ai_query_logic.md
+├── 📁 initiatives/
+│   ├── 📁 onboarding/
+│   │   ├── 📄 overview.md
+│   │   ├── 📄 events.md
+│   │   ├── 📄 flows.md
+│   │   └── 📄 ai_logic.md
+│   └── 📁 [iniciativa-n]/
+└── 📁 versions/
+    └── 📄 CHANGELOG.md</div>
+        <div class="bp-sub">Opción B — PC local (uso individual)</div>
+        <div class="bp-tree">📁 Documents/
+└── 📁 Amplitude AI Context/
+    └── 📁 [NombreProyecto]/
+        ├── 📄 index.md
+        ├── 📄 project_overview.md
+        ├── 📁 global/
+        └── 📁 versions/
+            ├── 📄 v1.0_2024-01-15/
+            └── 📄 v2.0_2024-03-01/</div>
+        <div class="bp-sub">Paso a paso en GitHub</div>
+        <ol class="bp-steps">
+          <li><div class="step-num">1</div><div class="step-body">Crear repo en GitHub: <strong>nombre-proyecto-ai-context</strong> (privado si el contenido es sensible)</div></li>
+          <li><div class="step-num">2</div><div class="step-body">Clonar localmente y crear la estructura de carpetas según la opción A</div></li>
+          <li><div class="step-num">3</div><div class="step-body">Copiar el contenido del notebook celda por celda en cada archivo .md</div></li>
+          <li><div class="step-num">4</div><div class="step-body">Commit con el mensaje: <strong>feat: AI Context v1.0 - [NombreProyecto] - [fecha]</strong></div></li>
+          <li><div class="step-num">5</div><div class="step-body">Para cada actualización, crear carpeta en <strong>versions/</strong> con la fecha y hacer nuevo commit</div></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="bp-section" style="margin-top:16px">
+      <div class="bp-header"><div class="bp-header-title">Pedirle a Claude que lo haga</div><div class="bp-header-tag">Paso 3 — Automatizar con Claude</div></div>
+      <div class="bp-body">
+        <div class="bp-sub">Prompt para pedirle a Claude que suba los archivos a GitHub</div>
+        <div class="bp-prompt-block" id="bp-claude-${id}">Tengo el siguiente AI Context generado por Amplitude Chat como notebook.
+Voy a pegarte el contenido de cada sección.
+
+Tu tarea es:
+1. Crear un archivo .md por cada sección del notebook
+2. Usar exactamente el nombre de archivo indicado en cada encabezado
+3. Crear la estructura de carpetas:
+   📁 [nombre-proyecto]/
+   ├── index.md
+   ├── project_overview.md
+   └── [estructura segun tipo: global o por iniciativas]
+
+4. Subir al repositorio GitHub: [URL del repo]
+   rama: main, carpeta: ai-context/[nombre-proyecto]/
+5. Commit: "feat: AI Context v[N] - [NombreProyecto] - [fecha]"
+
+Aquí está el contenido del notebook:
+[pegar secciones del notebook una por una]<button class="bp-copy-btn" onclick="copyBP('bp-claude-${id}', this)">Copiar</button></div>
+        <div class="note" style="margin-top:10px">Configurá el conector de GitHub en Claude.ai antes de usar este prompt.</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════
 function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function copyPr(id) {
-  const text = PROMPTS[id].prompt;
-  navigator.clipboard.writeText(text).then(() => {
+  navigator.clipboard.writeText(PROMPTS[id].prompt).then(() => {
     const btn = document.getElementById(`cbtn-${id}`);
     btn.textContent = '✓ Copiado';
     btn.classList.add('copied');
-    setTimeout(() => {
-      btn.textContent = 'Copiar prompt';
-      btn.classList.remove('copied');
-    }, 2000);
+    setTimeout(() => { btn.textContent = 'Copiar prompt'; btn.classList.remove('copied'); }, 2000);
   });
 }
+
+function copyBP(elId, btn) {
+  const el = document.getElementById(elId);
+  const clone = el.cloneNode(true);
+  const b = clone.querySelector('button');
+  if (b) b.remove();
+  navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓';
+    setTimeout(() => btn.textContent = orig, 1800);
+  });
+}
+
 </script>
 </body>
 </html>
