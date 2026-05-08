@@ -967,7 +967,8 @@ body {
 <div class="land-hero">
   <div>
     <div class="hero-eyebrow">Amplitude Consulting Playbook</div>
-    <div class="hero-title">Prompt library<br>para consultores<br>de Amplitude</div>
+    <div class="hero-title">Amplitude<br>Consulting<br>Playbook</div>
+    <div style="font-family:var(--body);font-size:16px;font-weight:400;color:var(--slate-light);letter-spacing:.04em;margin-bottom:12px">prompt library</div>
     <div class="hero-subtitle">Prompts estructurados con Structured Execution Contract para ejecutar análisis, diagnósticos y estrategias de adopción directamente en Amplitude Chat.</div>
     <div class="hero-stats">
       <div>
@@ -978,10 +979,7 @@ body {
         <div class="hero-stat-num" style="color:var(--navy)">SEC</div>
         <div class="hero-stat-lbl">Metodología</div>
       </div>
-      <div>
-        <div class="hero-stat-num" style="color:var(--navy-light)">180d</div>
-        <div class="hero-stat-lbl">Ventana análisis</div>
-      </div>
+
       <div>
         <div class="hero-stat-num" style="color:var(--green)">100%</div>
         <div class="hero-stat-lbl">Copy-paste ready</div>
@@ -991,7 +989,7 @@ body {
   <div class="author-card">
     <div class="author-label">Autor del playbook</div>
     <div class="author-name">Cristian Vallon</div>
-    <div class="author-role">Senior Martech Analyst &amp; Amplitude Strategist</div>
+    <div class="author-role">Senior Martech Analyst &amp; Data Specialist</div>
     <a href="https://www.linkedin.com/in/cristian-vallon/" target="_blank" class="author-linkedin">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       linkedin.com/in/cristian-vallon
@@ -1000,6 +998,7 @@ body {
       <span class="author-tag">Amplitude</span>
       <span class="author-tag">Braze</span>
       <span class="author-tag">Segment</span>
+      <span class="author-tag">Intercom</span>
       <span class="author-tag">Snowflake</span>
       <span class="author-tag">Martech</span>
       <span class="author-tag">Data Analytics</span>
@@ -3274,7 +3273,7 @@ function openDetail(id) {
   document.getElementById('detail-sidebar').innerHTML =
     '<div class="dsb-label">Secciones</div>' +
     sbItems.map((item, i) =>
-      `<div class="dsb-item${i===0?' active':''}" onclick="showDetailSec('${id}','${item.key}',this)">${item.label}</div>`
+      `<div class="dsb-item${i===0?' active':''}" id="sb-${id}-${item.key}" onclick="showDetailSec('${id}','${item.key}', document.getElementById('sb-${id}-${item.key}'))">${item.label}</div>`
     ).join('');
 
   let secHtml;
