@@ -479,7 +479,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
   </div>
 </div>
 
-<!-- SCRIPT 1: PROMPTS (ES) -->
 <script>
 
 const PROMPTS = {
@@ -2610,7 +2609,6 @@ Navegá las secciones del menú lateral para recorrerlo completo.`
 
 </script>
 
-<!-- SCRIPT 2: I18N + ENGINE + RICE + SKILLS -->
 <script>
 // ════════════════════════════════════════
 // I18N — UI STRINGS
@@ -2777,6 +2775,20 @@ Aquí está el contenido del notebook:
     skill_requires_note: 'Verificá que tenés todo esto antes de activar la skill.',
     skill_install_note: 'Seguí estos pasos para tener la skill activa en tu Claude Desktop.',
     skill_repo_note: 'Los archivos SKILL.md de ambas skills están disponibles en el repositorio del playbook:',
+    vs_tag: 'Declarar al inicio',
+    nb_rows_tag: 'filas · orden fijo',
+    out_col1: 'Bloque',
+    out_col2: 'Etapa',
+    out_col3: 'Contenido',
+    skill_how_title: '¿Cómo funciona una Claude Skill?',
+    skill_how_body: 'Es un archivo SKILL.md que le enseña a Claude cómo ejecutar una tarea específica. Una vez instalado en Claude Desktop, se activa automáticamente cuando usás alguna de las frases clave. No necesitás escribir prompts largos — Claude reconoce la intención y sigue el flujo definido.',
+    skill_triggers_label: 'Frases clave',
+    skill_triggers_tip: 'También podés combinar con contexto específico, por ejemplo:',
+    skill_steps_count: 'pasos',
+    skill_steps_note: 'Así ejecuta Claude esta skill de principio a fin.',
+    skill_requires_tag: 'Antes de usar',
+    skill_notes_tag: 'Producción',
+    skill_repo_note: 'Los archivos SKILL.md de ambas skills están disponibles en el repositorio del playbook:',
   },
 
   en: {
@@ -2923,6 +2935,20 @@ Here is the notebook content:
     skill_requires_note: 'Verify you have all of this before activating the skill.',
     skill_install_note: 'Follow these steps to have the skill active in your Claude Desktop.',
     skill_repo_note: 'The SKILL.md files for both skills are available in the playbook repository:',
+    vs_tag: 'Declare at start',
+    nb_rows_tag: 'rows · fixed order',
+    out_col1: 'Block',
+    out_col2: 'Stage',
+    out_col3: 'Content',
+    skill_how_title: 'How does a Claude Skill work?',
+    skill_how_body: 'It is a SKILL.md file that teaches Claude how to execute a specific task. Once installed in Claude Desktop, it activates automatically when you use any of the key phrases. No long prompts needed — Claude recognizes the intent and follows the defined flow.',
+    skill_triggers_label: 'Key phrases',
+    skill_triggers_tip: 'You can also combine with specific context, for example:',
+    skill_steps_count: 'steps',
+    skill_steps_note: 'This is how Claude executes this skill from start to finish.',
+    skill_requires_tag: 'Before using',
+    skill_notes_tag: 'Production',
+    skill_repo_note: 'The SKILL.md files for both skills are available in the playbook repository:',
   },
 
   pt: {
@@ -3068,6 +3094,20 @@ Aqui está o conteúdo do notebook:
     skill_triggers_note: 'Digite qualquer uma destas frases no Claude Desktop e a skill ativa automaticamente.',
     skill_requires_note: 'Verifique se você tem tudo isso antes de ativar a skill.',
     skill_install_note: 'Siga estes passos para ter a skill ativa no seu Claude Desktop.',
+    skill_repo_note: 'Os arquivos SKILL.md de ambas as skills estão disponíveis no repositório do playbook:',
+    vs_tag: 'Declarar no início',
+    nb_rows_tag: 'linhas · ordem fixa',
+    out_col1: 'Bloco',
+    out_col2: 'Etapa',
+    out_col3: 'Conteúdo',
+    skill_how_title: 'Como funciona uma Claude Skill?',
+    skill_how_body: 'É um arquivo SKILL.md que ensina o Claude a executar uma tarefa específica. Uma vez instalado no Claude Desktop, ativa automaticamente quando você usa qualquer uma das frases-chave. Sem prompts longos — o Claude reconhece a intenção e segue o fluxo definido.',
+    skill_triggers_label: 'Frases-chave',
+    skill_triggers_tip: 'Você também pode combinar com contexto específico, por exemplo:',
+    skill_steps_count: 'passos',
+    skill_steps_note: 'É assim que o Claude executa esta skill do início ao fim.',
+    skill_requires_tag: 'Antes de usar',
+    skill_notes_tag: 'Produção',
     skill_repo_note: 'Os arquivos SKILL.md de ambas as skills estão disponíveis no repositório do playbook:',
   },
 };
@@ -4507,10 +4547,6 @@ Recomendado: criar pastas por iniciativa no AI Context para manter a estrutura.`
 
 applyPromptTranslations();
 
-
-// ════════════════════════════════════════
-// PROMPT SWITCHER
-// ════════════════════════════════════════
 const PROMPT_LIST = [
   {id:'rayosx', num:'01', title:'Rayos X'},
   {id:'taxonomia', num:'02', title:'Taxonomía Audit'},
@@ -4567,7 +4603,8 @@ function openDetail(id) {
   currentPromptId = id;
 
   document.getElementById('detail-breadcrumb-name').textContent = p.title;
-  document.getElementById('ps-label').textContent = t('nav_label');
+  const psLbl = document.getElementById('ps-label');
+  if (psLbl) psLbl.textContent = t('nav_label');
   buildSwitcherMenu();
 
   const color = p.color || '#e8420a';
@@ -4673,17 +4710,22 @@ function showSec(id, key) {
 // ════════════════════════════════════════
 function buildOverview(id, p) {
   const color = p.color || '#e8420a';
-  const nb = p.notebook.length;
+  const nb = getLangField(p,'notebook');
+  const vs = getLangField(p,'vars');
+  const ch = getLangField(p,'checklist');
+  const ph = getLangField(p,'phases');
+  const hasNb = nb && nb.length;
   const cards = [
-    {n: nb || '—', l: nb ? 'Filas/Archivos' : 'Output', d: nb ? 'Orden fijo verificado' : 'Prompt copiable para Agent', c: color},
-    {n: p.vars.length, l:'Variables', d:'Declaradas al inicio', c:'#3d8bff'},
-    {n: p.checklist.length, l:'Entregables', d:'Checklist de cierre', c:'#00c853'},
-    {n: p.phases.length, l:'Fases', d:'Plan de ejecución', c:color},
-    {n:'SEC', l:'Metodología', d:'Structured Execution Contract', c:'#3d8bff'},
-    {n:'100%', l:'Copy-paste', d:'Sin modificaciones necesarias', c:'#3d8bff'},
+    {n: hasNb||'—', l:hasNb?t('ov_files'):t('ov_output'),
+                    d:hasNb?t('ov_desc_files'):t('ov_desc_output'), c:color},
+    {n: vs.length,  l:t('ov_vars'),         d:t('ov_desc_vars'),    c:'#3d8bff'},
+    {n: ch.length,  l:t('ov_deliverables'), d:t('ov_desc_del'),     c:'#00c853'},
+    {n: ph.length,  l:t('ov_phases'),       d:t('ov_desc_phases'),  c:color},
+    {n:'SEC',       l:t('ov_method'),       d:t('ov_desc_method'),  c:'#3d8bff'},
+    {n:'100%',      l:t('ov_copy'),         d:t('ov_desc_copy'),    c:'#3d8bff'},
   ];
   return `<div id="dsec-${id}-overview" class="dsec">
-    <div class="dsec-header"><h2>Vista general</h2><span class="dsec-tag">Overview</span></div>
+    <div class="dsec-header"><h2>${t('sec_overview')}</h2><span class="dsec-tag">${getLangField(p,'subtitle')||p.subtitle||''}</span></div>
     <div class="ov-grid">
       ${cards.map(c=>`<div class="ov-card">
         <div class="ov-num" style="color:${c.c}">${c.n}</div>
@@ -4691,6 +4733,7 @@ function buildOverview(id, p) {
         <div class="ov-desc">${c.d}</div>
       </div>`).join('')}
     </div>
+    <div class="note">${getLangField(p,'desc')||p.desc||''}</div>
     <div class="note warn">${t('ov_warn')}</div>
   </div>`;
 }
@@ -4724,7 +4767,7 @@ function buildPromptSec(id, p) {
       </div>
       <div class="prompt-body" id="pb-${id}">${escHtml(prompt)}</div>
       <div class="prompt-footer">
-        <div class="prompt-hint">// Structured Execution Contract · ${p.notebook.length || '—'} ${linesLabel}</div>
+        <div class="prompt-hint">// Structured Execution Contract · ${getLangField(p,'notebook').length || '—'} ${linesLabel}</div>
         <button class="copy-btn" id="cbtn-${id}" onclick="copyPr('${id}')">${t('ps_copy')}</button>
       </div>
     </div>
@@ -4734,7 +4777,7 @@ function buildPromptSec(id, p) {
 function buildVarsSec(id, p) {
   const vars = getLangField(p, 'vars');
   return `<div id="dsec-${id}-variables" class="dsec">
-    <div class="dsec-header"><h2>${t('sec_variables')}</h2><span class="dsec-tag">Declarar al inicio</span></div>
+    <div class="dsec-header"><h2>${t('sec_variables')}</h2><span class="dsec-tag">${t('vs_tag')}</span></div>
     <div class="note">${t('vs_note')}</div>
     <table class="var-table">
       ${vars.map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('')}
@@ -4758,30 +4801,19 @@ function buildNotebookSec(id, p) {
 
 function buildRulesSec(id, p) {
   const isAICtx = id === 'aictxglobal' || id === 'aictxinitiative';
-  const rules = isAICtx ? [
-    ['01','Selección de Activos','10 dashboards con más charts + 5 notebooks recientes. Priorizar flujos críticos de negocio.'],
-    ['02','Inferencia de Taxonomía','Descripción oficial si existe. Si no: definición lógica marcada como [INFERRED_DEF].'],
-    ['03','Mapeo de Relaciones','Cadenas de eventos que forman flujos críticos. Dependencias entre eventos y propiedades.'],
-    ['04','Formato de Salida','Notebook con celdas de texto. Una celda por archivo. Markdown limpio y navegable.'],
-    ['05','Validación Pre-Entrega','Orden lógico verificado. Links funcionando. Definiciones inferidas marcadas. Contenido completo.'],
-  ] : [
-    ['1','Nombres exactos','Títulos de sección copiados literalmente. Sin parafrasear.'],
-    ['2','Orden fijo','No reordenar, no fusionar, no omitir secciones.'],
-    ['3','Verificación','get_notebook → verificar → set_rows si hay errores.'],
-    ['4','Sin interpretación libre','Preguntar antes de ejecutar si algo no está claro.'],
-    ['5','Checkpoint','Listar títulos en el hilo y esperar confirmación.'],
-    ['6','Formato por sección','# [TÍTULO] → ## Contexto → ## Hallazgos → ## Recomendaciones'],
-    ['7','Datos faltantes','"⚠️ Sin datos disponibles — [razón]". No inventar valores.'],
-    ['8','Tono','Ejecutivo, directo. Tablas con datos reales o "N/D". Sin frases genéricas.'],
-  ];
-  const cols = isAICtx ? '1fr' : '1fr 1fr';
+  const rules = isAICtx ? t('rules_sec_label') : t('rules_label');
   return `<div id="dsec-${id}-reglas" class="dsec">
-    <div class="dsec-header"><h2>Reglas SEC</h2><span class="dsec-tag" style="color:var(--accent);border-color:var(--accent)44">Structured Execution Contract</span></div>
-    <div class="rules-grid" style="grid-template-columns:${cols}">
-      ${rules.map(([n,t,b])=>`<div class="rule-card">
-        <div class="rule-n">${n}</div>
-        <div class="rule-title">${t}</div>
-        <div class="rule-body">${b}</div>
+    <div class="dsec-header">
+      <h2>${t('rules_title')}</h2>
+      <span class="dsec-tag" style="color:${p.color};border-color:${p.color}44">${t('rules_tag')}</span>
+    </div>
+    <div class="rules-list">
+      ${rules.map(([n,title,desc])=>`<div class="rule-item">
+        <div class="rule-num">${n}</div>
+        <div class="rule-body">
+          <div class="rule-title">${title}</div>
+          <div class="rule-desc">${desc}</div>
+        </div>
       </div>`).join('')}
     </div>
   </div>`;
@@ -4822,91 +4854,78 @@ function buildOutputSec(id, p) {
     <div class="dsec-header"><h2>${t('out_title')}</h2><span class="dsec-tag" style="color:#06b6d4;border-color:#06b6d444">Prompt copiable</span></div>
     <div class="note info">${t('out_note')}</div>
     <table class="nb-table">
-      <thead><tr><th>Bloque</th><th>Etapa</th><th>Contenido</th></tr></thead>
+      <thead><tr><th>${t('out_col1')}</th><th>${t('out_col2')}</th><th>${t('out_col3')}</th></tr></thead>
       <tbody>${rows.map(([b,e,c])=>`<tr><td style="color:#06b6d4">${b}</td><td>${e}</td><td>${c}</td></tr>`).join('')}</tbody>
     </table>
   </div>`;
 }
 
 function buildBestPractices(id) {
+  const eds   = t('bp_editors');
+  const steps = t('bp_steps');
   return `<div id="dsec-${id}-bestpractices" class="dsec">
-    <div class="dsec-header"><h2>Gestión de archivos</h2><span class="dsec-tag" style="color:#a855f7;border-color:#a855f744">Post-proceso manual</span></div>
-    <div class="note info">El notebook contiene el AI Context en celdas de texto. El siguiente paso manual es convertir cada celda en un archivo .md y subirlo al AI Context de Amplitude Chat.</div>
+    <div class="dsec-header">
+      <h2>${t('bp_title')}</h2>
+      <span class="dsec-tag" style="color:#a855f7;border-color:#a855f744">${t('bp_tag')}</span>
+    </div>
+    <div class="note">${t('bp_note')}</div>
 
-    <div class="bp-section">
-      <div class="bp-header"><div class="bp-header-title">Editores recomendados</div><div class="bp-header-tag">Paso 1 — Crear archivos</div></div>
-      <div class="bp-body">
-        <div class="bp-sub">¿Dónde crear y editar los archivos .md?</div>
-        <div class="bp-grid">
-          <div class="bp-card"><div class="bp-card-title">VS Code ★ Recomendado</div><div class="bp-card-desc">Extensiones: Markdown Preview Enhanced, GitLens, Prettier. Abrí la carpeta del AI Context como workspace.</div></div>
-          <div class="bp-card"><div class="bp-card-title">Cursor</div><div class="bp-card-desc">Ideal si querés usar AI para editar. Contexto de carpeta completo disponible, útil para revisar [INFERRED_DEF].</div></div>
-          <div class="bp-card"><div class="bp-card-title">Obsidian</div><div class="bp-card-desc">Vista de grafo de relaciones entre archivos. Útil para visualizar dependencias entre iniciativas.</div></div>
-          <div class="bp-card"><div class="bp-card-title">Notepad++</div><div class="bp-card-desc">Opción liviana para Windows. Soporte de Markdown básico sin configuración adicional.</div></div>
-        </div>
-      </div>
+    <div class="dsec-header" style="margin-top:20px">
+      <h2>${t('bp_ed_title')}</h2>
+      <span class="dsec-tag">${t('bp_ed_tag')}</span>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px">${t('bp_ed_sub')}</div>
+    <div class="bp-editors">
+      ${eds.map(([name,desc])=>`<div class="bp-editor">
+        <div class="bp-editor-name">${name}</div>
+        <div class="bp-editor-desc">${desc}</div>
+      </div>`).join('')}
     </div>
 
-    <div class="bp-section" style="margin-top:14px">
-      <div class="bp-header"><div class="bp-header-title">Dónde guardar las versiones</div><div class="bp-header-tag">Paso 2 — Control de versiones</div></div>
-      <div class="bp-body">
-        <div class="bp-sub">Opción A — GitHub (recomendado para equipos)</div>
-        <div class="bp-tree">📁 amplitude-ai-context/
-├── 📄 README.md
-├── 📄 index.md
-├── 📄 project_overview.md
-├── 📁 global/
-│   ├── 📄 event_dictionary.md
-│   ├── 📄 dashboard_map.md
-│   └── 📄 ai_query_logic.md
-├── 📁 initiatives/
-│   ├── 📁 onboarding/
-│   └── 📁 [iniciativa-n]/
-└── 📁 versions/
-    └── 📄 CHANGELOG.md</div>
-        <div class="bp-sub">Opción B — PC local</div>
-        <div class="bp-tree">📁 Documents/Amplitude AI Context/
-└── 📁 [NombreProyecto]/
-    ├── 📄 index.md
-    ├── 📁 global/
-    └── 📁 versions/
-        └── 📄 v1.0_YYYY-MM-DD/</div>
-        <div class="bp-sub">Paso a paso en GitHub</div>
-        <ol class="bp-steps">
-          <li><div class="step-num">1</div><div class="step-body">Crear repo: <strong>nombre-proyecto-ai-context</strong> (privado si el contenido es sensible)</div></li>
-          <li><div class="step-num">2</div><div class="step-body">Clonar localmente y crear la estructura de carpetas según opción A</div></li>
-          <li><div class="step-num">3</div><div class="step-body">Copiar el contenido del notebook celda por celda en cada archivo .md correspondiente</div></li>
-          <li><div class="step-num">4</div><div class="step-body">Commit: <strong>feat: AI Context v1.0 - [NombreProyecto] - [fecha]</strong></div></li>
-          <li><div class="step-num">5</div><div class="step-body">Para cada actualización, crear carpeta en <strong>versions/</strong> y hacer nuevo commit</div></li>
-        </ol>
-      </div>
+    <div class="dsec-header" style="margin-top:20px">
+      <h2>${t('bp_ver_title')}</h2>
+      <span class="dsec-tag">${t('bp_ver_tag')}</span>
+    </div>
+    <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--text);margin-bottom:8px">${t('bp_ver_a')}</div>
+    <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:3px;padding:12px;font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.8;margin-bottom:8px">
+      ai-context/<br>
+      &nbsp;&nbsp;[nombre-proyecto]/<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;index.md<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;project_overview.md<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;event_dictionary.md<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;dashboard_and_insights_map.md<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;ai_query_logic.md<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;versions/<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v1.0_[fecha]/<br>
+    </div>
+    <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--text);margin:14px 0 8px">${t('bp_ver_b')}</div>
+    <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:3px;padding:12px;font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.8;margin-bottom:8px">
+      ~/Documents/AI Context/[nombre-proyecto]/
     </div>
 
-    <div class="bp-section" style="margin-top:14px">
-      <div class="bp-header"><div class="bp-header-title">Pedirle a Claude que lo haga</div><div class="bp-header-tag">Paso 3 — Automatizar</div></div>
-      <div class="bp-body">
-        <div class="bp-sub">Prompt para pedirle a Claude que suba los archivos a GitHub</div>
-        <div class="bp-prompt-block" id="bp-claude-${id}">Tengo el siguiente AI Context generado por Amplitude Chat como notebook.
-Voy a pegarte el contenido de cada sección.
+    <div class="dsec-header" style="margin-top:20px">
+      <h2>${t('bp_steps_title')}</h2>
+      <span class="dsec-tag">${t('bp_ver_tag')}</span>
+    </div>
+    <ol style="margin:0;padding-left:20px">
+      ${steps.map(([s])=>`<li style="font-size:12px;color:var(--muted);padding:4px 0">${s}</li>`).join('')}
+    </ol>
 
-Tu tarea es:
-1. Crear un archivo .md por cada sección del notebook
-2. Usar exactamente el nombre de archivo indicado en cada encabezado
-3. Crear la estructura de carpetas correspondiente
-4. Subir al repo GitHub: [URL del repo]
-   rama: main, carpeta: ai-context/[nombre-proyecto]/
-5. Commit: "feat: AI Context v[N] - [NombreProyecto] - [fecha]"
-
-Aquí está el contenido del notebook:
-[pegar secciones del notebook una por una]<button class="bp-copy-btn" onclick="copyBP('bp-claude-${id}',this)">Copiar</button></div>
-        <div class="note" style="margin-top:10px">Configurá el conector de GitHub en Claude.ai antes de usar este prompt.</div>
+    <div class="dsec-header" style="margin-top:20px">
+      <h2>${t('bp_claude_title')}</h2>
+      <span class="dsec-tag">${t('bp_claude_tag')}</span>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px">${t('bp_claude_sub')}</div>
+    <div class="prompt-wrap" style="margin-bottom:12px">
+      <div class="prompt-body" id="bp-claude-${id}">${t('bp_claude_prompt').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+      <div class="prompt-footer">
+        <button class="copy-btn" onclick="copyBP('bp-claude-${id}',this)">Copiar</button>
       </div>
     </div>
+    <div class="note info">${t('bp_claude_note')}</div>
   </div>`;
 }
 
-// ════════════════════════════════════════
-// UTILS
-// ════════════════════════════════════════
 function copyEl(elId, btn) {
   const el = document.getElementById(elId);
   const clone = el.cloneNode(true);
@@ -4954,6 +4973,12 @@ function renderLanding() {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
 }
+
+
+
+
+
+
 
 
 // RICE FRAMEWORK BUILDER
@@ -5812,18 +5837,18 @@ function openSkill(id) {
     <div class="detail-title" style="color:${s.color}">${s.title}</div>
     <div class="detail-desc">${s.subtitle}</div>
     <div class="detail-tags">
-      ${s.tags.map(t => `<span class="dtag" style="background:${s.color}18;color:${s.color};border-color:${s.color}44">${t}</span>`).join('')}
+      ${s.tags.map(tag => `<span class="dtag" style="background:${s.color}18;color:${s.color};border-color:${s.color}44">${tag}</span>`).join('')}
     </div>
   `;
 
   const sbItems = [
-    {key:'overview',  label:'Vista general'},
-    {key:'que',       label:'Qué genera'},
-    {key:'triggers',  label:'Cómo activarla'},
-    {key:'pasos',     label:'Flujo paso a paso'},
-    {key:'requiere',  label:'Requisitos'},
-    {key:'notas',     label:'Notas técnicas'},
-    {key:'instalar',  label:'Cómo instalarla'},
+    {key:'overview',  label:t('skill_overview')},
+    {key:'que',       label:t('skill_what')},
+    {key:'triggers',  label:t('skill_triggers')},
+    {key:'pasos',     label:t('skill_steps')},
+    {key:'requiere',  label:t('skill_requires')},
+    {key:'notas',     label:t('skill_notes')},
+    {key:'instalar',  label:t('skill_install')},
   ];
 
   document.getElementById('skill-sidebar').innerHTML =
@@ -5888,15 +5913,15 @@ function skillOverview(s) {
     </div>
     <div class="note">${s.desc}</div>
     <div class="note info" style="border-left-color:#f59e0b;background:#1a1000">
-      <strong style="color:#f59e0b">¿Cómo funciona una Claude Skill?</strong><br>
-      Es un archivo SKILL.md que le enseña a Claude cómo ejecutar una tarea específica. Una vez instalado en Claude Desktop, se activa automáticamente cuando usás alguna de las frases clave. No necesitás escribir prompts largos — Claude reconoce la intención y sigue el flujo definido.
+      <strong style="color:#f59e0b">${t('skill_how_title')}</strong><br>
+      ${t('skill_how_body')}
     </div>`
   );
 }
 
 function skillQue(s) {
-  return skillSec(s.id, 'que', 'Qué genera', 'Output', s.color,
-    `<div class="note">Todo lo que esta skill produce cuando la activás.</div>
+  return skillSec(s.id, 'que', t('skill_what'), 'Output', s.color,
+    `<div class="note">${t('skill_what_note')}</div>
     ${s.what.map(w => `<div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--muted)">
       <span style="color:${s.color};font-size:14px;flex-shrink:0;line-height:1.4">›</span>
       <span>${w}</span>
@@ -5905,21 +5930,21 @@ function skillQue(s) {
 }
 
 function skillTriggers(s) {
-  return skillSec(s.id, 'triggers', 'Cómo activarla', 'Frases clave', s.color,
-    `<div class="note">Escribí cualquiera de estas frases en Claude Desktop y la skill se activa automáticamente.</div>
+  return skillSec(s.id, 'triggers', t('skill_triggers'), t('skill_triggers_label'), s.color,
+    `<div class="note">${t('skill_triggers_note')}</div>
     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
-      ${s.triggers.map(t => `<span style="font-family:var(--mono);font-size:11px;background:var(--surface2);border:1px solid var(--border2);border-left:2px solid ${s.color};padding:6px 12px;border-radius:2px;color:${s.color}">${t}</span>`).join('')}
+      ${s.triggers.map(tr => `<span style="font-family:var(--mono);font-size:11px;background:var(--surface2);border:1px solid var(--border2);border-left:2px solid ${s.color};padding:6px 12px;border-radius:2px;color:${s.color}">${tr}</span>`).join('')}
     </div>
     <div class="note info" style="border-left-color:${s.color};background:${s.color}0a">
-      También podés combinar con contexto específico, por ejemplo:<br>
-      <span style="font-family:var(--mono);font-size:11px;color:${s.color}">"${s.triggers[0].replace(/"/g,'')} para una empresa de salud similar a [marca]"</span>
+      ${t('skill_triggers_tip')}<br>
+      <span style="font-family:var(--mono);font-size:11px;color:${s.color}">"${s.triggers[0].replace(/"/g,'')} ${t('skill_triggers_example_suffix')}"</span>
     </div>`
   );
 }
 
 function skillPasos(s) {
-  return skillSec(s.id, 'pasos', 'Flujo paso a paso', `${s.steps.length} pasos`, s.color,
-    `<div class="note">Así ejecuta Claude esta skill de principio a fin.</div>
+  return skillSec(s.id, 'pasos', t('skill_steps'), `${s.steps.length} ${t('skill_steps_count')}`, s.color,
+    `<div class="note">${t('skill_steps_note')}</div>
     ${s.steps.map(step => `<div style="display:flex;gap:14px;padding:16px;background:var(--surface);border:1px solid var(--border2);border-left:3px solid ${step.color};margin-bottom:1px">
       <div style="width:28px;height:28px;background:${step.color};color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px">${step.n}</div>
       <div>
@@ -5931,8 +5956,8 @@ function skillPasos(s) {
 }
 
 function skillRequiere(s) {
-  return skillSec(s.id, 'requiere', 'Requisitos', 'Antes de usar', '#f59e0b',
-    `<div class="note warn">Verificá que tenés todo esto antes de activar la skill.</div>
+  return skillSec(s.id, 'requiere', t('skill_requires'), t('skill_requires_tag'), '#f59e0b',
+    `<div class="note warn">${t('skill_requires_note')}</div>
     ${s.requires.map(r => `<div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--muted)">
       <span style="color:#f59e0b;flex-shrink:0">⚠</span>
       <span>${r}</span>
@@ -5941,22 +5966,21 @@ function skillRequiere(s) {
 }
 
 function skillNotas(s) {
-  return skillSec(s.id, 'notas', 'Notas técnicas', 'Producción', s.color,
+  return skillSec(s.id, 'notas', t('skill_notes'), t('skill_notes_tag'), s.color,
     s.notes.map(n => `<div class="note${n.type==='warn'?' warn':' info'}" style="${n.type==='warn'?'border-left-color:var(--accent);background:#140a04':'border-left-color:'+s.color+';background:'+s.color+'0a'}">${n.text}</div>`).join('')
   );
 }
 
 function skillInstalar(s) {
-  return skillSec(s.id, 'instalar', 'Cómo instalarla', 'Setup', s.color,
-    `<div class="note">Seguí estos pasos para tener la skill activa en tu Claude Desktop.</div>
+  return skillSec(s.id, 'instalar', t('skill_install'), 'Setup', s.color,
+    `<div class="note">${t('skill_install_note')}</div>
     <div style="background:#0d0d0d;border:1px solid var(--border2);border-left:3px solid ${s.color};border-radius:3px;padding:16px 18px;font-family:var(--mono);font-size:12px;color:#d4d4d4;line-height:2;white-space:pre-wrap;margin-bottom:16px">${s.install}</div>
     <div class="note info" style="border-left-color:${s.color};background:${s.color}0a">
-      Los archivos SKILL.md de ambas skills están disponibles en el repositorio del playbook:
+      ${t('skill_repo_note')}
       <a href="https://github.com/10XTIAN10/amplitude-consulting" target="_blank" style="color:${s.color};text-decoration:none">github.com/10XTIAN10/amplitude-consulting ↗</a>
     </div>`
   );
 }
-
 
 </script>
 
