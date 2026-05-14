@@ -312,8 +312,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
 
 <div class="grid-section">
   <div class="grid-hdr">
-    <div class="grid-title">// Prompts del playbook</div>
-    <div class="grid-hint">click para abrir →</div>
+    <div class="grid-title" id="landing-grid-title">// Prompts del playbook</div>
+    <div class="grid-hint" id="landing-grid-hint">click para abrir →</div>
   </div>
   <div class="prompt-grid">
 
@@ -413,8 +413,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
 <!-- ══ CLAUDE SKILLS LANDING ══ -->
 <div style="max-width:1060px;margin:0 auto;padding:0 40px 56px">
   <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)">
-    <div style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">// Claude Skills</div>
-    <div style="font-family:var(--mono);font-size:9px;color:var(--muted2)">click para ver el detalle →</div>
+    <div style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)"><span id="landing-skills-title">// Claude Skills</span></div>
+    <div style="font-family:var(--mono);font-size:9px;color:var(--muted2)" id="landing-skills-hint">click para ver el detalle →</div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border)">
 
@@ -457,7 +457,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
 <!-- ══ DETAIL PAGE ══ -->
 <div id="detail-page" class="page">
   <nav class="detail-nav">
-    <button class="back-btn" onclick="goBack()">← Volver</button>
+    <button class="back-btn" onclick="goBack()" id="detail-back-btn">← Volver</button>
     <div class="detail-crumb">
       <span>Playbook</span><span class="sep">/</span>
       <span class="cur" id="detail-breadcrumb-name"></span>
@@ -4033,7 +4033,7 @@ function skillInstalar(s) {
 <!-- ══ SKILL DETAIL PAGE ══ -->
 <div id="skill-page" class="page">
   <nav class="detail-nav">
-    <button class="back-btn" onclick="goBackSkill()">← Volver</button>
+    <button class="back-btn" onclick="goBackSkill()" id="skill-back-btn">← Volver</button>
     <div class="detail-crumb">
       <span>Claude Skills</span><span class="sep">/</span>
       <span class="cur" id="skill-breadcrumb-name"></span>
@@ -6576,6 +6576,20 @@ function applyLang(lang) {
   // Update switcher UI
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+
+  // Update static DOM text nodes that can't be re-rendered
+  const staticPatch = [
+    ['detail-back-btn', t('back_btn')],
+    ['skill-back-btn', t('back_btn')],
+    ['landing-grid-title', t('grid_title')],
+    ['landing-skills-title', t('skills_title')],
+    ['landing-grid-hint', t('grid_hint')],
+    ['landing-skills-hint', t('skills_hint')],
+  ];
+  staticPatch.forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
   });
 
   // Re-render current page
