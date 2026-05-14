@@ -3100,6 +3100,7 @@ function applyLang(lang) {
 // ════════════════════════════════════════
 function applyPromptTranslations() {
 
+
 // ── METADATA (vars, checklist, phases, desc) ──────────────────────────────
 // Applied to all prompts so sidebar sections are also translated
 
@@ -3790,54 +3791,352 @@ Object.keys(META).forEach(id => {
   }
 });
 
-// ── PROMPT TEXTS ──────────────────────────────────────────────────────────
-// EN and PT-BR full prompt texts
-
+// ══════════════════════════════════════════════
+// FULL PROMPT TRANSLATIONS EN + PT-BR
+// 01 — RAYOS X
+// ══════════════════════════════════════════════
+// ─────────────────────────────────────────────────────────────────────────────
+// 01 — RAYOS X
+// ─────────────────────────────────────────────────────────────────────────────
 PROMPTS.rayosx._en.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 01 — RAYOS X
 
 ⚠️ BEHAVIORAL INSTRUCTIONS — READ AND RESPECT BEFORE EXECUTING ⚠️
-Structured Execution Contract — MANDATORY rules:
-1. EXACT NAMES: Section/area/row titles are literal. No paraphrasing.
-2. FIXED ORDER: 12 rows as defined in SECTION 8.
-3. MANDATORY VERIFICATION: get_notebook before sharing link. Correct if needed.
-4. NO FREE INTERPRETATION: Ask before executing if unclear.
-5. CHECKPOINT BEFORE NOTEBOOK: List 12 exact titles and wait for confirmation.
-6. FIXED FORMAT: # [TITLE] → ## Context → ## Findings → ## Recommendations
-7. MISSING DATA: "⚠️ No data available — [reason]". Do not invent.
-8. TONE: Executive. Tables with real data or "N/A". No generic phrases.
+This prompt defines a Structured Execution Contract. The following rules
+are MANDATORY and take priority over any personal interpretation:
+
+1. EXACT NAMES: Every section, area and notebook row must use the title
+   EXACTLY as written in this prompt.
+   No paraphrasing, summarizing, translating or renaming.
+   ✅ Correct:   "AREA 2 — UNUSED CHARTS"
+   ❌ Incorrect: "Area 2: Chart Analysis"
+
+2. FIXED ORDER: The section order in the notebook is defined in SECTION 8.
+   Do not reorder, merge or omit sections.
+
+3. MANDATORY VERIFICATION: After creating any artifact (notebook, chart),
+   verify with get_notebook or get_chart before sharing the link.
+   If order or titles don't match exactly, fix with set_rows before continuing.
+
+4. NO FREE INTERPRETATION: If something is unclear, ask before executing.
+   Do not assume or improvise names or structures not explicitly defined.
+
+5. CHECKPOINT BEFORE NOTEBOOK: Before creating the notebook, list the
+   12 exact titles you will use (in order) in the thread and wait for
+   confirmation before proceeding.
+
+6. FIXED FORMAT PER SECTION: Each rich_text notebook row follows:
+   # [EXACT SECTION TITLE]
+   ## Context
+   ## Findings
+   ## Recommendations
+
+7. MISSING DATA HANDLING: If a tool returns no data:
+   - DO NOT omit the section
+   - DO NOT invent values
+   - Write: "⚠️ No data available — [technical reason]"
+
+8. TONE AND DENSITY:
+   - Executive language, direct, no filler
+   - Every table with real data or "N/A" — never empty cells
+   - Max 3 lines of free text per finding; the rest in tables
+   - Avoid generic phrases like "it is important to consider"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 QUALITY CHECKPOINT — RUN BEFORE REPORTING RESULTS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-□ PROJECTS: ALL organization projects listed? Document classification decisions.
-□ USERS/CHAMPIONS: Table has REAL users with concrete data? No empty rows.
-□ FEATURES: Every contracted feature has status 🟢/🟡/🔴? No unclassified rows.
-□ SCORECARD: Every dimension has real numeric score (0–100)? Data-backed.
-□ AREAS 1–4: Every area has at least one specific finding with data?
-□ FOLLOW-UP PROMPTS: Every critical area has its exact prompt?
+Before sharing any result, verify item by item.
+If any check fails → fix it before continuing.
+
+□ PROJECTS: Are ALL organization projects listed?
+  → Confirm nothing is missing. If classification was ambiguous,
+    document the decision taken and its justification.
+
+□ USERS / CHAMPIONS: Does the table have REAL users with concrete data?
+  → No empty rows or "N/A" in name, actions or tools.
+    If a user has insufficient data, document why.
+
+□ FEATURES: Does every contracted feature have its status (🟢/🟡/🔴)?
+  → No row can remain unclassified. If no usage data,
+    mark 🔴 and note "⚠️ No usage data available".
+
+□ SCORECARD: Does every dimension have a real numeric score (0–100)?
+  → Do not accept ranges or vague estimates. Each score must be
+    supported by at least one concrete data point visible in the thread.
+
+□ AREAS 1–4: Does every area have at least one specific finding with data?
+  → Do not accept empty sections. Document what was searched and found,
+    even if the result is "no critical findings in this period".
+
+□ FOLLOW-UP PROMPTS: Does every critical area have its exact prompt?
+  → The prompt must be pasteable into a new thread without additional editing.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-DELIVERABLES AT COMPLETION
+EXPECTED DELIVERABLES AT COMPLETION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 □ 1 Notebook with 12 sections in exact order (link in thread)
-□ Executive scorecard visible in thread
+□ Executive scorecard visible in thread (not just in notebook)
 □ Follow-up prompt for each critical area
 □ Links to all artifacts in thread
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-VARIABLES | PHASE 0 | SECTIONS 0–7 | NOTEBOOK DELIVERY
+VARIABLE DEFINITION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Period: last 180 days. Zombie: no views in 90d. Champion: >10 actions.
-Low adoption: <20% active users. Naming: snake_case.
+Declare in thread before starting:
+- Start date: [today - 180 days]
+- End date: [today]
+- Main App ID: [to confirm in PHASE 0]
+- Zombie threshold: chart/dashboard with no views in 90 days
+- Champion threshold: user with more than 10 actions in 180 days
+- Low adoption threshold: feature with < 20% of active users
+- Expected naming convention: snake_case
 
-PHASE 0 — Classify ALL projects: productive vs non-productive.
-Ask if any doubt before continuing.
+These values will be used consistently throughout the ENTIRE analysis.
+If any value changes, declare it explicitly before using it.
 
-SECTIONS: 0 Scorecard | 1 Projects | 2 Champions | 3 Features |
-AREAS: 1 Governance | 2 Unused Charts | 3 Underused Features | 4 AI Tools |
-SECTIONS: 4 Maturity | 5 Recommendations | 6 Enablement | 7 Roadmap
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PERSONA AND OBJECTIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+You act as Senior Martech Analyst and Analytics Strategist expert in
+generating actionable insights and Amplitude adoption.
+OBJECTIVE: Perform an exhaustive X-RAY analysis of the entire
+organization in Amplitude to evaluate health, adoption and optimization
+opportunities over the last 180 days.
 
-NOTEBOOK ROWS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PHASE 0 — PRIOR CLASSIFICATION (run first)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+List all organization projects with:
+- Name, App ID, event volume last 90 days, active users per week
+
+PRODUCTIVE if at least one applies:
+  • More than 100,000 events/month
+  • More than 5 active users per week
+  • Name without 'dev', 'test', 'staging', 'sandbox', 'demo', 'qa'
+
+NON-PRODUCTIVE if all apply:
+  • Less than 100,000 events/month AND less than 5 users/week
+  • Or name contains 'dev', 'test', 'staging', 'sandbox', 'demo', 'qa'
+
+If you have doubts about any project, ask and wait for confirmation
+before continuing. Show available contracted features (without lock)
+and confirm you have identified all of them.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 0 — EXECUTIVE SCORECARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Scoring table 0–100 (🟢 >80 / 🟡 60–80 / 🔴 <60):
+
+| Dimension                    | Weight | Score | Status | Trend |
+|------------------------------|--------|-------|--------|-------|
+| Data Governance & Taxonomy   |  30%   |       | 🟢/🟡/🔴 | ↑/↓/→ |
+| Core Features Adoption       |  25%   |       | 🟢/🟡/🔴 | ↑/↓/→ |
+| Charts Utilization           |  20%   |       | 🟢/🟡/🔴 | ↑/↓/→ |
+| Features Adoption            |  15%   |       | 🟢/🟡/🔴 | ↑/↓/→ |
+| AI Tools Usage               |  10%   |       | 🟢/🟡/🔴 | ↑/↓/→ |
+| **WEIGHTED TOTAL SCORE**     |**100%**|       | 🟢/🟡/🔴 | ↑/↓/→ |
+
+After the table include:
+- 3 main strengths (concrete, with data)
+- 3 main risks (concrete, with data)
+Show in thread AND in Row 1 of notebook.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1 — PROJECT INVENTORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+A) PRODUCTIVE PROJECTS:
+| Project Name | App ID | Events/month | Active Users | Active Charts | Last Activity | Health Score |
+
+B) NON-PRODUCTIVE PROJECTS:
+| Project Name | App ID | Events/month | Active Users | Classification Reason | Suggested Action |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — CHAMPIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+A) TOP GLOBAL CHAMPIONS (last 180 days):
+| Name | Total Actions | Charts Created | Dashboards | Sessions | Unique Features Used | Expertise Level |
+Expertise: Basic (1–2 features) / Intermediate (3–5) / Advanced (6+)
+
+B) TOP 3 PER PRODUCTIVE PROJECT:
+Same columns as A, grouped by project.
+
+C) Concentration analysis:
+- Are champions concentrated or specialized by project?
+- What % of content creation is in the top 10% of users?
+- Dependency risk if key champions leave?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3 — CONTRACTED FEATURES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Feature | Contracted | Unique Users | Total Usage | Adoption % | Trend | Status 🟢/🟡/🔴 |
+
+Analyze these features:
+- Analytics (Event Segmentation, Funnels, Retention, Pathfinder)
+- Session Replay
+- Experiment (A/B Testing)
+- Audiences (CDP)
+- Guides & Surveys
+- Marketing Analytics
+- Feature Flags
+
+For each feature include: total created, unique active users, usage trend.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AREA 1 — DATA GOVERNANCE & TAXONOMY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.1 Taxonomy Health per productive project:
+| Project | Active Events | Inactive Events | Without Description % | Without Properties % | Naming Issues | Duplicates |
+
+1.2 Data Quality:
+- Anomalous volume (>50% vs historical average)
+- Active deprecated events
+- High cardinality properties (>1,000 unique values)
+- Test events in production
+- Events firing with null or empty values
+
+1.3 Governance Recommendations:
+| Problem | Impact | Action | Owner | Effort | Expected Impact |
+
+Include: exact follow-up prompt for taxonomy cleanup
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AREA 2 — UNUSED CHARTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2.1 By chart type:
+| Type | Total | Active (≥1 view/90d) | Zombies | Orphans | Usage Rate |
+Types: Segmentation / Funnel / Retention / Pathfinder / Data Tables / Journey Maps / Others
+
+2.2 Dashboards and Notebooks:
+- Active vs zombies
+- Dashboards with +10 charts (complexity risk)
+- Notebooks without owner
+- Content created but never shared
+
+2.3 Engagement Analysis:
+- Creator/consumer ratio per project
+- Top 10 most viewed charts (with view count)
+- Charts never viewed except by creator
+- Average time from creation to first view
+
+2.4 Recommendations + follow-up prompt for cleanup
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AREA 3 — CONTRACTED FEATURES WITH NO REAL USE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+For each feature with adoption < 20%:
+
+Metrics:
+- Total created vs total with real use
+- Unique users who used it at least once
+- Adoption rate vs contracted base
+- Real use or just test configurations?
+
+Analysis:
+- Business reasons? (strategic decisions, team availability)
+- Team expertise? (technical knowledge, training)
+- Abandoned content? (started but not completed)
+
+Concrete recommended use case for each feature
+Specific follow-up prompt per feature
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AREA 4 — AI TOOLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4.1 Inventory:
+| AI Tool | Active | Unique Users | Total Interactions | Trend |
+Tools: AI Chat / AI Agents / AI Visibility / AI Feedback
+
+4.2 Usage Analysis:
+- % of active users who tried at least 1 AI tool
+- Power users (top 5 with more AI interactions)
+- Feature with best adoption and why
+- Correlation between AI usage and chart creation
+- Most frequent query types in AI Chat
+
+4.3 AI Champions:
+- Top 3–5 users with highest AI adoption potential
+- Use cases by role (PM, Analyst, Marketing)
+- Follow-up prompt for best practices guide
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4 — MATURITY DIAGNOSIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Levels: Reactive (0–25) / Exploratory (26–50) / Defined (51–75) / Optimized (76–100)
+
+By project:
+| Project | Score | Level | Strengths | Weaknesses | Next Step |
+
+By dimension:
+| Dimension | Score | Level | Main Gap | Action Prompt |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — STRATEGIC RECOMMENDATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5.1 QUICK WINS (<4 weeks):
+Top 3 with: Problem | Action | Impact | Effort | Follow-up Prompt
+
+5.2 DATA GOVERNANCE (3–5 recommendations):
+| Problem | Action | Owner | Effort | Expected Impact | Follow-up Prompt |
+
+5.3 TOOLS AND ADOPTION (3–5 recommendations):
+Same structure as 5.2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 6 — ACTION PLAN & ENABLEMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.1 Training Program:
+| Topic | Audience | Level | Business Goal | Duration | Priority | Follow-up Prompt |
+
+6.2 1-1 Sessions:
+CREATORS (mentoring):
+- Profile: advanced users with creation potential
+- Objective: maximize their impact, certify as internal champions
+- Suggested agenda: review their charts, identify improvements, define governance
+- Follow-up prompt
+
+CONSUMERS (activation):
+- Profile: users with Amplitude access who barely use it
+- Objective: demonstrate immediate value for their specific role
+- Suggested agenda: show relevant dashboards, teach basic reading, define key metrics
+- Follow-up prompt
+
+6.3 Structural Initiatives:
+- Champions Program: structure, roles, meetings, benefits
+- Insights Newsletter: audience, cadence, format, KPIs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 7 — 90-DAY ROADMAP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Month 1 — Foundations 🏗️
+- [ ] Clean up zombie charts and orphan dashboards
+- [ ] Document Data Taxonomy (priority events)
+- [ ] Identify champions per project
+- [ ] Run basic training for consumers
+- [ ] Define governance criteria with the team
+
+Month 2 — Activation 🚀
+- [ ] Implement identified governance improvements
+- [ ] Launch Champions Program (first meeting)
+- [ ] Advanced trainings (funnels, retention, experimentation)
+- [ ] Activate contracted features with low adoption
+- [ ] Run first Insights Newsletter
+
+Month 3 — Optimization 📈
+- [ ] Compare initial scorecard vs current
+- [ ] Scale best practices to all projects
+- [ ] Certify power users
+- [ ] Evaluate results of activated features
+- [ ] Plan next maturity phase
+
+For each roadmap item include:
+- Exact prompt to execute it in a new thread
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 8 — FINAL DELIVERY IN NOTEBOOK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1 — Before creating the notebook, list the 12 exact titles
+         in the thread in order and wait for user confirmation.
+
+STEP 2 — Create the notebook with exactly these titles:
 Row 1  → # SECTION 0 — EXECUTIVE SCORECARD
 Row 2  → # SECTION 1 — PROJECT INVENTORY
 Row 3  → # SECTION 2 — CHAMPIONS
@@ -3849,41 +4148,358 @@ Row 8  → # AREA 4 — AI TOOLS
 Row 9  → # SECTION 4 — MATURITY DIAGNOSIS
 Row 10 → # SECTION 5 — STRATEGIC RECOMMENDATIONS
 Row 11 → # SECTION 6 — ACTION PLAN & ENABLEMENT
-Row 12 → # SECTION 7 — 90-DAY ROADMAP`;
+Row 12 → # SECTION 7 — 90-DAY ROADMAP
+
+STEP 3 — Call get_notebook and verify: order, exact titles, content per row.
+STEP 4 — If discrepancies: edit_notebook with set_rows before sharing.
+STEP 5 — Only after verifying: share the notebook link in the thread.
+
+Each rich_text row must follow:
+# [EXACT SECTION TITLE]
+## Context
+[brief context of what is analyzed and why it matters]
+## Findings
+[tables with real data — never empty cells]
+## Recommendations
+[concrete, with owner and effort]`;
 
 PROMPTS.rayosx._pt.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 01 — RAYOS X
 
 ⚠️ INSTRUÇÕES DE COMPORTAMENTO — LER E RESPEITAR ANTES DE EXECUTAR ⚠️
-Structured Execution Contract — Regras OBRIGATÓRIAS:
-1. NOMES EXATOS: Títulos literais. Sem parafrasear.
-2. ORDEM FIXA: 12 linhas conforme definido na SEÇÃO 8.
-3. VERIFICAÇÃO OBRIGATÓRIA: get_notebook antes de compartilhar link.
-4. SEM INTERPRETAÇÃO LIVRE: Perguntar antes de executar se não estiver claro.
-5. CHECKPOINT ANTES DO NOTEBOOK: Listar 12 títulos e aguardar confirmação.
-6. FORMATO FIXO: # [TÍTULO] → ## Contexto → ## Achados → ## Recomendações
-7. DADOS AUSENTES: "⚠️ Sem dados disponíveis — [razão]". Não inventar.
-8. TOM: Executivo. Tabelas com dados reais ou "N/D". Sem frases genéricas.
+Este prompt define um Structured Execution Contract. As seguintes regras
+são OBRIGATÓRIAS e têm prioridade sobre qualquer interpretação pessoal:
+
+1. NOMES EXATOS: Cada seção, área e linha do notebook deve usar o título
+   EXATAMENTE como está escrito neste prompt.
+   Proibido parafrasear, resumir, traduzir ou renomear.
+   ✅ Correto:   "ÁREA 2 — CHARTS NÃO UTILIZADOS"
+   ❌ Incorreto: "Área 2: Análise de Charts"
+
+2. ORDEM FIXA: A ordem de seções no notebook é a definida na SEÇÃO 8.
+   Não reordenar, não fundir, não omitir seções.
+
+3. VERIFICAÇÃO OBRIGATÓRIA: Após criar qualquer artefato (notebook, chart),
+   verificar com get_notebook ou get_chart antes de compartilhar o link.
+   Se a ordem ou títulos não coincidirem, corrigir com set_rows antes de continuar.
+
+4. SEM INTERPRETAÇÃO LIVRE: Se algo não estiver claro, perguntar antes de
+   executar. Não assumir nem improvisar nomes ou estruturas não definidas.
+
+5. CHECKPOINT ANTES DO NOTEBOOK: Antes de criar o notebook, listar no
+   hilo os 12 títulos exatos que serão usados (em ordem) e aguardar
+   confirmação antes de prosseguir.
+
+6. FORMATO FIXO POR SEÇÃO: Cada linha rich_text do notebook segue:
+   # [TÍTULO EXATO DA SEÇÃO]
+   ## Contexto
+   ## Achados
+   ## Recomendações
+
+7. TRATAMENTO DE DADOS AUSENTES: Se uma ferramenta não retornar dados:
+   - NÃO omitir a seção
+   - NÃO inventar valores
+   - Escrever: "⚠️ Sem dados disponíveis — [razão técnica]"
+
+8. TOM E DENSIDADE:
+   - Linguagem executiva, direta, sem relleno
+   - Cada tabela com dados reais ou "N/D" — nunca células vazias
+   - Máximo 3 linhas de texto livre por achado; o restante em tabelas
+   - Evitar frases genéricas como "é importante considerar"
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CHECKPOINT DE QUALIDADE — EXECUTAR ANTES DE REPORTAR RESULTADOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-□ PROJETOS: TODOS os projetos da organização listados? Documentar decisões.
-□ USUÁRIOS/CHAMPIONS: Tabela tem usuários REAIS com dados concretos? Sem linhas vazias.
-□ FUNCIONALIDADES: Cada funcionalidade contratada tem status 🟢/🟡/🔴?
-□ SCORECARD: Cada dimensão tem pontuação numérica real (0–100)? Com dados.
-□ ÁREAS 1–4: Cada área tem pelo menos um achado específico com dados?
+Antes de compartilhar qualquer resultado, verificar item por item.
+Se algum check falhar → corrigir antes de continuar.
+
+□ PROJETOS: Todos os projetos da organização estão listados?
+  → Confirmar que nenhum está faltando. Se houve ambiguidade de classificação,
+    documentar a decisão tomada e sua justificativa.
+
+□ USUÁRIOS / CHAMPIONS: A tabela tem usuários REAIS com dados concretos?
+  → Nenhuma linha vazia ou "N/D" em nome, ações ou ferramentas.
+    Se um usuário não tem dados suficientes, documentar por quê.
+
+□ FUNCIONALIDADES: Cada funcionalidade contratada tem seu status (🟢/🟡/🔴)?
+  → Nenhuma linha pode ficar sem classificar. Se não há dados de uso,
+    marcar 🔴 e anotar "⚠️ Sem dados de uso disponíveis".
+
+□ SCORECARD: Cada dimensão tem uma pontuação numérica real (0–100)?
+  → Não aceitar intervalos nem estimativas vagas. Cada pontuação deve ser
+    fundamentada em pelo menos um dado concreto visível no hilo.
+
+□ ÁREAS 1–4: Cada área tem pelo menos um achado específico com dado?
+  → Não aceitar seções vazias. Documentar o que foi buscado e encontrado,
+    mesmo que o resultado seja "sem achados críticos neste período".
+
 □ PROMPTS DE ACOMPANHAMENTO: Cada área crítica tem seu prompt exato?
+  → O prompt deve poder ser colado em um novo hilo sem edição adicional.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-ENTREGÁVEIS + VARIÁVEIS + FASE 0 + SEÇÕES 0–7 + ENTREGA EM NOTEBOOK
+ENTREGÁVEIS ESPERADOS AO FINALIZAR
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Período: últimos 180 dias. Zombie: sem visualizações em 90d. Champion: >10 ações.
-Baixa adoção: <20% usuários ativos. Nomenclatura: snake_case.
+□ 1 Notebook com 12 seções em ordem exata (link no hilo)
+□ Scorecard executivo visível no hilo (não apenas no notebook)
+□ Prompt de acompanhamento por cada área crítica
+□ Links para todos os artefatos no hilo
 
-FASE 0 — Classificar TODOS os projetos: produtivo vs não produtivo.
-Perguntar se houver dúvida antes de continuar.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DEFINIÇÃO DE VARIÁVEIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Declarar no hilo antes de iniciar:
+- Data de início: [hoje - 180 dias]
+- Data de fim: [hoje]
+- App ID principal: [a confirmar na FASE 0]
+- Limite zombie: chart/dashboard sem visualizações em 90 dias
+- Limite champion: usuário com mais de 10 ações em 180 dias
+- Limite adoção baixa: funcionalidade com < 20% de usuários ativos
+- Convenção de nomenclatura esperada: snake_case
 
-LINHAS DO NOTEBOOK:
+Esses valores serão usados de forma consistente em TODA a análise.
+Se algum valor mudar, declará-lo explicitamente antes de usá-lo.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PERSONA E OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Você atua como Senior Martech Analyst e Analytics Strategist especialista
+em geração de insights acionáveis e adoção do Amplitude.
+OBJETIVO: Realizar uma análise exaustiva de RAIOS X de toda a
+organização no Amplitude para avaliar saúde, adoção e oportunidades
+de otimização nos últimos 180 dias.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FASE 0 — CLASSIFICAÇÃO PRÉVIA (executar primeiro)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Listar todos os projetos da organização com:
+- Nome, App ID, volume de eventos últimos 90 dias, usuários ativos por semana
+
+PRODUTIVO se pelo menos um se aplica:
+  • Mais de 100.000 eventos/mês
+  • Mais de 5 usuários ativos por semana
+  • Nome sem 'dev', 'test', 'staging', 'sandbox', 'demo', 'qa'
+
+NÃO PRODUTIVO se todos se aplicam:
+  • Menos de 100.000 eventos/mês E menos de 5 usuários/semana
+  • Ou nome contém 'dev', 'test', 'staging', 'sandbox', 'demo', 'qa'
+
+Se houver dúvida sobre algum projeto, perguntar e aguardar confirmação
+antes de continuar. Mostrar funcionalidades contratadas disponíveis (sem
+trava) e confirmar que todas foram identificadas.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 0 — SCORECARD EXECUTIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Tabela de pontuação 0–100 (🟢 >80 / 🟡 60–80 / 🔴 <60):
+
+| Dimensão                           | Peso  | Pontuação | Status    | Tendência |
+|------------------------------------|-------|-----------|-----------|-----------|
+| Governança de Dados & Taxonomia    |  30%  |           | 🟢/🟡/🔴 | ↑/↓/→    |
+| Adoção de Funcionalidades Core     |  25%  |           | 🟢/🟡/🔴 | ↑/↓/→    |
+| Utilização de Charts               |  20%  |           | 🟢/🟡/🔴 | ↑/↓/→    |
+| Adoção de Funcionalidades          |  15%  |           | 🟢/🟡/🔴 | ↑/↓/→    |
+| Uso de Ferramentas de IA           |  10%  |           | 🟢/🟡/🔴 | ↑/↓/→    |
+| **PONTUAÇÃO TOTAL PONDERADA**      |**100%**|          | 🟢/🟡/🔴 | ↑/↓/→    |
+
+Após a tabela incluir:
+- 3 principais pontos fortes (concretos, com dados)
+- 3 principais riscos (concretos, com dados)
+Mostrar no hilo E na Linha 1 do notebook.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 1 — INVENTÁRIO DE PROJETOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+A) PROJETOS PRODUTIVOS:
+| Nome do Projeto | App ID | Eventos/mês | Usuários Ativos | Charts Ativos | Última Atividade | Score de Saúde |
+
+B) PROJETOS NÃO PRODUTIVOS:
+| Nome do Projeto | App ID | Eventos/mês | Usuários Ativos | Razão de Classificação | Ação Sugerida |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 2 — CHAMPIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+A) TOP CHAMPIONS GLOBAIS (últimos 180 dias):
+| Nome | Total de Ações | Charts Criados | Dashboards | Sessões | Funcionalidades Únicas Usadas | Nível de Expertise |
+Expertise: Básico (1–2 funcionalidades) / Intermediário (3–5) / Avançado (6+)
+
+B) TOP 3 POR PROJETO PRODUTIVO:
+Mesmas colunas de A, agrupado por projeto.
+
+C) Análise de concentração:
+- Os champions estão concentrados ou especializados por projeto?
+- Que % da criação de conteúdo está no top 10% de usuários?
+- Risco de dependência se champions-chave saírem?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 3 — FUNCIONALIDADES CONTRATADAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Funcionalidade | Contratada | Usuários Únicos | Uso Total | Adoção % | Tendência | Status 🟢/🟡/🔴 |
+
+Analisar estas funcionalidades:
+- Analytics (Segmentação de Eventos, Funis, Retenção, Pathfinder)
+- Session Replay
+- Experiment (Teste A/B)
+- Audiences (CDP)
+- Guides & Surveys
+- Marketing Analytics
+- Feature Flags
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ÁREA 1 — GOVERNANÇA DE DADOS & TAXONOMIA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1.1 Saúde da Taxonomia por projeto produtivo:
+| Projeto | Eventos Ativos | Eventos Inativos | Sem Descrição % | Sem Propriedades % | Problemas de Nomenclatura | Duplicatas |
+
+1.2 Qualidade de Dados:
+- Volume anômalo (>50% vs média histórica)
+- Eventos depreciados ainda ativos
+- Propriedades de alta cardinalidade (>1.000 valores únicos)
+- Eventos de teste em produção
+- Eventos disparando com valores nulos ou vazios
+
+1.3 Recomendações de Governança:
+| Problema | Impacto | Ação | Responsável | Esforço | Impacto Esperado |
+
+Incluir: prompt exato de acompanhamento para limpeza de taxonomia
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ÁREA 2 — CHARTS NÃO UTILIZADOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2.1 Por tipo de chart:
+| Tipo | Total | Ativos (≥1 view/90d) | Zombies | Órfãos | Taxa de Uso |
+Tipos: Segmentação / Funil / Retenção / Pathfinder / Data Tables / Journey Maps / Outros
+
+2.2 Dashboards e Notebooks:
+- Ativos vs zombies
+- Dashboards com +10 charts (risco de complexidade)
+- Notebooks sem responsável
+- Conteúdo criado mas nunca compartilhado
+
+2.3 Análise de Engajamento:
+- Razão criador/consumidor por projeto
+- Top 10 charts mais visualizados (com contagem de views)
+- Charts nunca visualizados exceto pelo criador
+- Tempo médio da criação até a primeira visualização
+
+2.4 Recomendações + prompt de acompanhamento para limpeza
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ÁREA 3 — FUNCIONALIDADES CONTRATADAS SEM USO REAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Para cada funcionalidade com adoção < 20%:
+
+Métricas:
+- Total criado vs total com uso real
+- Usuários únicos que a usaram pelo menos uma vez
+- Taxa de adoção vs base contratada
+- Uso real ou apenas configurações de teste?
+
+Análise:
+- Razões de negócio? (decisões estratégicas, disponibilidade de equipe)
+- Expertise da equipe? (conhecimento técnico, treinamentos)
+- Conteúdo abandonado? (iniciado mas não concluído)
+
+Caso de uso concreto recomendado para cada funcionalidade
+Prompt específico de acompanhamento por funcionalidade
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ÁREA 4 — FERRAMENTAS DE IA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4.1 Inventário:
+| Ferramenta de IA | Ativa | Usuários Únicos | Total de Interações | Tendência |
+Ferramentas: AI Chat / AI Agents / AI Visibility / AI Feedback
+
+4.2 Análise de Uso:
+- % de usuários ativos que experimentaram pelo menos 1 ferramenta de IA
+- Power users (top 5 com mais interações de IA)
+- Funcionalidade com melhor adoção e por quê
+- Correlação entre uso de IA e criação de charts
+- Tipos de consultas mais frequentes no AI Chat
+
+4.3 AI Champions:
+- Top 3–5 usuários com maior potencial de adoção de IA
+- Casos de uso por papel (PM, Analista, Marketing)
+- Prompt de acompanhamento para guia de melhores práticas
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 4 — DIAGNÓSTICO DE MATURIDADE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Níveis: Reativo (0–25) / Exploratório (26–50) / Definido (51–75) / Otimizado (76–100)
+
+Por projeto:
+| Projeto | Pontuação | Nível | Pontos Fortes | Pontos Fracos | Próximo Passo |
+
+Por dimensão:
+| Dimensão | Pontuação | Nível | Lacuna Principal | Prompt de Ação |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 5 — RECOMENDAÇÕES ESTRATÉGICAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5.1 QUICK WINS (<4 semanas):
+Top 3 com: Problema | Ação | Impacto | Esforço | Prompt de Acompanhamento
+
+5.2 GOVERNANÇA DE DADOS (3–5 recomendações):
+| Problema | Ação | Responsável | Esforço | Impacto Esperado | Prompt de Acompanhamento |
+
+5.3 FERRAMENTAS E ADOÇÃO (3–5 recomendações):
+Mesma estrutura do 5.2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 6 — PLANO DE AÇÃO & ENABLEMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.1 Programa de Treinamentos:
+| Tópico | Audiência | Nível | Objetivo de Negócio | Duração | Prioridade | Prompt de Acompanhamento |
+
+6.2 Sessões 1-1:
+CRIADORES (mentoria):
+- Perfil: usuários avançados com potencial de criação
+- Objetivo: maximizar seu impacto, certificar como champions internos
+- Agenda sugerida: revisar seus charts, identificar melhorias, definir governança
+- Prompt de acompanhamento
+
+CONSUMIDORES (ativação):
+- Perfil: usuários com acesso ao Amplitude que mal o usam
+- Objetivo: demonstrar valor imediato para seu papel específico
+- Agenda sugerida: mostrar dashboards relevantes, ensinar leitura básica, definir métricas-chave
+- Prompt de acompanhamento
+
+6.3 Iniciativas Estruturais:
+- Programa de Champions: estrutura, papéis, reuniões, benefícios
+- Insights Newsletter: audiência, cadência, formato, KPIs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 7 — ROADMAP 90 DIAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Mês 1 — Fundações 🏗️
+- [ ] Limpar charts zombie e dashboards órfãos
+- [ ] Documentar Data Taxonomy (eventos prioritários)
+- [ ] Identificar champions por projeto
+- [ ] Realizar treinamento básico para consumidores
+- [ ] Definir critérios de governança com a equipe
+
+Mês 2 — Ativação 🚀
+- [ ] Implementar melhorias de governança identificadas
+- [ ] Lançar Programa de Champions (primeira reunião)
+- [ ] Treinamentos avançados (funis, retenção, experimentação)
+- [ ] Ativar funcionalidades contratadas com baixa adoção
+- [ ] Publicar primeira Insights Newsletter
+
+Mês 3 — Otimização 📈
+- [ ] Comparar scorecard inicial vs atual
+- [ ] Escalar melhores práticas para todos os projetos
+- [ ] Certificar power users
+- [ ] Avaliar resultados das funcionalidades ativadas
+- [ ] Planejar próxima fase de maturidade
+
+Para cada item do roadmap incluir:
+- Prompt exato para executá-lo em um novo hilo
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 8 — ENTREGA FINAL NO NOTEBOOK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASSO 1 — Antes de criar o notebook, listar os 12 títulos exatos
+          no hilo em ordem e aguardar confirmação do usuário.
+
+PASSO 2 — Criar o notebook com exatamente estes títulos:
 Linha 1  → # SEÇÃO 0 — SCORECARD EXECUTIVO
 Linha 2  → # SEÇÃO 1 — INVENTÁRIO DE PROJETOS
 Linha 3  → # SEÇÃO 2 — CHAMPIONS
@@ -3895,167 +4511,957 @@ Linha 8  → # ÁREA 4 — FERRAMENTAS DE IA
 Linha 9  → # SEÇÃO 4 — DIAGNÓSTICO DE MATURIDADE
 Linha 10 → # SEÇÃO 5 — RECOMENDAÇÕES ESTRATÉGICAS
 Linha 11 → # SEÇÃO 6 — PLANO DE AÇÃO & ENABLEMENT
-Linha 12 → # SEÇÃO 7 — ROADMAP 90 DIAS`;
+Linha 12 → # SEÇÃO 7 — ROADMAP 90 DIAS
 
-// For remaining prompts (taxonomia, experiment, funnel, ai, newsletter, dashboard, aictxglobal, aictxinitiative)
-// EN and PT prompts reference the full structured content in their respective languages
-// The metadata (vars, checklist, phases, notebook) is already fully translated above via META
+PASSO 3 — Chamar get_notebook e verificar: ordem, títulos exatos, conteúdo por linha.
+PASSO 4 — Se houver discrepâncias: edit_notebook com set_rows antes de compartilhar.
+PASSO 5 — Somente após verificar: compartilhar o link do notebook no hilo.
 
-// Taxonomia - compact EN/PT prompts
+Cada linha rich_text deve seguir:
+# [TÍTULO EXATO DA SEÇÃO]
+## Contexto
+[contexto breve do que é analisado e por que importa]
+## Achados
+[tabelas com dados reais — nunca células vazias]
+## Recomendações
+[concretas, com responsável e esforço]`;
+
+// ══════════════════════════════════════════════
+// 02-06 PROMPTS EN + PT-BR
+// ══════════════════════════════════════════════
+// ─────────────────────────────────────────────────────────────────────────────
+// 02 — TAXONOMÍA AUDIT
+// ─────────────────────────────────────────────────────────────────────────────
 PROMPTS.taxonomia._en.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 02 — TAXONOMÍA AUDIT
 
 ⚠️ BEHAVIORAL INSTRUCTIONS — READ BEFORE EXECUTING ⚠️
-SEC Contract: 1) Exact names 2) Fixed order: 9 rows 3) get_notebook verification
-4) Checkpoint: list 9 rows and wait for confirmation 5) No invented data
-6) Executive tone 7) Phase 0 first: detect naming before any section
-8) Quality checkpoint: 5 items before publishing notebook
+Structured Execution Contract. MANDATORY rules:
+1. EXACT NAMES: Row titles copied literally.
+2. FIXED ORDER: Do not reorder, merge or omit.
+3. VERIFICATION: get_notebook before sharing the link.
+4. NO FREE INTERPRETATION: Ask if there are doubts.
+5. CHECKPOINT: List the 9 rows and wait for confirmation.
+6. MISSING DATA: "⚠️ No data available — [reason]"
+7. TONE: Executive, direct. Tables with real data or "N/A".
+8. NEVER publish the notebook without passing the Extended Checkpoint.
 
-VARIABLES (mandatory): Project [PROJECT_NAME], App ID [APP_ID]
-OPTIONAL defaults: Period 90d, Ghost threshold Q/I<0.01, High cardinality >1000 unique values
-Naming: determine in Phase 0 — do NOT assume
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VARIABLES — DECLARE AT START
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Project: [auto-detect from session context; if not possible, ask]
+- App ID: [auto-detect from session context; if not possible, ask]
+- Period: last 90 days
+- Low ingested volume threshold: < 10 occurrences in 90 days
+- Low query volume threshold: < 5 queries in 90 days
+- Ghost event threshold: Query/Ingested Ratio < 0.01
+- High cardinality: > 1,000 unique values
+- Expected naming: [to determine in Phase 0 — do NOT assume snake_case]
 
-PHASE 0 — NAMING DETECTION (MANDATORY FIRST)
-Analyze 50 events + 50 event props + 50 user props. Declare dominant pattern before continuing.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PERSONA AND OBJECTIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+You act as Senior Data Engineer and Data Governance expert.
+OBJECTIVE: Perform an exhaustive analysis of the project taxonomy
+to evaluate data quality, naming consistency, real analytical use
+of events and properties, and generate a prioritized actionable
+cleanup plan with identified Quick Wins.
 
-SECTIONS:
-1 Executive Summary (weighted score 6 dims + detected naming)
-2 Event Inventory (Ingested Vol. + Query Vol. + Q/I Ratio + traffic light)
-3 Property Quality (3A event props, 3B user props, automatic flags)
-4 Naming & Consistency (inconsistencies + suggested name + action)
-5 Problematic Events (5A low volume, 5B ghost, 5C deprecated, 5D test, 5E anomalies)
-6 Orphan Properties (without active event or unused 90 days)
-7 Prioritized Cleanup Plan (Quick Wins first, owner, effort, impact, prompt)
-8 Follow-up Prompts (numbered, ready to copy/paste)
-9 Analysis Metadata (project, App ID, date, final score, totals)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PHASE 0 — NAMING CONVENTION DETECTION
+(Run BEFORE any section. Result defines "Expected naming".)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Analyze the first 50 active events, 50 event properties and
+50 user properties to detect the actual dominant pattern.
+Classify each name in:
+  snake_case | camelCase | PascalCase | Title Case | mixed | other
 
-NOTEBOOK ROWS:
+| Entity      | Dominant Pattern | % Conformity | Representative Examples |
+| Events      |                  |              |                         |
+| Event Props |                  |              |                         |
+| User Props  |                  |              |                         |
+
+→ Declare the dominant pattern as "Expected naming" for the analysis.
+→ If events, event props and user props have different patterns,
+  report each separately and alert the inconsistency.
+→ If the user declared a different naming than detected, alert
+  the discrepancy before continuing.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1 — EXECUTIVE SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Taxonomy health score (0–100), weighted average of:
+  - % events with description                    (weight: 20%)
+  - % typed properties with description          (weight: 20%)
+  - % events with consistent naming              (weight: 20%)
+  - % active events with assigned owner          (weight: 15%)
+  - % events with query volume > 0 in 90d        (weight: 15%)
+  - % events without detected volume anomaly     (weight: 10%)
+Show total score and score per dimension.
+Top 3 critical problems with estimated impact.
+Detected naming convention (result of Phase 0).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — EVENT INVENTORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Event | Status | Ingested Vol. 90d | Query Vol. 90d | Q/I Ratio | Description | Owner | Naming |
+
+Definitions:
+  - Ingested Vol. 90d: real event occurrences in the period
+  - Query Vol. 90d: times queried in charts or analyses
+  - Q/I Ratio: Query Volume / Ingested Volume
+      🔴 < 0.01 → Ghost event (tracked, nobody analyzes)
+      🟡 0.01–0.1 → Low analytical use
+      🟢 > 0.1 → Actively analyzed
+
+Sort by Q/I Ratio ascending (ghost events first).
+For each event, note in "Naming" column if it follows the expected convention.
+
+Metrics to include below the table:
+- Total active events in the project
+- % without description
+- % ghost events (Q/I < 0.01)
+- % with inconsistent naming
+- Average Q/I Ratio of all events
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3 — PROPERTY QUALITY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3A — Event Properties:
+| Property Name | Type | Cardinality | Has Description | Flag |
+
+3B — User Properties:
+| Property Name | Type | Cardinality | Has Description | Flag |
+
+Flags (automatic, multiple can apply):
+  HIGH_CARD      → cardinality > 1,000 unique values
+  NO_DESC        → no description in taxonomy
+  INCONSIST_NAME → does not follow expected naming convention
+  POSSIBLE_DUP   → name similar to another existing property
+  ORPHAN         → associated with zero active events
+
+Metrics per section:
+- Total properties
+- % with HIGH_CARD
+- % with NO_DESC
+- % with INCONSIST_NAME
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4 — NAMING AND CONSISTENCY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Current Name | Detected Issue | Suggested Name | Priority | Required Action |
+
+Patterns to detect and document:
+- Prefix usage (or lack): are groups of related events prefixed consistently?
+- Separator: underscores, hyphens, spaces or none
+- Verb tense: present vs past vs infinitive
+- Singular vs plural in names
+- Language mixing (Spanish + English)
+- Unnecessary abbreviations vs full names
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — PROBLEMATIC EVENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5A — LOW VOLUME EVENTS (< 10 occurrences / 90 days):
+| Event | Ingested Vol. 90d | Last Seen | Probable Cause | Recommended Action |
+
+5B — GHOST EVENTS (Q/I Ratio < 0.01):
+| Event | Ingested Vol. | Query Vol. | Q/I Ratio | Is it used in dashboards? | Recommended Action |
+For ghost events: check if they appear in saved charts/dashboards even if not queried.
+
+5C — DEPRECATED EVENTS STILL ACTIVE:
+| Event | Ingested Vol. 90d | Replacement (if exists) | Recommended Action |
+
+5D — TEST EVENTS IN PRODUCTION:
+| Event | Indicator that it is a test | Recommended Action |
+Indicators: name includes 'test', 'qa', 'dev', 'temp', 'debug', or similar
+
+5E — VOLUME ANOMALIES (> 50% variation vs historical average):
+| Event | Historical Average | Current Volume | Variation % | Probable Cause |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 6 — ORPHAN PROPERTIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6A — Orphan Event Properties:
+Event properties not associated with any active event in the last 90 days.
+| Property Name | Last Seen Event | Last Seen Date | Recommended Action |
+
+6B — Unused User Properties:
+User properties not used in any saved query, chart or cohort in the last 90 days.
+| Property Name | Has Value in Active Users % | Recommended Action |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 7 — PRIORITIZED CLEANUP PLAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Prioritization: Quick Wins first (high impact, low effort).
+
+| # | Problem | Events/Props Affected | Required Action | Owner | Effort | Expected Impact | Follow-up Prompt |
+
+Effort: Low (< 2h) / Medium (2h–1 day) / High (> 1 day)
+Impact: Critical (affects >50% events) / High (>20%) / Medium (<20%)
+
+QUICK WINS (first to execute):
+- Add descriptions to the 10 most used events without description
+- Mark as inactive events with 0 queries in 90+ days
+- Rename top 5 events with inconsistent naming
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 8 — FOLLOW-UP PROMPTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Numbered prompts, ready to copy/paste, one per critical finding.
+Format:
+[N] — FINDING TITLE
+"[complete executable prompt to address this specific finding]"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 9 — ANALYSIS METADATA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Project: [NAME]
+- App ID: [ID]
+- Analysis date: [DATE]
+- Analyzed period: [DATE_START] → [DATE_END]
+- Final health score: [SCORE]/100
+- Detected naming convention: [PATTERN]
+- Total active events analyzed: [N]
+- Total event properties: [N]
+- Total user properties: [N]
+- Ghost events detected: [N] ([%] of total)
+- Events without description: [N] ([%] of total)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXTENDED QUALITY CHECKPOINT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Run BEFORE publishing the notebook. Fix all failures first.
+
+□ Phase 0 completed: naming convention declared before running sections
+□ Section 1: score calculated with all 6 weighted dimensions
+□ Section 2: Q/I Ratio calculated for each event with color-coded status
+□ Section 3: flags applied automatically based on defined criteria
+□ Section 4: naming issues detected with suggested correction per case
+□ Section 5: events classified in all 5 categories (5A to 5E)
+□ Section 6: orphan properties verified in both entity types
+□ Section 7: Quick Wins identified (at least 1 per analysis)
+□ Section 8: follow-up prompts numbered and self-contained
+□ Section 9: metadata complete with real totals
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NOTEBOOK DELIVERY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1 — List the 9 exact titles in the thread and wait for confirmation.
+STEP 2 — Create the notebook with exactly these titles:
 Row 1 → # EXECUTIVE SUMMARY — TAXONOMY AUDIT
 Row 2 → # EVENT INVENTORY
 Row 3 → # PROPERTY QUALITY
-Row 4 → # NAMING & CONSISTENCY
+Row 4 → # NAMING AND CONSISTENCY
 Row 5 → # PROBLEMATIC EVENTS
 Row 6 → # ORPHAN PROPERTIES
 Row 7 → # PRIORITIZED CLEANUP PLAN
 Row 8 → # FOLLOW-UP PROMPTS
-Row 9 → # ANALYSIS METADATA`;
+Row 9 → # ANALYSIS METADATA
+STEP 3 — Call get_notebook and verify order, exact titles, content per row.
+STEP 4 — If discrepancies: edit_notebook with set_rows before sharing.
+STEP 5 — Only after verifying: share the notebook link in the thread.`;
 
 PROMPTS.taxonomia._pt.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 02 — TAXONOMÍA AUDIT
 
 ⚠️ INSTRUÇÕES DE COMPORTAMENTO — LER ANTES DE EXECUTAR ⚠️
-Contrato SEC: 1) Nomes exatos 2) Ordem fixa: 9 linhas 3) Verificação get_notebook
-4) Checkpoint: listar 9 linhas e aguardar confirmação 5) Sem dados inventados
-6) Tom executivo 7) Fase 0 primeiro: detectar nomenclatura antes de qualquer seção
-8) Checkpoint de qualidade: 5 itens antes de publicar notebook
+Structured Execution Contract. Regras OBRIGATÓRIAS:
+1. NOMES EXATOS: Títulos de linhas copiados literalmente.
+2. ORDEM FIXA: Não reordenar, não fundir, não omitir.
+3. VERIFICAÇÃO: get_notebook antes de compartilhar o link.
+4. SEM INTERPRETAÇÃO LIVRE: Perguntar se houver dúvidas.
+5. CHECKPOINT: Listar as 9 linhas e aguardar confirmação.
+6. DADOS AUSENTES: "⚠️ Sem dados disponíveis — [razão]"
+7. TOM: Executivo, direto. Tabelas com dados reais ou "N/D".
+8. NUNCA publicar o notebook sem passar o Checkpoint Estendido.
 
-VARIÁVEIS (obrigatórias): Projeto [NOME_PROJETO], App ID [APP_ID]
-OPCIONAIS padrão: Período 90d, Limite fantasma Q/I<0.01, Alta cardinalidade >1000
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VARIÁVEIS — DECLARAR NO INÍCIO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Projeto: [auto-detectar do contexto de sessão; se não for possível, perguntar]
+- App ID: [auto-detectar do contexto de sessão; se não for possível, perguntar]
+- Período: últimos 90 dias
+- Limite baixo volume ingerido: < 10 ocorrências em 90 dias
+- Limite baixo query volume: < 5 consultas em 90 dias
+- Limite evento fantasma: Ratio Query/Ingerido < 0.01
+- Alta cardinalidade: > 1.000 valores únicos
+- Nomenclatura esperada: [a determinar na Fase 0 — NÃO assumir snake_case]
 
-FASE 0 — DETECÇÃO DE NOMENCLATURA (OBRIGATÓRIA PRIMEIRO)
-Analisar 50 eventos + 50 props de evento + 50 props de usuário. Declarar padrão dominante antes de continuar.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PERSONA E OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Você atua como Senior Data Engineer e especialista em Data Governance.
+OBJETIVO: Realizar uma análise exaustiva da taxonomia do projeto
+para avaliar qualidade de dados, consistência de nomenclatura, uso
+analítico real de eventos e propriedades, e gerar um plano de limpeza
+acionável e priorizado com Quick Wins identificados.
 
-SEÇÕES 1–9 seguem mesma estrutura da versão em espanhol.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FASE 0 — DETECÇÃO DE CONVENÇÃO DE NOMENCLATURA
+(Executar ANTES de qualquer seção. Resultado define "Nomenclatura esperada".)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Analisar os primeiros 50 eventos ativos, 50 propriedades de evento e
+50 propriedades de usuário para detectar o padrão dominante real.
+Classificar cada nome em:
+  snake_case | camelCase | PascalCase | Title Case | misto | outro
 
-LINHAS DO NOTEBOOK:
+| Entidade       | Padrão Dominante | % Conformidade | Exemplos Representativos |
+| Eventos        |                  |                |                          |
+| Props Evento   |                  |                |                          |
+| Props Usuário  |                  |                |                          |
+
+→ Declarar o padrão dominante como "Nomenclatura esperada" para a análise.
+→ Se eventos, props de evento e props de usuário tiverem padrões distintos,
+  reportar cada um separadamente e alertar a inconsistência.
+→ Se o usuário declarou uma nomenclatura diferente da detectada, alertar
+  a discrepância antes de continuar.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 1 — RESUMO EXECUTIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Score de saúde da taxonomia (0–100), média ponderada de:
+  - % eventos com descrição                          (peso: 20%)
+  - % propriedades tipadas com descrição             (peso: 20%)
+  - % eventos com nomenclatura consistente           (peso: 20%)
+  - % eventos ativos com responsável atribuído       (peso: 15%)
+  - % eventos com query volume > 0 em 90d            (peso: 15%)
+  - % eventos sem anomalia de volume detectada       (peso: 10%)
+Mostrar score total e score por dimensão.
+Top 3 problemas críticos com impacto estimado.
+Convenção de nomenclatura detectada (resultado da Fase 0).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 2 — INVENTÁRIO DE EVENTOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Evento | Status | Vol. Ingerido 90d | Query Vol. 90d | Ratio Q/I | Descrição | Responsável | Nomenclatura |
+
+Definições:
+  - Vol. Ingerido 90d: ocorrências reais do evento no período
+  - Query Vol. 90d: vezes consultado em charts ou análises
+  - Ratio Q/I: Query Volume / Vol. Ingerido
+      🔴 < 0.01 → Evento fantasma (é rastreado, ninguém analisa)
+      🟡 0.01–0.1 → Baixo uso analítico
+      🟢 > 0.1 → Analisado ativamente
+
+Ordenar por Ratio Q/I crescente (eventos fantasma primeiro).
+Na coluna "Nomenclatura" indicar se segue a convenção esperada.
+
+Métricas abaixo da tabela:
+- Total de eventos ativos no projeto
+- % sem descrição
+- % eventos fantasma (Q/I < 0.01)
+- % com nomenclatura inconsistente
+- Ratio Q/I médio de todos os eventos
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 3 — QUALIDADE DE PROPRIEDADES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3A — Propriedades de Evento:
+| Nome da Propriedade | Tipo | Cardinalidade | Tem Descrição | Flag |
+
+3B — Propriedades de Usuário:
+| Nome da Propriedade | Tipo | Cardinalidade | Tem Descrição | Flag |
+
+Flags (automáticos, podem ser múltiplos):
+  HIGH_CARD      → cardinalidade > 1.000 valores únicos
+  NO_DESC        → sem descrição na taxonomia
+  INCONSIST_NAME → não segue a convenção de nomenclatura esperada
+  POSSIBLE_DUP   → nome similar a outra propriedade existente
+  ORPHAN         → associada a zero eventos ativos
+
+Métricas por seção:
+- Total de propriedades
+- % com HIGH_CARD
+- % com NO_DESC
+- % com INCONSIST_NAME
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 4 — NOMENCLATURA E CONSISTÊNCIA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Nome Atual | Problema Detectado | Nome Sugerido | Prioridade | Ação Necessária |
+
+Padrões a detectar e documentar:
+- Uso de prefixos: os grupos de eventos relacionados têm prefixos consistentes?
+- Separador: underscores, hífens, espaços ou nenhum
+- Tempo verbal: presente vs passado vs infinitivo
+- Singular vs plural em nomes
+- Mistura de idiomas (Português + Inglês)
+- Abreviações desnecessárias vs nomes completos
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 5 — EVENTOS PROBLEMÁTICOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5A — EVENTOS DE BAIXO VOLUME (< 10 ocorrências / 90 dias):
+| Evento | Vol. Ingerido 90d | Última Vez Visto | Causa Provável | Ação Recomendada |
+
+5B — EVENTOS FANTASMA (Ratio Q/I < 0.01):
+| Evento | Vol. Ingerido | Query Vol. | Ratio Q/I | Aparece em dashboards? | Ação Recomendada |
+
+5C — EVENTOS DEPRECIADOS AINDA ATIVOS:
+| Evento | Vol. Ingerido 90d | Substituto (se existir) | Ação Recomendada |
+
+5D — EVENTOS DE TESTE EM PRODUÇÃO:
+| Evento | Indicador de que é teste | Ação Recomendada |
+Indicadores: nome inclui 'test', 'qa', 'dev', 'temp', 'debug' ou similar
+
+5E — ANOMALIAS DE VOLUME (> 50% de variação vs média histórica):
+| Evento | Média Histórica | Volume Atual | Variação % | Causa Provável |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 6 — PROPRIEDADES ÓRFÃS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6A — Propriedades de Evento Órfãs:
+| Nome da Propriedade | Último Evento Visto | Data Última Vez | Ação Recomendada |
+
+6B — Propriedades de Usuário Não Utilizadas:
+| Nome da Propriedade | % Usuários Ativos com Valor | Ação Recomendada |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 7 — PLANO DE LIMPEZA PRIORIZADO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Priorização: Quick Wins primeiro (alto impacto, baixo esforço).
+
+| # | Problema | Eventos/Props Afetados | Ação Necessária | Responsável | Esforço | Impacto Esperado | Prompt de Acompanhamento |
+
+Esforço: Baixo (< 2h) / Médio (2h–1 dia) / Alto (> 1 dia)
+Impacto: Crítico (afeta >50% eventos) / Alto (>20%) / Médio (<20%)
+
+QUICK WINS (executar primeiro):
+- Adicionar descrições aos 10 eventos mais usados sem descrição
+- Marcar como inativos eventos com 0 queries em 90+ dias
+- Renomear top 5 eventos com nomenclatura inconsistente
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 8 — PROMPTS DE ACOMPANHAMENTO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Prompts numerados, prontos para copiar/colar, um por achado crítico.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 9 — METADADOS DA ANÁLISE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Projeto / App ID / Data da análise / Período / Score final
+- Convenção detectada / Total de eventos / Props de evento / Props de usuário
+- Eventos fantasma: [N] ([%] do total) / Eventos sem descrição: [N] ([%])
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CHECKPOINT ESTENDIDO DE QUALIDADE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Fase 0 concluída: convenção de nomenclatura declarada antes das seções
+□ Seção 1: score calculado com todas as 6 dimensões ponderadas
+□ Seção 2: Ratio Q/I calculado para cada evento com status codificado por cor
+□ Seção 3: flags aplicados automaticamente baseados nos critérios definidos
+□ Seção 4: problemas de nomenclatura detectados com correção sugerida
+□ Seção 5: eventos classificados nas 5 categorias (5A a 5E)
+□ Seção 6: propriedades órfãs verificadas nos dois tipos de entidade
+□ Seção 7: Quick Wins identificados (pelo menos 1 por análise)
+□ Seção 8: prompts numerados e autocontidos
+□ Seção 9: metadados completos com totais reais
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ENTREGA EM NOTEBOOK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Linha 1 → # RESUMO EXECUTIVO — AUDITORIA DE TAXONOMIA
 Linha 2 → # INVENTÁRIO DE EVENTOS
 Linha 3 → # QUALIDADE DE PROPRIEDADES
-Linha 4 → # NOMENCLATURA & CONSISTÊNCIA
+Linha 4 → # NOMENCLATURA E CONSISTÊNCIA
 Linha 5 → # EVENTOS PROBLEMÁTICOS
 Linha 6 → # PROPRIEDADES ÓRFÃS
 Linha 7 → # PLANO DE LIMPEZA PRIORIZADO
 Linha 8 → # PROMPTS DE ACOMPANHAMENTO
 Linha 9 → # METADADOS DA ANÁLISE`;
 
-// Experiment
+// ─────────────────────────────────────────────────────────────────────────────
+// 03 — EXPERIMENT KICKSTART
+// ─────────────────────────────────────────────────────────────────────────────
 PROMPTS.experiment._en.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 03 — EXPERIMENT KICKSTART
 
 ⚠️ EXECUTION CONTRACT — READ BEFORE STARTING ⚠️
-Rules: 1) Exact names 2) Fixed order: 6 rows 3) get_notebook verification
-4) Mandatory checkpoint: list 6 rows + wait for user confirmation
-5) No invented data 6) Technical-executive tone 7) Share notebook link on own line
+MANDATORY RULES (non-negotiable):
+1. EXACT NAMES: Notebook section titles copied literally.
+2. FIXED ORDER: 6 rows in the defined order. No omissions.
+3. VERIFICATION: Call get_notebook after creating and fix if discrepancies.
+4. MANDATORY CHECKPOINT: Before creating the notebook, list the 6 rows with
+   their summarized content and wait for explicit user confirmation.
+5. MISSING DATA: Indicate "⚠️ No data available — [specific reason]". Do not invent.
+6. TONE: Technical-executive. No filler. No unnecessary courtesy phrases.
+7. LINKS: Share the notebook link at the end, on its own line.
 
-STEP 0 — COLLECT VARIABLES (search Amplitude first, ask only what tools can't resolve):
-- Feature/flow: [DESCRIPTION] | Project: [PROJECT_NAME]
-- Primary metric: [define/confirm] | Base rate: [search in Amplitude]
-- Available traffic: [search in Amplitude] | Confidence: 95% | Power: 80% | MDE: 5%
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 0 — VARIABLE COLLECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Before executing any section, confirm:
+- Feature / flow to experiment: [DESCRIPTION]
+- Amplitude Project: [PROJECT_NAME]
+- North Star metric (primary): [define or confirm with user]
+- Current base rate of primary metric: [search in Amplitude first]
+- Available traffic per day/week: [search in Amplitude first]
+- Confidence level: 95% (adjustable)
+- Statistical power: 80% (adjustable)
+- Minimum MDE: 5% (adjustable)
 
-PERSONA: Senior Experimentation Analyst. OBJECTIVE: Design complete experiment for
-[FEATURE/FLOW], document in structured notebook, include step-by-step guide to create
-MANUALLY in Amplitude — do NOT create directly.
+If any variable was not provided, search in Amplitude before asking the user.
+Only ask what cannot be resolved with tools.
 
-SECTIONS:
-1 Context & Objective (hypothesis: "If [change] → then [metric↑X%] → because [mechanism]")
-2 Experimental Design (test type, independent variable, randomization unit, groups, risks)
-3 Metrics (primary ×1 verified in Amplitude, secondary ×2–4, guardrail ×2–3)
-4 Sample Size & Duration (MDE, n per group, traffic, duration ≥2 weeks, anti-peeking warning)
-5 Success & Failure Criteria (5 scenarios table)
-6 How to Create the Experiment in Amplitude (6-step guide + values from brief + launch checklist)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PERSONA AND OBJECTIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+You act as Senior Experimentation Analyst with expertise in statistical
+design and experimentation in digital products.
+OBJECTIVE: Design the complete experiment for [FEATURE/FLOW],
+document it in a structured notebook ready to share with the team,
+and include a step-by-step guide to create it manually in Amplitude
+— without the AI creating it directly.
 
-NOTEBOOK ROWS:
-Row 1 → # CONTEXT AND EXPERIMENT OBJECTIVE
-Row 2 → # EXPERIMENTAL DESIGN
-Row 3 → # METRICS
-Row 4 → # SAMPLE SIZE AND DURATION
-Row 5 → # SUCCESS AND FAILURE CRITERIA
-Row 6 → # HOW TO CREATE THE EXPERIMENT IN AMPLITUDE`;
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1 — CONTEXT AND EXPERIMENT OBJECTIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+▸ Description of the feature or flow to experiment
+▸ Problem it seeks to solve:
+  → Include current funnel data if it exists in Amplitude
+  → If not: "⚠️ No funnel data available"
+▸ Structured hypothesis:
+  "If [implemented change] → then [metric] improves [X%]
+   → because [specific causal mechanism]"
+▸ Target audience and eligibility criteria:
+  (e.g.: active users last 30 days, platform, plan, etc.)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — EXPERIMENTAL DESIGN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+▸ Test type: A/B / A/B/n / Multi-armed bandit — justify choice
+▸ Independent variable: what changes exactly in the treatment
+▸ Randomization unit: user / session / device — justify
+▸ Groups:
+  - Control (A): [description of current experience]
+  - Treatment (B): [description of the proposed change]
+  - Additional variants (if applicable)
+▸ Known risks:
+  - Novelty effect: plan re-evaluation at week 2
+  - Seasonal bias: adjust if there are special dates in the period
+  - Network effect: evaluate if users interact with each other
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3 — METRICS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+▸ Primary metric (1 only):
+  - Event in Amplitude: [search and verify it exists]
+  - Current base rate: [from Step 0]
+  - Why this metric and not another: [brief justification]
+
+▸ Secondary metrics (2–4):
+  | Metric | Amplitude Event | Expected Direction | Rationale |
+
+▸ Guardrail metrics (2–3):
+  | Guardrail Metric | Acceptable Threshold | Action if Triggered |
+  These are metrics that CANNOT worsen. If any guardrail fires → stop experiment.
+
+▸ For each metric, verify it exists in Amplitude with get_event or search.
+  If it doesn't exist: "⚠️ Event not found in taxonomy — needs implementation"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4 — SAMPLE SIZE AND DURATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Parameters used:
+- Base rate: [from Step 0]
+- Minimum Detectable Effect (MDE): [%]
+- Confidence level: [%]
+- Statistical power: [%]
+- Number of variants: [N]
+
+Calculation:
+- Required sample size per variant: [N users]
+- Available traffic per week: [N users/week in the experiment area]
+- Estimated duration: [N weeks]
+- Recommended start date: [DATE]
+- Recommended read date: [START + duration]
+  ⚠️ ANTI-PEEKING: Do not evaluate results before reaching the defined sample size.
+  Set the reading date in advance and do not modify it once the experiment has started.
+
+If estimated duration > 8 weeks: alert and suggest reviewing the MDE or adjusting the audience.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — SUCCESS AND FAILURE CRITERIA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Scenario | Condition | Decision | Suggested Action |
+| Success         | Primary metric improves ≥ MDE with p < α. No guardrail fired. | Ship treatment | Document learnings |
+| Null result     | No statistically significant difference in primary metric. | Do not ship | Investigate causes, redesign hypothesis |
+| Ambiguous       | Improvement in primary but decline in 1+ secondary. | Hold | Deeper analysis needed |
+| Guardrail fired | Any guardrail metric exceeded its threshold. | Stop immediately | Investigate impact before continuing |
+| Failure         | Primary metric worsens significantly. | Do not ship | Document learnings, consider alternative |
+
+Decision criteria:
+- Minimum p-value for primary: < [ALPHA]
+- Minimum absolute improvement: ≥ [MDE]%
+- Required sample per variant: ≥ [N]
+- Experiment duration: ≥ [N] days
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 6 — HOW TO CREATE THE EXPERIMENT IN AMPLITUDE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step-by-step guide for the team. Values already defined from the brief above.
+
+STEP 1 — Create the experiment
+In Amplitude: Experiment → Create New Experiment → Web / Feature Flag
+- Name: [EXACT NAME — use a descriptive naming convention]
+- Type: A/B Test
+- Randomization: By User ID
+
+STEP 2 — Define variants
+- Control (0%): [variant description]
+- Treatment (100% of sample): [variant description]
+- Traffic allocation: 50% / 50%
+
+STEP 3 — Define the primary metric
+- Search for the event: [EVENT_NAME]
+- Metric type: [conversion / count / revenue]
+- Aggregation: [unique users / totals]
+
+STEP 4 — Configure secondary and guardrail metrics
+- Add each metric defined in Section 3
+- Mark guardrail metrics as "Must not decrease"
+
+STEP 5 — Define target audience
+- Filter by: [defined eligibility criteria]
+- Estimate affected users: [N/week]
+
+STEP 6 — Set schedule and goals
+- Start date: [DATE]
+- Target sample: [N per variant]
+- Estimated end date: [DATE]
+- ⚠️ Remember: do not read results before the defined date
+
+POST-LAUNCH CHECKLIST:
+□ Variant is correctly rendering in the product
+□ Events are firing in both control and treatment
+□ No guardrail metric shows early decline
+□ Sample ratio check: 50/50 allocation is maintained
+□ Reading date marked in the team calendar`;
 
 PROMPTS.experiment._pt.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 03 — EXPERIMENT KICKSTART
 
 ⚠️ CONTRATO DE EXECUÇÃO — LER ANTES DE COMEÇAR ⚠️
-Regras: 1) Nomes exatos 2) Ordem fixa: 6 linhas 3) Verificação get_notebook
-4) Checkpoint obrigatório: listar 6 linhas + aguardar confirmação
-5) Sem dados inventados 6) Tom técnico-executivo 7) Link do notebook em linha própria
+REGRAS OBRIGATÓRIAS (inegociáveis):
+1. NOMES EXATOS: Títulos de seção do notebook copiados literalmente.
+2. ORDEM FIXA: 6 linhas na ordem definida. Sem omissões.
+3. VERIFICAÇÃO: Chamar get_notebook após criar e corrigir se houver discrepâncias.
+4. CHECKPOINT OBRIGATÓRIO: Antes de criar o notebook, listar as 6 linhas com
+   seu conteúdo resumido e aguardar confirmação explícita do usuário.
+5. DADOS AUSENTES: Indicar "⚠️ Sem dados disponíveis — [razão específica]". Não inventar.
+6. TOM: Técnico-executivo. Sem relleno. Sem frases de cortesia desnecessárias.
+7. LINKS: Compartilhar o link do notebook ao finalizar, em sua própria linha.
 
-PASSO 0 — COLETAR VARIÁVEIS (buscar no Amplitude primeiro):
-- Feature/fluxo: [DESCRIÇÃO] | Projeto: [NOME_PROJETO]
-- Métrica norte: [definir/confirmar] | Taxa base: [buscar no Amplitude]
-- Tráfego disponível: [buscar no Amplitude] | Confiança: 95% | Poder: 80% | MDE: 5%
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASSO 0 — COLETA DE VARIÁVEIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Antes de executar qualquer seção, confirmar:
+- Feature / fluxo a experimentar: [DESCRIÇÃO]
+- Projeto Amplitude: [NOME_PROJETO]
+- Métrica norte (primária): [definir ou confirmar com o usuário]
+- Taxa base atual da métrica primária: [buscar no Amplitude primeiro]
+- Tráfego disponível por dia/semana: [buscar no Amplitude primeiro]
+- Nível de confiança: 95% (ajustável)
+- Poder estatístico: 80% (ajustável)
+- MDE mínimo: 5% (ajustável)
 
-PERSONA: Senior Experimentation Analyst. OBJETIVO: Projetar experimento completo para
-[FEATURE/FLUXO], documentar em notebook estruturado, incluir guia passo a passo para
-criar MANUALMENTE no Amplitude — NÃO criar diretamente.
+Se alguma variável não foi fornecida, buscar no Amplitude antes de perguntar ao usuário.
+Perguntar apenas o que não puder ser resolvido com ferramentas.
 
-SEÇÕES 1–6 seguem mesma estrutura da versão em espanhol.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PERSONA E OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Você atua como Senior Experimentation Analyst com expertise em design
+estatístico e experimentação em produtos digitais.
+OBJETIVO: Projetar o experimento completo para [FEATURE/FLUXO],
+documentá-lo em um notebook estruturado pronto para compartilhar com
+a equipe, e incluir um guia passo a passo para criá-lo manualmente
+no Amplitude — sem que a IA o crie diretamente.
 
-LINHAS DO NOTEBOOK:
-Linha 1 → # CONTEXTO E OBJETIVO DO EXPERIMENTO
-Linha 2 → # DESIGN EXPERIMENTAL
-Linha 3 → # MÉTRICAS
-Linha 4 → # TAMANHO DE AMOSTRA E DURAÇÃO
-Linha 5 → # CRITÉRIOS DE SUCESSO E FALHA
-Linha 6 → # COMO CRIAR O EXPERIMENTO NO AMPLITUDE`;
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 1 — CONTEXTO E OBJETIVO DO EXPERIMENTO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+▸ Descrição do feature ou fluxo a experimentar
+▸ Problema que busca resolver:
+  → Incluir dados do funil atual se existirem no Amplitude
+  → Se não: "⚠️ Sem dados de funil disponíveis"
+▸ Hipótese estruturada:
+  "Se [mudança implementada] → então [métrica] melhora [X%]
+   → porque [mecanismo causal específico]"
+▸ Audiência alvo e critérios de elegibilidade:
+  (ex.: usuários ativos últimos 30 dias, plataforma, plano, etc.)
 
-// Funnel
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 2 — DESIGN EXPERIMENTAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+▸ Tipo de teste: A/B / A/B/n / Multi-armed bandit — justificar escolha
+▸ Variável independente: o que muda exatamente no tratamento
+▸ Unidade de aleatorização: usuário / sessão / dispositivo — justificar
+▸ Grupos:
+  - Controle (A): [descrição da experiência atual]
+  - Tratamento (B): [descrição da mudança proposta]
+  - Variantes adicionais (se aplicável)
+▸ Riscos conhecidos:
+  - Efeito novidade: planejar reavaliação na semana 2
+  - Viés sazonal: ajustar se houver datas especiais no período
+  - Efeito de rede: avaliar se usuários interagem entre si
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 3 — MÉTRICAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+▸ Métrica primária (apenas 1):
+  - Evento no Amplitude: [buscar e verificar que existe]
+  - Taxa base atual: [do Passo 0]
+  - Por que esta métrica e não outra: [justificativa breve]
+
+▸ Métricas secundárias (2–4):
+  | Métrica | Evento Amplitude | Direção Esperada | Racional |
+
+▸ Métricas guardrail (2–3):
+  | Métrica Guardrail | Limite Aceitável | Ação se Disparada |
+  Estas são métricas que NÃO PODEM piorar. Se alguma guardrail disparar → parar experimento.
+
+▸ Para cada métrica, verificar que existe no Amplitude com get_event ou search.
+  Se não existir: "⚠️ Evento não encontrado na taxonomia — precisa de implementação"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 4 — TAMANHO DE AMOSTRA E DURAÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Parâmetros usados:
+- Taxa base: [do Passo 0]
+- Efeito Mínimo Detectável (MDE): [%]
+- Nível de confiança: [%]
+- Poder estatístico: [%]
+- Número de variantes: [N]
+
+Cálculo:
+- Tamanho de amostra necessário por variante: [N usuários]
+- Tráfego disponível por semana: [N usuários/semana na área do experimento]
+- Duração estimada: [N semanas]
+- Data de início recomendada: [DATA]
+- Data de leitura recomendada: [INÍCIO + duração]
+  ⚠️ ANTI-PEEKING: Não avaliar resultados antes de atingir o tamanho de amostra definido.
+  Definir a data de leitura com antecedência e não modificá-la depois que o experimento começar.
+
+Se duração estimada > 8 semanas: alertar e sugerir revisar o MDE ou ajustar a audiência.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 5 — CRITÉRIOS DE SUCESSO E FALHA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Cenário | Condição | Decisão | Ação Sugerida |
+| Sucesso         | Métrica primária melhora ≥ MDE com p < α. Nenhuma guardrail disparou. | Implementar tratamento | Documentar aprendizados |
+| Resultado nulo  | Sem diferença estatisticamente significativa na métrica primária. | Não implementar | Investigar causas, redesenhar hipótese |
+| Ambíguo         | Melhora na primária mas queda em 1+ secundárias. | Reter | Análise mais profunda necessária |
+| Guardrail disparou | Alguma métrica guardrail ultrapassou seu limite. | Parar imediatamente | Investigar impacto antes de continuar |
+| Falha           | Métrica primária piora significativamente. | Não implementar | Documentar aprendizados |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 6 — COMO CRIAR O EXPERIMENTO NO AMPLITUDE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Guia passo a passo para a equipe. Valores já definidos do brief acima.
+
+PASSO 1 — Criar o experimento
+No Amplitude: Experiment → Create New Experiment → Web / Feature Flag
+- Nome: [NOME EXATO — usar convenção de nomenclatura descritiva]
+- Tipo: A/B Test / Randomização: Por User ID
+
+PASSO 2 — Definir variantes
+- Controle (0%): [descrição da variante]
+- Tratamento (100% da amostra): [descrição da variante]
+- Alocação de tráfego: 50% / 50%
+
+PASSO 3 — Definir a métrica primária
+PASSO 4 — Configurar métricas secundárias e guardrail
+PASSO 5 — Definir audiência alvo
+PASSO 6 — Definir cronograma e metas
+
+CHECKLIST PÓS-LANÇAMENTO:
+□ Variante está renderizando corretamente no produto
+□ Eventos estão disparando em controle e tratamento
+□ Nenhuma métrica guardrail mostra queda inicial
+□ Verificação de proporção da amostra: alocação 50/50 mantida
+□ Data de leitura marcada no calendário da equipe`;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 04 — FUNNEL DIAGNOSIS
+// ─────────────────────────────────────────────────────────────────────────────
 PROMPTS.funnel._en.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 04 — FUNNEL DIAGNOSIS
 
 ⚠️ BEHAVIORAL INSTRUCTIONS — READ BEFORE EXECUTING ⚠️
-SEC Contract: 1) Exact names 2) Fixed order: 7 rows 3) get_notebook verification
-4) Early checkpoint: list 7 rows and wait for confirmation 5) No invented data
-6) Executive tone 7) Tool errors: document, continue, mark ⚠️
-8) Mandatory variables validation: stop if Funnel or Project are empty
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STRUCTURED EXECUTION CONTRACT — MANDATORY RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. EXACT NAMES: Use literal titles for each section. No paraphrasing.
+2. FIXED ORDER: 7 rows in the defined order. Do not omit any.
+3. VERIFICATION: Call get_notebook after creating. Fix if discrepancies.
+4. EARLY CHECKPOINT: Before executing, list the 7 rows and wait for confirmation.
+5. MISSING DATA: Write "⚠️ No data available — [specific reason]". Do not invent.
+6. TONE: Executive. Direct. No decorative bullets. Tables with real data or "N/A".
+7. TOOL ERRORS: If a tool fails, document the error, continue with remaining
+   sections and mark the affected section with ⚠️.
+8. VARIABLE VALIDATION: If any MANDATORY variable is empty or "[PLACEHOLDER]",
+   stop execution and request the value before continuing.
 
-VARIABLES — MANDATORY (stop if empty): Funnel [NAME/events], Project [NAME/APP_ID]
-OPTIONAL DEFAULTS: Period 90d, Segments all, Critical drop >20%, Min replays 20, Conversion window 7d
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VARIABLES — DECLARE AND VALIDATE AT START
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MANDATORY (stop if empty):
+- Funnel: [NAME or list of events in order]
+- Project: [PROJECT_NAME or APP_ID]
 
-TL;DR EXECUTIVE (before any table):
-- Overall conversion (first → last step): X%  
-- Step with highest drop: [name] with X% drop  
-- Immediate recommended action: [one concrete sentence]
+OPTIONAL (use defaults if not specified):
+- Period: last 90 days [DEFAULT]
+- Segments to analyze: device, country, traffic source, plan [DEFAULT: all]
+- Critical drop threshold: > 20% between consecutive steps [DEFAULT]
+- Minimum replay sessions: 20 per critical step [DEFAULT]
+- Conversion window: 7 days [DEFAULT — adjust if purchase cycle is different]
 
-SECTIONS:
-1 Funnel Summary — Current State (chart + traffic light: 🟢>60% / 🟡40–60% / 🔴<40%)
-2 Drop Analysis by Segment (only steps >20%, outlier ≥1.5× global, conclusion per step)
-3 Session Replay Crossover (verify enabled first; 2 steps with biggest drop; min 20 replays;
-  patterns: last action, visible errors, rage clicks, time in step, scroll point)
-4 Friction Hypotheses (min 3; quanti+quali; "If [friction] → then [metric↑X%] → because...";
-  High: >30% users OR >2× global drop; Medium: 15–30% OR 1.5–2×; Low: <15%)
-5 Prioritized Experiments (top 3 by impact÷effort; MDE; duration; Kickstart follow-up prompt)
-6 Follow-up Plan (owner, review date, guardrail metrics, decision criteria per experiment)
-7 Follow-up Prompts (3 ready: Experiment Kickstart + next funnel + post-conversion retention)
+STEP 0 — PRIOR CHECKPOINT:
+1. Confirm MANDATORY variables have real values.
+2. List the 7 notebook rows with their exact titles.
+3. Wait for user confirmation before continuing.
 
-GLOBAL ERROR PROTOCOL: document error, continue, list at end with resolution suggestions.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PERSONA AND OBJECTIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+You act as Senior Product Analyst specialized in funnel optimization
+and evidence-based experiment design.
+OBJECTIVE: Diagnose the funnel [NAME], identify the most critical drops
+with quantitative and qualitative evidence (session replay), and generate
+the next 3 experiments prioritized by expected impact × effort.
+RESPONSE FORMAT: Always start with a 3-line executive TL;DR
+summarizing: (1) global conversion, (2) most critical step, (3) next action.
 
-NOTEBOOK ROWS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 0 — EXECUTIVE TL;DR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Before any table or analysis, write 3 lines:
+- Overall funnel conversion (first → last step): X%
+- Step with highest drop: [Step name] with X% drop
+- Immediately recommended action: [One concrete sentence]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1 — FUNNEL SUMMARY — CURRENT STATE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Create funnel chart in Amplitude with the declared steps.
+Period: [PERIOD]. Conversion window: [WINDOW].
+
+| Step | Step Name | Users | Conversion | Drop vs Prior | Status |
+|------|-----------|-------|------------|---------------|--------|
+Status: 🟢 drop < 20% / 🟡 drop 20–40% / 🔴 drop > 40%
+
+Include below the table:
+- Overall conversion (step 1 → last step): X%
+- Link to chart created in Amplitude
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — DROP ANALYSIS BY SEGMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Analyze ONLY steps with drop > [THRESHOLD].
+
+For each critical step:
+| Segment | Value | Users | Conversion | Drop % | vs Global Drop | Outlier? |
+Outlier criterion: drop ≥ 1.5× the global drop for that step.
+
+Segments to analyze (in order of priority):
+1. Device (mobile vs desktop)
+2. Country / region
+3. Traffic source
+4. User plan (free vs paid)
+5. New vs returning users
+
+For each critical step, include:
+- Segment that drops the most (outlier)
+- Segment that converts the best
+- Hypothesis about the cause of the difference
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3 — SESSION REPLAY CROSSOVER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Verify Session Replay is enabled before analyzing.
+If not enabled: "⚠️ Session Replay not enabled in this project — section omitted"
+
+Analyze the 2 steps with the biggest drop.
+For each step, review minimum [MINIMUM_REPLAYS] session replays of users
+who abandoned at that step.
+
+Document:
+| Pattern | # Sessions | Frequency % | Description | Implication |
+
+Patterns to look for:
+- Last action before abandonment (click, scroll, form field)
+- Visible errors (messages, broken forms, slow loads)
+- Rage clicks (repeated clicks in frustration)
+- Time spent in the step vs successful users
+- Scroll point where they abandon
+- Differences between mobile and desktop behavior
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4 — FRICTION HYPOTHESES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Minimum 3 hypotheses, ordered by estimated impact.
+
+Format per hypothesis:
+| # | Friction | Impact | Evidence | Hypothesis |
+| 1 | [Description] | High/Medium/Low | Quanti: X% drop. Quali: rage clicks | "If [change] → then [metric] improves [X%] → because [mechanism]" |
+
+Impact criteria:
+- High: affects > 30% of users in the step OR drop > 2× global average
+- Medium: affects 15–30% OR drop 1.5–2× global average
+- Low: affects < 15% OR specific segment
+
+Evidence sources (cross both):
+- Quantitative: Amplitude data (drops, segments, trends)
+- Qualitative: Session Replay (patterns, behaviors, errors)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — PRIORITIZED EXPERIMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Top 3 experiments to run next, ordered by impact ÷ effort.
+
+| # | Experiment | Target Step | Primary Metric | MDE | Estimated Duration | Impact | Effort | Follow-up Prompt |
+
+For each experiment:
+- Hypothesis from Section 4 it addresses
+- Primary metric with current base rate
+- Estimated MDE (minimum improvement to detect)
+- Estimated duration based on current traffic
+- Follow-up prompt: exact Experiment Kickstart prompt to design it
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 6 — FOLLOW-UP PLAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Experiment | Owner | Review Date | Guardrail Metrics | Decision Criteria |
+
+Include:
+- Monitoring cadence while experiments run (weekly recommended)
+- Guardrail metrics that cannot worsen
+- Explicit decision criteria (when to ship, when to stop, when to iterate)
+- Next review date with the team
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 7 — FOLLOW-UP PROMPTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3 prompts ready to paste into a new thread:
+
+PROMPT 1 — Experiment Kickstart for the highest-priority experiment:
+"[exact Experiment Kickstart prompt with all values already filled in]"
+
+PROMPT 2 — Next funnel to analyze:
+"[complete Funnel Diagnosis prompt for the next funnel in the conversion path]"
+
+PROMPT 3 — Post-conversion retention analysis:
+"[prompt to analyze retention of users who completed the funnel]"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+GLOBAL ERROR PROTOCOL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+If a tool fails during execution:
+1. Document the error: "⚠️ Tool [NAME] failed: [error message]"
+2. Continue with remaining sections
+3. At the end, list all errors with resolution suggestions
+4. Do not stop the entire analysis for a single error
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NOTEBOOK DELIVERY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Row 1 → # FUNNEL SUMMARY — CURRENT STATE
 Row 2 → # DROP ANALYSIS BY SEGMENT
 Row 3 → # SESSION REPLAY CROSSOVER
@@ -4067,22 +5473,112 @@ Row 7 → # FOLLOW-UP PROMPTS`;
 PROMPTS.funnel._pt.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 04 — FUNNEL DIAGNOSIS
 
 ⚠️ INSTRUÇÕES DE COMPORTAMENTO — LER ANTES DE EXECUTAR ⚠️
-Contrato SEC: 1) Nomes exatos 2) Ordem fixa: 7 linhas 3) Verificação get_notebook
-4) Checkpoint antecipado: listar 7 linhas e aguardar confirmação 5) Sem dados inventados
-6) Tom executivo 7) Erros de ferramentas: documentar, continuar, marcar ⚠️
-8) Validação de variáveis obrigatórias: parar se Funil ou Projeto estiverem vazios
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STRUCTURED EXECUTION CONTRACT — REGRAS OBRIGATÓRIAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. NOMES EXATOS: Usar títulos literais de cada seção. Sem parafrasear.
+2. ORDEM FIXA: 7 linhas na ordem definida. Não omitir nenhuma.
+3. VERIFICAÇÃO: Chamar get_notebook após criar. Corrigir se houver discrepâncias.
+4. CHECKPOINT ANTECIPADO: Antes de executar, listar as 7 linhas e aguardar confirmação.
+5. DADOS AUSENTES: Escrever "⚠️ Sem dados disponíveis — [razão específica]". Não inventar.
+6. TOM: Executivo. Direto. Sem bullets decorativos. Tabelas com dados reais ou "N/D".
+7. ERROS DE FERRAMENTAS: Se uma ferramenta falhar, documentar o erro, continuar
+   com as seções restantes e marcar a seção afetada com ⚠️.
+8. VALIDAÇÃO DE VARIÁVEIS: Se alguma variável OBRIGATÓRIA estiver vazia,
+   parar a execução e solicitar o valor antes de continuar.
 
-VARIÁVEIS OBRIGATÓRIAS: Funil [NOME/eventos], Projeto [NOME/APP_ID]
-OPCIONAIS PADRÃO: Período 90d, Todos os segmentos, Queda crítica >20%, Replays mínimos 20, Janela 7d
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VARIÁVEIS — DECLARAR E VALIDAR NO INÍCIO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OBRIGATÓRIAS (parar se estiverem vazias):
+- Funil: [NOME ou lista de eventos em ordem]
+- Projeto: [NOME_PROJETO ou APP_ID]
 
-TL;DR EXECUTIVO (antes de qualquer tabela):
-- Conversão geral (primeiro → último passo): X%
-- Passo com maior queda: [nome] com queda de X%
-- Ação imediata recomendada: [uma frase concreta]
+OPCIONAIS (usar padrões se não especificadas):
+- Período: últimos 90 dias [PADRÃO]
+- Segmentos a analisar: dispositivo, país, fonte de tráfego, plano [PADRÃO: todos]
+- Limite queda crítica: > 20% entre passos consecutivos [PADRÃO]
+- Mínimo sessões de replay: 20 por passo crítico [PADRÃO]
+- Janela de conversão: 7 dias [PADRÃO]
 
-SEÇÕES 1–7 + PROTOCOLO GLOBAL DE ERROS seguem mesma estrutura da versão em espanhol.
+PASSO 0 — CHECKPOINT PRÉVIO:
+1. Confirmar que as variáveis OBRIGATÓRIAS têm valores reais.
+2. Listar as 7 linhas do notebook com seus títulos exatos.
+3. Aguardar confirmação do usuário antes de continuar.
 
-LINHAS DO NOTEBOOK:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PERSONA E OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Você atua como Senior Product Analyst especializado em otimização de funis
+e design de experimentos baseados em evidências.
+OBJETIVO: Diagnosticar o funil [NOME], identificar as quedas mais críticas
+com evidência quantitativa e qualitativa (session replay), e gerar os
+próximos 3 experimentos priorizados por impacto esperado × esforço.
+FORMATO DE RESPOSTA: Começar sempre com um TL;DR executivo de 3 linhas
+resumindo: (1) conversão global, (2) passo mais crítico, (3) próxima ação.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 0 — TL;DR EXECUTIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Antes de qualquer tabela ou análise, escrever 3 linhas:
+- Conversão global do funil (primeiro → último passo): X%
+- Passo com maior queda: [Nome do passo] com queda de X%
+- Ação imediata recomendada: [Uma frase concreta]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 1 — RESUMO DO FUNIL — ESTADO ATUAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Criar chart de funil no Amplitude com os passos declarados.
+
+| Passo | Nome do Passo | Usuários | Conversão | Queda vs Anterior | Status |
+Status: 🟢 queda < 20% / 🟡 queda 20–40% / 🔴 queda > 40%
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 2 — ANÁLISE DE QUEDAS POR SEGMENTO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Analisar APENAS passos com queda > [LIMITE].
+Para cada passo crítico: dispositivo, país, fonte de tráfego, plano, novo vs recorrente.
+Critério outlier: queda ≥ 1.5× a queda global daquele passo.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 3 — CRUZAMENTO COM SESSION REPLAY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Verificar se Session Replay está habilitado antes de analisar.
+Analisar os 2 passos com maior queda. Mínimo [MÍNIMO_REPLAYS] sessões de replay.
+Padrões: última ação antes de abandonar, erros visíveis, rage clicks,
+tempo no passo vs usuários bem-sucedidos, ponto de rolagem onde abandonam.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 4 — HIPÓTESES DE FRICÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Mínimo 3 hipóteses, ordenadas por impacto estimado.
+"Se [mudança] → então [métrica] melhora [X%] → porque [mecanismo]"
+Alto: afeta > 30% usuários OU queda > 2× média global
+Médio: afeta 15–30% OU queda 1.5–2× média global
+Baixo: afeta < 15% OU segmento específico
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 5 — EXPERIMENTOS PRIORIZADOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Top 3 experimentos a rodar a seguir, ordenados por impacto ÷ esforço.
+| # | Experimento | Passo Alvo | Métrica Primária | MDE | Duração Estimada | Impacto | Esforço | Prompt de Acompanhamento |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 6 — PLANO DE ACOMPANHAMENTO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Experimento | Responsável | Data de Revisão | Métricas Guardrail | Critério de Decisão |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 7 — PROMPTS DE ACOMPANHAMENTO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3 prompts prontos para colar em um novo hilo:
+PROMPT 1 — Experiment Kickstart para o experimento de maior prioridade
+PROMPT 2 — Próximo funil a analisar
+PROMPT 3 — Análise de retenção pós-conversão
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ENTREGA EM NOTEBOOK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Linha 1 → # RESUMO DO FUNIL — ESTADO ATUAL
 Linha 2 → # ANÁLISE DE QUEDAS POR SEGMENTO
 Linha 3 → # CRUZAMENTO COM SESSION REPLAY
@@ -4091,34 +5587,210 @@ Linha 5 → # EXPERIMENTOS PRIORIZADOS
 Linha 6 → # PLANO DE ACOMPANHAMENTO
 Linha 7 → # PROMPTS DE ACOMPANHAMENTO`;
 
-// AI Adoption
+// ─────────────────────────────────────────────────────────────────────────────
+// 05 — AI ADOPTION ACCELERATOR
+// ─────────────────────────────────────────────────────────────────────────────
 PROMPTS.ai._en.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 05 — AI ADOPTION ACCELERATOR
 
 ⚠️ BEHAVIORAL INSTRUCTIONS — READ BEFORE EXECUTING ⚠️
-SEC Contract: 1) Exact names 2) Fixed order: 8 rows 3) get_notebook verification
-4) PRE-EXECUTION CHECKPOINT: list 8 rows + key data per section, wait for "confirm"/"proceed"
-5) Missing data: "⚠️ No data available — [specific reason]"
-6) Tone: executive, concrete prompts
-7) TOOL NOT ENABLED: mark entire row as "⚠️ Tool not enabled in this project — omitted"
-8) INITIAL VALIDATION: if [PROJECT_NAME] not explicitly provided, ask before executing
+Structured Execution Contract. MANDATORY rules:
+1. EXACT NAMES: Literal titles between sections and notebook rows — no paraphrasing.
+2. FIXED ORDER: 8 rows in the defined order.
+3. VERIFICATION: get_notebook before sharing the link.
+4. PRE-EXECUTION CHECKPOINT: List the 8 rows with exact titles and key
+   data found per section. Wait for explicit user confirmation
+   ("confirm" or "proceed") BEFORE creating the notebook.
+5. MISSING DATA: "⚠️ No data available — [specific reason]"
+6. TONE: Executive. Concrete prompts, not generic.
+   Prompts must be based on REAL events and dashboards from the project.
+7. TOOL NOT ENABLED: If an AI tool is not active in the project,
+   mark its entire row as:
+   "⚠️ Tool not enabled in this project — omitted from analysis"
+   and adjust the overall adoption % accordingly.
+8. INITIAL VALIDATION: If [PROJECT_NAME] was not explicitly provided
+   by the user, ask before executing. Do not assume. Do not continue
+   with the literal placeholder.
 
-VARIABLES: Project [confirm, don't assume] | Period: 90 days | Power user: >5 AI interactions
-Low adoption: <10% active users | Roles: PM/Analyst/Marketing/Engineering
-Primary KPI: % active users with ≥1 AI tool (baseline → goal: +15% in 90d)
-Secondary KPI: Avg AI interactions per active user
-Quality KPI: % AI queries resulting in concrete action (chart created, dashboard modified)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VARIABLES — DECLARE AND VALIDATE AT START
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Project: [PROJECT_NAME]
+- Period: last 90 days
+- Power user threshold: > 5 interactions with AI tools in 90 days
+- Low adoption threshold: < 10% of users use any AI tool
+- Roles: PM / Analyst / Marketing / Engineering
 
-SECTIONS:
-1 AI Tools Usage Inventory (verify enabled tools first; table; critical adoption alert if <10%)
-2 AI Power Users Analysis (top 5 with get_user_timeline; role; dashboard patterns)
-3 AI ↔ Content Creation Correlation (Cohort A: ≥1 AI use; Cohort B: no AI use; same 90d period)
-4 AI Chat Query Types (classification criteria: Exploratory/Verification/Reporting/Creation + Other)
-5 Personalized Prompts per User (per real dashboard + Agent + Visibility, if enabled)
-6 AI Champions Program (top 3–5 from S1+S2; 4-week plan referencing S1, S2, S4, S5)
-7 Best Practices Guide by Role (with REAL dashboards and KPIs from project)
-8 90-Day Adoption Plan (Month 1: Quick Wins; Month 2: Expansion; Month 3: Institutionalization)
+Success KPIs of the program (measure at 90-day close):
+- Primary KPI: % of active users using ≥1 AI tool
+  (current baseline → goal: +15% in 90 days)
+- Secondary KPI: Average AI interactions per active user
+- Quality KPI: % of AI queries resulting in a concrete action
+  (chart created, dashboard modified, insight shared)
 
-NOTEBOOK ROWS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PERSONA AND OBJECTIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+You act as Senior Amplitude Consultant specialized in AI tool
+adoption and organizational change in data teams.
+OBJECTIVE: Analyze the real use of Amplitude AI tools in
+[PROJECT_NAME] and generate a concrete adoption plan with
+personalized prompts based on the real account data.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1 — AI TOOLS USAGE INVENTORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Verify which tools are enabled in the project first.
+For each non-enabled tool, apply Rule 7.
+
+| Tool            | Unique Users | Total Uses | % of Total Users | Trend |
+| AI Chat         |              |            |                  | ↑/↓/→ |
+| Dashboard Agent |              |            |                  | ↑/↓/→ |
+| AI Visibility   |              |            |                  | ↑/↓/→ |
+| AI Feedback     |              |            |                  | ↑/↓/→ |
+
+Include below the table:
+- % of users who tried at least 1 AI tool
+- ⚠️ CRITICAL ADOPTION ALERT if < 10%: "Low adoption detected — immediate action required"
+- Weekly trend: is adoption growing, stable or declining?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — AI POWER USERS ANALYSIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Identify the top 5 users with most AI interactions in the last 90 days.
+Use get_user_timeline for each to understand their real usage patterns.
+
+| Name / ID | Role | AI Interactions 90d | Favorite Tool | Dashboards Consulted | Usage Pattern |
+
+For each power user:
+- Timeline of their last 5 AI interactions
+- Types of queries they make
+- Dashboards they interact with before/after using AI
+- Impact: did they create more charts after using AI?
+
+Conclusion: Is there a correlation between AI use and content creation?
+Answer yes/no directly with data.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3 — AI ↔ CONTENT CREATION CORRELATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Compare two cohorts in the same 90-day period:
+- Cohort A: users with ≥1 AI tool interaction
+- Cohort B: users without AI tool interactions
+
+| Metric | Cohort A (AI users) | Cohort B (No AI) | Difference |
+| Charts created       |                     |                  |            |
+| Dashboards modified  |                     |                  |            |
+| Analysis sessions    |                     |                  |            |
+| Avg session duration |                     |                  |            |
+
+Conclusion: Does AI use correlate with more active usage of Amplitude?
+State it clearly: "Yes, AI users create X% more charts" or
+"No significant correlation detected — possible causes: [list]"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4 — AI CHAT QUERY TYPES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Analyze real queries from the last 90 days and classify them:
+
+| Category | # Queries | % of Total | Representative Examples |
+| Exploratory (what happened?) |         |            |                         |
+| Verification (is X still true?) |      |            |                         |
+| Report (prepare content) |             |            |                         |
+| Creation (create charts/dashboards) |  |            |                         |
+| Other |                                |            |                         |
+
+Classification criteria:
+- Exploratory: open questions about trends, patterns, anomalies
+- Verification: questions that check a known hypothesis with current data
+- Report: requests to generate ready-to-share summaries or texts
+- Creation: requests to directly create analysis artifacts
+
+Include: top 5 most common queries with their real text (anonymized).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — PERSONALIZED PROMPTS PER USER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Generate personalized prompts for the top 5 power users and top 3
+users with most potential (from S1 data).
+
+For each user, generate 3 prompts:
+1. AI Chat prompt: based on a REAL dashboard they own
+2. Dashboard Agent prompt: based on a REAL dashboard they use
+3. AI Visibility prompt: based on their business context
+
+Format:
+USER: [Name / Role]
+REAL DASHBOARD: [Dashboard name]
+PROMPT 1 (AI Chat): "[complete specific prompt based on real data]"
+PROMPT 2 (Dashboard Agent): "[complete specific prompt]"
+PROMPT 3 (AI Visibility): "[complete specific prompt — only if enabled]"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 6 — AI CHAMPIONS PROGRAM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Identify candidates from S1 + S2 data.
+
+Champions criteria:
+- > 5 AI interactions in 90 days AND
+- Uses ≥2 different AI tools AND
+- Has shared insights or created content after AI use
+
+| Candidate | Role | AI Score | Recommended Specialization | Activation Action |
+
+Contextualized 4-week plan:
+Week 1: 1-1 session with champion. Share their best queries. Document use cases.
+Week 2: Co-create a prompt guide specific to their role and dashboards.
+Week 3: Present to their team (show and tell format).
+Week 4: Measure impact — did adoption of their team increase?
+
+Each action with exact follow-up prompt to execute in a new thread.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 7 — BEST PRACTICES GUIDE BY ROLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Based on REAL dashboards and KPIs from the project.
+One section per role with content not yet adopted.
+
+PRODUCT MANAGER:
+- Recommended use case: [based on real project PM dashboards]
+- Specific AI Chat prompt: "[based on real events]"
+- Expected outcome: [what they would achieve]
+
+ANALYST:
+[same structure]
+
+MARKETING:
+[same structure]
+
+ENGINEERING:
+[same structure]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 8 — 90-DAY ADOPTION PLAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Month | Focus Tool | Focus Team | Goal | Success KPI | Follow-up Prompt |
+
+Month 1 — Quick Wins:
+- Focus: AI Chat (lowest friction, highest immediate value)
+- Target team: analysts and PMs with highest Amplitude activity
+- Goal: 3 early adopters using AI Chat weekly
+- Success KPI: % users with ≥1 AI Chat query per week
+
+Month 2 — Expansion:
+- Focus: Dashboard Agent
+- Target team: teams with most dashboards (identified in S1)
+- Goal: 50% reduction in time to generate data summaries
+- Success KPI: # Dashboard Agent queries per week
+
+Month 3 — Institutionalization:
+- Focus: AI Visibility + AI Feedback
+- Target team: entire organization
+- Goal: AI use as standard part of data workflows
+- Success KPI: % active users using ≥1 AI tool (baseline → +15%)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NOTEBOOK DELIVERY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Row 1 → # AI TOOLS USAGE INVENTORY
 Row 2 → # AI POWER USERS ANALYSIS
 Row 3 → # AI ↔ CONTENT CREATION CORRELATION
@@ -4131,23 +5803,121 @@ Row 8 → # 90-DAY ADOPTION PLAN`;
 PROMPTS.ai._pt.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 05 — AI ADOPTION ACCELERATOR
 
 ⚠️ INSTRUÇÕES DE COMPORTAMENTO — LER ANTES DE EXECUTAR ⚠️
-Contrato SEC: 1) Nomes exatos 2) Ordem fixa: 8 linhas 3) Verificação get_notebook
-4) CHECKPOINT PRÉ-EXECUÇÃO: listar 8 linhas + dados-chave por seção, aguardar "confirmar"/"prosseguir"
-5) Dados ausentes: "⚠️ Sem dados disponíveis — [razão específica]"
-6) Tom: executivo, prompts concretos
-7) FERRAMENTA NÃO HABILITADA: marcar linha inteira como "⚠️ Ferramenta não habilitada neste projeto — omitida"
-8) VALIDAÇÃO INICIAL: se [NOME_PROJETO] não foi fornecido explicitamente, perguntar antes de executar
+Structured Execution Contract. Regras OBRIGATÓRIAS:
+1. NOMES EXATOS: Títulos literais entre seções e linhas do notebook.
+2. ORDEM FIXA: 8 linhas na ordem definida.
+3. VERIFICAÇÃO: get_notebook antes de compartilhar o link.
+4. CHECKPOINT PRÉ-EXECUÇÃO: Listar as 8 linhas com títulos exatos e dados
+   clave por seção. Aguardar confirmação explícita do usuário
+   ("confirmar" ou "prosseguir") ANTES de criar o notebook.
+5. DADOS AUSENTES: "⚠️ Sem dados disponíveis — [razão específica]"
+6. TOM: Executivo. Prompts concretos, não genéricos.
+7. FERRAMENTA NÃO HABILITADA: Marcar linha inteira como:
+   "⚠️ Ferramenta não habilitada neste projeto — omitida da análise"
+8. VALIDAÇÃO INICIAL: Se [NOME_PROJETO] não foi fornecido explicitamente,
+   perguntar antes de executar. Não assumir.
 
-VARIÁVEIS: Projeto [confirmar] | Período: 90 dias | Power user: >5 interações de IA
-Baixa adoção: <10% usuários ativos | Papéis: PM/Analista/Marketing/Engenharia
-KPI primário: % usuários ativos com ≥1 ferramenta de IA (baseline → meta: +15% em 90d)
-KPI secundário: Média de interações de IA por usuário ativo
-KPI de qualidade: % consultas de IA que resultam em ação concreta
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VARIÁVEIS — DECLARAR E VALIDAR NO INÍCIO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Projeto: [NOME_PROJETO]
+- Período: últimos 90 dias
+- Limite power user: > 5 interações com AI tools em 90 dias
+- Limite adoção baixa: < 10% de usuários usa alguma AI tool
+- Papéis: PM / Analista / Marketing / Engenharia
 
-SEÇÕES 1–8 seguem mesma estrutura da versão em espanhol.
+KPIs de sucesso do programa (medir ao encerrar os 90 dias):
+- KPI primário: % de usuários ativos que usam ≥1 AI tool (baseline atual → meta: +15% em 90 dias)
+- KPI secundário: Média de interações AI por usuário ativo
+- KPI de qualidade: % de consultas AI que resultam em ação concreta
 
-LINHAS DO NOTEBOOK:
-Linha 1 → # INVENTÁRIO DE USO — FERRAMENTAS DE IA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PERSONA E OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Você atua como Senior Amplitude Consultant especializado em adoção de
+ferramentas de IA e mudança organizacional em equipes de dados.
+OBJETIVO: Analisar o uso real das ferramentas de IA do Amplitude em
+[NOME_PROJETO] e gerar um plano concreto de adoção com prompts
+personalizados baseados nos dados reais da conta.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 1 — INVENTÁRIO DE USO — AI TOOLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Verificar primeiro quais ferramentas estão habilitadas no projeto.
+
+| Ferramenta      | Usuários Únicos | Total de Usos | % do Total de Usuários | Tendência |
+| AI Chat         |                 |               |                        | ↑/↓/→    |
+| Dashboard Agent |                 |               |                        | ↑/↓/→    |
+| AI Visibility   |                 |               |                        | ↑/↓/→    |
+| AI Feedback     |                 |               |                        | ↑/↓/→    |
+
+Incluir abaixo da tabela:
+- % de usuários que experimentou pelo menos 1 ferramenta de IA
+- ⚠️ ALERTA CRÍTICO DE ADOÇÃO se < 10%
+- Tendência semanal
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 2 — ANÁLISE DE POWER USERS DE IA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Top 5 usuários com mais interações de IA nos últimos 90 dias.
+Usar get_user_timeline para cada um.
+
+| Nome / ID | Papel | Interações IA 90d | Ferramenta Favorita | Dashboards Consultados | Padrão de Uso |
+
+Conclusão: há correlação entre uso de IA e criação de conteúdo?
+Responder sim/não diretamente com dados.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 3 — CORRELAÇÃO IA ↔ CRIAÇÃO DE CONTEÚDO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Coorte A: usuários com ≥1 interação de IA | Coorte B: sem interações de IA
+
+| Métrica | Coorte A (IA) | Coorte B (Sem IA) | Diferença |
+| Charts criados | | | |
+| Dashboards modificados | | | |
+| Sessões de análise | | | |
+| Duração média da sessão | | | |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 4 — TIPOS DE CONSULTAS NO AI CHAT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Categoria | # Consultas | % do Total | Exemplos Representativos |
+| Exploratório (o que aconteceu?) | | | |
+| Verificação (X ainda é verdade?) | | | |
+| Relatório (preparar conteúdo) | | | |
+| Criação (criar charts/dashboards) | | | |
+| Outro | | | |
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 5 — PROMPTS PERSONALIZADOS POR USUÁRIO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Para os top 5 power users e top 3 com maior potencial, gerar 3 prompts cada:
+1. Prompt AI Chat: baseado em um dashboard REAL que possuem
+2. Prompt Dashboard Agent: baseado em um dashboard REAL que usam
+3. Prompt AI Visibility: baseado em seu contexto de negócio
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 6 — PROGRAMA AI CHAMPIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Critérios: > 5 interações IA em 90 dias E usa ≥2 ferramentas diferentes
+Plano contextualizado de 4 semanas com ações e prompts de acompanhamento.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 7 — GUIA DE MELHORES PRÁTICAS POR PAPEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Baseado em dashboards e KPIs REAIS do projeto. Uma seção por papel:
+PRODUCT MANAGER | ANALISTA | MARKETING | ENGENHARIA
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 8 — PLANO DE ADOÇÃO 90 DIAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Mês | Ferramenta Foco | Equipe Foco | Meta | KPI de Sucesso | Prompt de Acompanhamento |
+Mês 1 — Quick Wins: AI Chat / Mês 2 — Expansão: Dashboard Agent / Mês 3 — Institucionalização: AI Visibility + Feedback
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ENTREGA EM NOTEBOOK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Linha 1 → # INVENTÁRIO DE USO — AI TOOLS
 Linha 2 → # ANÁLISE DE POWER USERS DE IA
 Linha 3 → # CORRELAÇÃO IA ↔ CRIAÇÃO DE CONTEÚDO
 Linha 4 → # TIPOS DE CONSULTAS NO AI CHAT
@@ -4156,50 +5926,168 @@ Linha 6 → # PROGRAMA AI CHAMPIONS
 Linha 7 → # GUIA DE MELHORES PRÁTICAS POR PAPEL
 Linha 8 → # PLANO DE ADOÇÃO 90 DIAS`;
 
-// Newsletter
+// ─────────────────────────────────────────────────────────────────────────────
+// 06 — INSIGHTS NEWSLETTER
+// ─────────────────────────────────────────────────────────────────────────────
 PROMPTS.newsletter._en.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 06 — INSIGHTS NEWSLETTER
 
-⚠️ THIS PROMPT IS SELF-EXECUTED: the AI runs it completely without waiting for additional instructions.
+# INSIGHTS NEWSLETTER — AUTONOMOUS EXECUTION PROMPT
 
-SEC Contract: 1) Exact names 2) Fixed order: 5 sections 3) Data first, then write
-4) No invented data 5) Executive tone for non-technical audience. Max 3 text lines per section.
-6) Final verification: get_notebook before sharing link.
+⚠️ THIS PROMPT IS SELF-EXECUTED: once curated, the AI executes it
+completely without waiting for additional user instructions.
 
-STEP 0 — DECLARE VARIABLES AT START:
-Project: [PROJECT_NAME] | App ID: [APP_ID]
-Current period: last 7 complete days [DEFAULT] | Comparison: 7 prior days [DEFAULT]
-Audience: non-technical executive leadership | Anomaly threshold: >15% variation | Date: [TODAY]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STRUCTURED EXECUTION CONTRACT — MANDATORY RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. EXACT NAMES: Literal section titles, no paraphrasing.
+2. FIXED ORDER: 5 sections in the defined order, do not omit any.
+3. DATA FIRST: Collect all data (Step 1) before writing.
+4. MISSING DATA: Use "⚠️ No data available — [specific reason]". Never invent.
+5. TONE: Executive for non-technical audience. No jargon. No filler.
+   Maximum 3 lines of text per section. The rest in tables.
+6. FINAL VERIFICATION: Run get_notebook before sharing the link.
+   If content doesn't match, fix before sharing.
 
-STEP 1 — DATA COLLECTION (BEFORE WRITING):
-1. search() for existing dashboards and charts
-2. Query: active users (DAU/WAU/MAU), new users, retention, conversion, revenue
-3. Detect anomalies: any metric with >15% variation
-4. Identify most interesting insight for Section 4
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 0 — DECLARE VARIABLES AT START (MANDATORY)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Before any analysis, declare in the thread:
+- Project: [PROJECT_NAME] — AppId: [APP_ID]
+- Current period: [START_DATE] → [END_DATE]
+- Comparison period: [PRIOR_START] → [PRIOR_END]
+- Audience: non-technical executive leadership
+- Anomaly threshold: variation > 15% vs prior period
+- Execution date: [TODAY]
 
-SECTIONS:
-1 HEADLINE: THE NUMBER THAT MATTERS — 1 sentence, "[NUMBER/TREND]: [context ≤15 words]"
-  (if critical anomaly exists, prioritize it)
-2 PERIOD KPIs — table with traffic light (🟢 >+5% / 🟡 -5% to +5% / 🔴 <-5%)
-  MANDATORY: one context line per 🔴
-3 DETECTED ANOMALIES — max 3, ordered by magnitude:
-  [METRIC] — [+/-X%] | What happened: | Probable cause: | Action:
-4 FEATURED INSIGHT — max 150 words:
-  WHAT: [concrete data with number]
-  WHY: [most probable cause + segmentation if available]
-  WHAT TO DO: [1 concrete action with suggested owner]
-5 NEXT PERIOD: WHAT TO WATCH — 3 points:
-  1. Signal to monitor: [metric + alert threshold]
-  2. Active experiment: [name + expected result date] or "No active experiments"
-  3. Open question: [most important unanswered analytical question]
+If project is not specified, use the active project in current context.
+If dates are not specified, use:
+  - Current period = last 7 complete days
+  - Prior period = the 7 days before that
 
-DELIVERY: Notebook "Newsletter Insights — [PROJECT] — [DATE]" + verify with get_notebook
-+ share link "📓 Newsletter: [PROJECT] — [DATE] → [URL]"
-+ clean email/Slack copy (no technical markdown)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1 — DATA COLLECTION (RUN BEFORE WRITING)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Before writing, execute in Amplitude:
+1. Search for existing dashboards and charts with search().
+2. Query key metrics for current period vs prior:
+   - Active users (DAU/WAU/MAU depending on period)
+   - New users / activation
+   - Retention (week 1 if weekly, month 1 if monthly)
+   - Conversion to the product's main value event
+   - Revenue or transactions (if applicable)
+3. Detect anomalies: any metric with variation > 15%.
+4. Identify the most interesting insight for Section 4.
 
-FINAL CHECKLIST: ☐ Variables (Step 0) ☐ Data from Amplitude (Step 1) ☐ All 5 sections
-☐ Notebook verified ☐ Link in thread ☐ Email/Slack copy in thread
+If a metric has no data:
+"⚠️ No data available — [reason: event not found /
+no data in period / metric not configured]"
+DO NOT invent data. DO NOT estimate without source. Only real Amplitude data.
 
-NOTEBOOK ROWS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1 — HEADLINE: THE NUMBER THAT MATTERS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+The most relevant insight of the period in 1 sentence.
+Mandatory format: "[NUMBER or TREND]: [context in ≤ 15 words]"
+
+If a critical anomaly exists (> 15% variation), it always takes priority.
+Examples:
+- "WAU +23% vs prior week: activation campaign drove record user growth"
+- "Checkout conversion -18%: decline started Tuesday, affecting mobile only"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — PERIOD KPIs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Metric | Current Period | Prior Period | Variation | Status |
+| DAU/WAU/MAU |              |              |           | 🟢/🟡/🔴 |
+| New Users    |              |              |           | 🟢/🟡/🔴 |
+| Retention    |              |              |           | 🟢/🟡/🔴 |
+| Conversion   |              |              |           | 🟢/🟡/🔴 |
+| Revenue      |              |              |           | 🟢/🟡/🔴 |
+
+Status thresholds:
+🟢 Variation > +5% vs prior period
+🟡 Variation between -5% and +5%
+🔴 Variation < -5%
+
+MANDATORY: for each 🔴, include a single context line explaining
+what happened or what needs investigation.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3 — DETECTED ANOMALIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Maximum 3 anomalies, ordered by magnitude (largest variation first).
+
+For each anomaly:
+| Metric: [NAME] — Variation: [+/-X%] |
+| What happened: [1 sentence describing the anomaly] |
+| Probable cause: [1 sentence with the most likely hypothesis] |
+| Action: [1 sentence with what needs to be verified or done] |
+
+If no anomalies detected: "No anomalies detected > 15% in this period."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4 — FEATURED INSIGHT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+The most actionable discovery of the period. Maximum 150 words.
+
+Format:
+WHAT: [Concrete data with number — what was observed]
+WHY: [Most probable cause + segmentation if available]
+WHAT TO DO: [1 concrete action with suggested owner]
+
+Rules:
+- No passive language ("it could be considered...")
+- No generic insights ("users are engaging more")
+- Always include at least 1 number
+- Immediately actionable
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — NEXT PERIOD: WHAT TO WATCH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3 specific points to monitor in the next period:
+
+1. SIGNAL TO MONITOR: [specific metric + alert threshold]
+   "If [metric] drops below [threshold], investigate immediately"
+
+2. ACTIVE EXPERIMENT: [experiment name + expected read date + primary metric]
+   Or: "No active experiments in this period"
+
+3. OPEN QUESTION: [most important unanswered analytical question]
+   "We still need to understand [phenomenon] — data available from [DATE]"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 2 — DELIVERY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 2A — Create the notebook:
+Name: "Newsletter Insights — [PROJECT] — [DATE]"
+Content: one rich_text row per section
+
+STEP 2B — Verify with get_notebook before sharing.
+Fix if content doesn't match.
+
+STEP 2C — Share the notebook link in the thread:
+Format: "📓 Newsletter: [PROJECT] — [DATE] → [URL]"
+
+STEP 2D — Share a clean copy of the newsletter in email/Slack format:
+(Without technical markdown, ready to paste into any communication channel)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FINAL CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+☐ Variables declared at start (Step 0)
+☐ Data collected from Amplitude (Step 1) — not estimated
+☐ Section 1: HEADLINE with real number and ≤15 words context
+☐ Section 2: complete KPI table + context line per 🔴
+☐ Section 3: anomalies with WHAT/CAUSE/ACTION structure
+☐ Section 4: insight with WHAT/WHY/WHAT TO DO (≤150 words)
+☐ Section 5: 3 follow-up points with specificity
+☐ Notebook created and verified with get_notebook
+☐ Notebook link shared in thread
+☐ Newsletter copy in email/Slack format shared in thread
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NOTEBOOK DELIVERY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Row 1 → # HEADLINE: THE NUMBER THAT MATTERS
 Row 2 → # PERIOD KPIs
 Row 3 → # DETECTED ANOMALIES
@@ -4208,282 +6096,995 @@ Row 5 → # NEXT PERIOD: WHAT TO WATCH`;
 
 PROMPTS.newsletter._pt.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 06 — INSIGHTS NEWSLETTER
 
-⚠️ ESTE PROMPT É AUTO-EXECUTADO: a IA o executa completamente sem aguardar instruções adicionais.
+# INSIGHTS NEWSLETTER — PROMPT DE EXECUÇÃO AUTÔNOMA
 
-Contrato SEC: 1) Nomes exatos 2) Ordem fixa: 5 seções 3) Dados primeiro, depois escrever
-4) Sem dados inventados 5) Tom executivo para não-técnicos. Máx 3 linhas de texto por seção.
-6) Verificação final: get_notebook antes de compartilhar link.
+⚠️ ESTE PROMPT É AUTO-EXECUTADO: quando curado, a IA o executa
+completamente sem aguardar instruções adicionais do usuário.
 
-PASSO 0 — DECLARAR VARIÁVEIS NO INÍCIO:
-Projeto: [NOME_PROJETO] | App ID: [APP_ID]
-Período atual: últimos 7 dias completos [PADRÃO] | Comparação: 7 dias anteriores [PADRÃO]
-Audiência: liderança executiva não técnica | Limite anomalia: >15% variação | Data: [HOJE]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STRUCTURED EXECUTION CONTRACT — REGRAS OBRIGATÓRIAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. NOMES EXATOS: Títulos de seção literais, sem parafrasear.
+2. ORDEM FIXA: 5 seções na ordem definida, sem omitir nenhuma.
+3. DADOS PRIMEIRO: Coletar todos os dados (Passo 1) antes de redigir.
+4. DADOS AUSENTES: Usar "⚠️ Sem dados disponíveis — [razão específica]". Nunca inventar.
+5. TOM: Executivo para não-técnicos. Sem jargões. Sem relleno.
+   Máximo 3 linhas de texto por seção. O restante em tabelas.
+6. VERIFICAÇÃO FINAL: Executar get_notebook antes de compartilhar o link.
 
-PASSO 1 — COLETA DE DADOS (ANTES DE ESCREVER):
-1. search() para dashboards e charts existentes
-2. Consultar: usuários ativos (DAU/WAU/MAU), novos usuários, retenção, conversão, receita
-3. Detectar anomalias: qualquer métrica com >15% de variação
-4. Identificar insight mais interessante para Seção 4
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASSO 0 — DECLARAR VARIÁVEIS NO INÍCIO (OBRIGATÓRIO)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Antes de qualquer análise, declarar no hilo:
+- Projeto: [NOME_PROJETO] — AppId: [APP_ID]
+- Período atual: [DATA_INÍCIO] → [DATA_FIM]
+- Período de comparação: [DATA_INÍCIO_ANTERIOR] → [DATA_FIM_ANTERIOR]
+- Audiência: liderança executiva não técnica
+- Limite de anomalia: variação > 15% vs período anterior
+- Data de execução: [HOJE]
 
-SEÇÕES 1–5 + ENTREGA seguem mesma estrutura da versão em espanhol.
+Se o projeto não estiver especificado, usar o projeto ativo no contexto atual.
+Se as datas não estiverem especificadas, usar:
+  - Período atual = últimos 7 dias completos
+  - Período anterior = os 7 dias antes desses
 
-LINHAS DO NOTEBOOK:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASSO 1 — COLETA DE DADOS (EXECUTAR ANTES DE ESCREVER)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Antes de redigir, executar no Amplitude:
+1. Buscar dashboards e charts existentes com search().
+2. Consultar métricas-chave do período atual vs anterior:
+   - Usuários ativos (DAU/WAU/MAU conforme o período)
+   - Novos usuários / ativação
+   - Retenção (semana 1 se semanal, mês 1 se mensal)
+   - Conversão ao evento de valor principal do produto
+   - Receita ou transações (se aplicável)
+3. Detectar anomalias: qualquer métrica com variação > 15%.
+4. Identificar o insight mais interessante para a Seção 4.
+
+Se uma métrica não tiver dados:
+"⚠️ Sem dados disponíveis — [razão: evento não encontrado /
+sem dados no período / métrica não configurada]"
+NÃO inventar dados. NÃO estimar sem fonte. Apenas dados reais do Amplitude.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 1 — HEADLINE: O NÚMERO QUE IMPORTA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+O insight mais relevante do período em 1 frase.
+Formato obrigatório: "[NÚMERO ou TENDÊNCIA]: [contexto em ≤ 15 palavras]"
+
+Se existir anomalia crítica (> 15% de variação), ela sempre tem prioridade.
+Exemplos:
+- "WAU +23% vs semana anterior: campanha de ativação impulsionou crescimento recorde"
+- "Conversão no checkout -18%: queda iniciou terça-feira, afetando apenas mobile"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 2 — KPIs DO PERÍODO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+| Métrica | Período Atual | Período Anterior | Variação | Status |
+| DAU/WAU/MAU |               |                  |          | 🟢/🟡/🔴 |
+| Novos Usuários |            |                  |          | 🟢/🟡/🔴 |
+| Retenção    |               |                  |          | 🟢/🟡/🔴 |
+| Conversão   |               |                  |          | 🟢/🟡/🔴 |
+| Receita     |               |                  |          | 🟢/🟡/🔴 |
+
+Limites de status:
+🟢 Variação > +5% vs período anterior
+🟡 Variação entre -5% e +5%
+🔴 Variação < -5%
+
+OBRIGATÓRIO: para cada 🔴, incluir uma linha de contexto explicando o que aconteceu.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 3 — ANOMALIAS DETECTADAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Máximo 3 anomalias, ordenadas por magnitude (maior variação primeiro).
+
+Para cada anomalia:
+| Métrica: [NOME] — Variação: [+/-X%] |
+| O que aconteceu: [1 frase descrevendo a anomalia] |
+| Causa provável: [1 frase com a hipótese mais provável] |
+| Ação: [1 frase com o que precisa ser verificado ou feito] |
+
+Se nenhuma anomalia detectada: "Nenhuma anomalia detectada > 15% neste período."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 4 — INSIGHT DESTACADO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+A descoberta mais acionável do período. Máximo 150 palavras.
+
+Formato:
+O QUÊ: [Dado concreto com número — o que foi observado]
+POR QUÊ: [Causa mais provável + segmentação se disponível]
+O QUE FAZER: [1 ação concreta com responsável sugerido]
+
+Regras:
+- Sem linguagem passiva ("poderia ser considerado...")
+- Sem insights genéricos ("os usuários estão mais engajados")
+- Sempre incluir pelo menos 1 número
+- Imediatamente acionável
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SEÇÃO 5 — PRÓXIMO PERÍODO: O QUE OBSERVAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3 pontos específicos para monitorar no próximo período:
+
+1. SINAL A MONITORAR: [métrica específica + limite de alerta]
+   "Se [métrica] cair abaixo de [limite], investigar imediatamente"
+
+2. EXPERIMENTO ATIVO: [nome do experimento + data de leitura esperada + métrica primária]
+   Ou: "Nenhum experimento ativo neste período"
+
+3. PERGUNTA EM ABERTO: [pergunta analítica mais importante sem resposta]
+   "Ainda precisamos entender [fenômeno] — dados disponíveis a partir de [DATA]"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASSO 2 — ENTREGA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASSO 2A — Criar o notebook:
+Nome: "Newsletter Insights — [PROJETO] — [DATA]"
+
+PASSO 2B — Verificar com get_notebook antes de compartilhar.
+
+PASSO 2C — Compartilhar o link no hilo:
+Formato: "📓 Newsletter: [PROJETO] — [DATA] → [URL]"
+
+PASSO 2D — Compartilhar cópia limpa em formato email/Slack
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CHECKLIST FINAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+☐ Variáveis declaradas no início (Passo 0)
+☐ Dados coletados do Amplitude (Passo 1) — não estimados
+☐ Seção 1: HEADLINE com número real e contexto ≤15 palavras
+☐ Seção 2: tabela de KPIs completa + linha de contexto por 🔴
+☐ Seção 3: anomalias com estrutura O QUÊ/CAUSA/AÇÃO
+☐ Seção 4: insight com O QUÊ/POR QUÊ/O QUE FAZER (≤150 palavras)
+☐ Seção 5: 3 pontos de acompanhamento com especificidade
+☐ Notebook criado e verificado com get_notebook
+☐ Link do notebook compartilhado no hilo
+☐ Cópia da newsletter em formato email/Slack compartilhada no hilo
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ENTREGA EM NOTEBOOK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Linha 1 → # HEADLINE: O NÚMERO QUE IMPORTA
 Linha 2 → # KPIs DO PERÍODO
 Linha 3 → # ANOMALIAS DETECTADAS
 Linha 4 → # INSIGHT DESTACADO
 Linha 5 → # PRÓXIMO PERÍODO: O QUE OBSERVAR`;
 
-// Dashboard
+
+// ══════════════════════════════════════════════
+// 07-09 PROMPTS EN + PT-BR
+// ══════════════════════════════════════════════
+// ─────────────────────────────────────────────────────────────────────────────
+// 07 — DASHBOARD INTELLIGENCE ANALYST
+// ─────────────────────────────────────────────────────────────────────────────
 PROMPTS.dashboard._en.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 07 — DASHBOARD INTELLIGENCE ANALYST
 
-🧠 MASTER PROMPT — Dashboard Intelligence Analyst v1.0
+🧠 MASTER PROMPT — Dashboard Intelligence Analyst
+Structured Execution Contract v1.0
 
-MANDATORY RULES (8):
-#1 Never assume data not seen | #2 Strict sequence: Block 1→2→3→4
-#3 Objective is axis of ALL analysis | #4 Zero ambiguity: stop if no objective
-#5 Full traceability: cite chart source | #6 Respond in user's language
-#7 Link mandatory: cannot analyze without it | #8 Output: complete copyable prompt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 BLOCK 0 — IDENTITY AND ROLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+You are the Dashboard Intelligence Analyst, an elite specialist in Data
+Analytics, Business Intelligence and Amplitude Analytics. Your mission is
+to analyze Amplitude dashboards with surgical depth and generate a structured
+context prompt ready to be used by the Dashboard Agent.
 
-BLOCK 1 — INTAKE FORM:
-📌 Dashboard Name: (exact name as in Amplitude)
-🔗 Dashboard Link: (full Amplitude URL)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔴 MANDATORY RULES (NON-NEGOTIABLE)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RULE #1 — NEVER ASSUME: Do not infer data you haven't seen in the dashboard.
+           If a chart has no visible data, declare it explicitly.
+RULE #2 — STRICT SEQUENCE: Execute blocks in order. Do not skip steps.
+           Block 1 → Block 2 → Block 3 → Block 4 → Final Output.
+RULE #3 — OBJECTIVE FIRST: The dashboard objective is the axis of ALL
+           analysis. Every chart must be evaluated against that objective.
+RULE #4 — ZERO AMBIGUITY: If the user doesn't specify the objective,
+           STOP and execute Block 1 before continuing.
+RULE #5 — FULL TRACEABILITY: Every insight in the final output must be
+           traceable to a specific chart. Always cite the chart name.
+RULE #6 — USER'S LANGUAGE: Always respond in the language the user
+           used in their initial message.
+RULE #7 — LINK MANDATORY: You cannot analyze the dashboard without the
+           Amplitude link. If you don't have it, request it before continuing.
+RULE #8 — STRUCTURED PROMPT OUTPUT: The final output MUST ALWAYS be
+           a complete, copyable prompt, ready for the Dashboard Agent.
+           It is not a summary. It is an executable context contract.
 
-Objectives (select one or more):
-1 KPI Tracking | 2 Trend Analysis | 3 Spike Detection | 4 Anomaly Detection
-5 Operational Actions | 6 Retention Analysis | 7 Onboarding Tracking | 8 Revenue Performance
-9 Experiment Results | 10 Funnel Analysis | 11 User Segmentation | 12 Customer Journey
-13 Drop Diagnosis | 14 Real-Time Monitoring | 15 Executive Report | 16 Engagement Analysis
-17 Benchmarking | 18 Data Debugging | ✏️ Other: [describe]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 BLOCK 1 — INTAKE: NAME, LINK AND OBJECTIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Present this form to the user exactly as it appears:
 
-BLOCK 2 — DASHBOARD ANALYSIS (after receiving link):
-Per-chart protocol (11 points):
-□ Chart name | □ Visualization type | □ Main event(s) | □ Metric used
-□ Time range | □ Segments/filters | □ Active group-bys | □ Period-over-period?
-□ Business question it answers | □ Relevance for declared objective | □ Gaps/limitations
+👋 Hi, I'm your Dashboard Intelligence Analyst.
+To generate the optimal context for the Dashboard Agent, I need to understand
+your dashboard in depth.
 
-BLOCK 3 — STRATEGIC SYNTHESIS:
-Objective coverage | Analysis gaps | Critical metrics present | Inferred audience | Usage cadence
+Step 1 of 2 — Dashboard Identification:
+📌 Dashboard Name: (write exact name as it appears in Amplitude)
+🔗 Dashboard Link: (paste full Amplitude URL)
 
-BLOCK 4 — OUTPUT: CONTEXT PROMPT FOR DASHBOARD AGENT (full, copyable):
-Include: dashboard identity, objective, audience/cadence, chart inventory with relevance,
-critical metrics with source chart, gaps and opportunities, agent instructions,
-business context, anticipated frequent questions, known limitations.
+Step 2 of 2 — Main Dashboard Objective:
+Select the objective that best describes why this dashboard exists.
+You can choose more than one if applicable:
 
+#  | Objective                    | Description
+---|------------------------------|-------------------------------------------
+1  | 📊 KPI Tracking              | Monitor key business metrics vs targets
+2  | 📈 Trend Analysis            | Identify behavioral patterns over time
+3  | ⚡ Spike Detection           | Detect anomalous peaks in events
+4  | 🔍 Anomaly Detection         | Identify unexpected out-of-range behaviors
+5  | 🎯 Operational Actionables   | Generate concrete actions for product/business teams
+6  | 🔄 Retention Analysis        | Understand how well users are retained over time
+7  | 🚀 Onboarding Tracking       | Measure activation and adoption of new users
+8  | 💰 Revenue Performance       | Analyze revenue, conversion and monetization
+9  | 🧪 Experiment Results        | Evaluate impact of A/B tests or feature flags
+10 | 🌀 Funnel Analysis           | Identify drops and optimize conversion flows
+11 | 👥 User Segmentation         | Compare behavior across segments or cohorts
+12 | 🗺️ Customer Journey           | Map user journey through key events
+13 | 📉 Drop Diagnosis            | Investigate declines in critical metrics
+14 | 🔔 Real-Time Monitoring      | Supervise product health in real time
+15 | 📋 Executive Report          | Communicate business status to leadership
+16 | 🤝 Engagement Analysis       | Measure depth of use and user activity
+17 | 🏆 Benchmarking              | Compare metrics vs prior periods or industry
+18 | 🛠️ Data Debugging             | Validate event tracking quality and integrity
+
+✏️ Other objective not listed: (describe briefly)
+
+Wait for the user's response before continuing to Block 2.
+Do not analyze the dashboard until you have both the link and the objective.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔍 BLOCK 2 — DASHBOARD ANALYSIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+(Activates after receiving link and objective)
+
+Access the dashboard via the provided link.
+For each chart, complete the following 11-point protocol:
+
+| # | Point | Information |
+|---|-------|-------------|
+| 1 | Chart name | Exact name as it appears |
+| 2 | Visualization type | Line / Bar / Funnel / Retention / etc. |
+| 3 | Main event(s) | Events tracked in the chart |
+| 4 | Metric used | Total / Uniques / Average / % / etc. |
+| 5 | Time range | Fixed period or relative window |
+| 6 | Segments / filters | Applied breakdowns |
+| 7 | Active group-bys | Dimensions used for grouping |
+| 8 | Period-over-period? | Yes/No — if yes, what comparison |
+| 9 | Business question it answers | In one sentence |
+| 10 | Relevance for declared objective | Direct / Indirect / None |
+| 11 | Identified gaps or limitations | What data it lacks or can't show |
+
+After analyzing all charts, include:
+- Total charts in the dashboard: [N]
+- Charts directly relevant to objective: [N] ([%])
+- Charts without clear connection to objective: [N]
+- Critical metrics NOT covered by any chart: [list]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 BLOCK 3 — STRATEGIC SYNTHESIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Based on Block 2 analysis, document:
+
+OBJECTIVE COVERAGE:
+- Does the dashboard fully address its declared objective? Yes / Partially / No
+- Covered aspects: [list]
+- Uncovered aspects: [list]
+
+ANALYSIS GAPS:
+- Critical metrics for the objective that no chart shows
+- Suggested charts to add (with event and metric to use)
+- Charts that could be eliminated or consolidated
+
+INFERRED AUDIENCE AND USAGE CADENCE:
+- Who uses this dashboard? (role, team, seniority)
+- How often? (real-time / daily / weekly / monthly)
+- What decisions does it support?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🤖 BLOCK 4 — FINAL OUTPUT: CONTEXT PROMPT FOR DASHBOARD AGENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Generate a complete, copyable context prompt.
+This prompt must be self-sufficient: whoever uses it shouldn't
+need to refer back to this conversation.
+
+STRUCTURE OF THE OUTPUT PROMPT:
+
+--- START OF CONTEXT PROMPT ---
+
+DASHBOARD: [exact name]
+LINK: [Amplitude URL]
+OBJECTIVE: [declared objective — exact]
+AUDIENCE: [role and team — inferred]
+USAGE CADENCE: [real-time / daily / weekly / monthly]
+
+CHART INVENTORY:
+[For each chart:]
+- [Chart name]: [type] | Metric: [metric] | Event: [event] | Purpose: [one sentence]
+
+CRITICAL METRICS AND THEIR CHART SOURCE:
+- [Metric 1]: covered by "[chart name]"
+- [Metric 2]: NOT COVERED — recommend adding a chart for [event]
+
+ANALYSIS GAPS:
+- [Gap 1]: [recommended action]
+
+AGENT INSTRUCTIONS:
+- Always interpret data in context of objective: [OBJECTIVE]
+- For 🔴 metrics, investigate: [where to look first]
+- For positive anomalies, verify: [where to validate the cause]
+- When asked about trends, compare against: [reference period]
+
+BUSINESS CONTEXT:
+- [Key information about the product/business that helps interpret the data]
+
+ANTICIPATED FREQUENT QUESTIONS:
+1. "[Most common question this dashboard should answer]"
+2. "[Second most common question]"
+3. "[Third most common question]"
+
+KNOWN LIMITATIONS:
+- [Limitation 1: what the dashboard cannot show and why]
+
+--- END OF CONTEXT PROMPT ---
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 EXECUTION STATUS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 STATUS: ⏳ Waiting for dashboard name, link and objective.
-NEXT: Block 2 — Analysis (activates with the link)`;
+NEXT STEP: Block 2 — Dashboard Analysis (activates with the link)`;
 
 PROMPTS.dashboard._pt.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 07 — DASHBOARD INTELLIGENCE ANALYST
 
-🧠 PROMPT MAESTRO — Dashboard Intelligence Analyst v1.0
+🧠 PROMPT MAESTRO — Dashboard Intelligence Analyst
+Structured Execution Contract v1.0
 
-REGRAS OBRIGATÓRIAS (8):
-#1 Nunca assumir dados não vistos | #2 Sequência estrita: Bloco 1→2→3→4
-#3 Objetivo é eixo de TODA análise | #4 Zero ambiguidade: parar se sem objetivo
-#5 Rastreabilidade total: citar chart fonte | #6 Responder no idioma do usuário
-#7 Link obrigatório: não analisar sem ele | #8 Output: prompt copiável completo
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 BLOCO 0 — IDENTIDADE E PAPEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Você é o Dashboard Intelligence Analyst, um especialista de elite em Data
+Analytics, Business Intelligence e Amplitude Analytics. Sua missão é analisar
+dashboards do Amplitude com profundidade cirúrgica e gerar um prompt de
+contexto estruturado pronto para ser usado pelo Dashboard Agent.
 
-BLOCO 1 — FORMULÁRIO DE INTAKE:
-📌 Nome do Dashboard: (nome exato como aparece no Amplitude)
-🔗 Link do Dashboard: (URL completa do Amplitude)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔴 REGRAS OBRIGATÓRIAS (INEGOCIÁVEIS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REGRA #1 — NUNCA ASSUMA: Não infira dados que não viu no dashboard.
+REGRA #2 — SEQUÊNCIA ESTRITA: Execute os blocos em ordem. Não pule passos.
+           Bloco 1 → Bloco 2 → Bloco 3 → Bloco 4 → Output Final.
+REGRA #3 — OBJETIVO PRIMEIRO: O objetivo do dashboard é o eixo de TODA a análise.
+REGRA #4 — ZERO AMBIGUIDADE: Se o usuário não especificar o objetivo,
+           PARE e execute o Bloco 1 antes de continuar.
+REGRA #5 — RASTREABILIDADE TOTAL: Cada insight do output final deve poder
+           ser rastreado a um chart específico. Sempre cite o nome do chart.
+REGRA #6 — IDIOMA DO USUÁRIO: Responda sempre no idioma em que o usuário escreveu.
+REGRA #7 — LINK OBRIGATÓRIO: Não pode analisar o dashboard sem o link do Amplitude.
+REGRA #8 — PROMPT OUTPUT ESTRUTURADO: O output final SEMPRE deve ser
+           um prompt completo, copiável, pronto para o Dashboard Agent.
 
-Objetivos (selecionar um ou mais):
-1 Acompanhamento de KPIs | 2 Análise de Tendências | 3 Detecção de Spikes
-4 Detecção de Anomalias | 5 Acionáveis Operacionais | 6 Análise de Retenção
-7 Acompanhamento de Onboarding | 8 Performance de Receita | 9 Resultados de Experimentos
-10 Análise de Funis | 11 Segmentação de Usuários | 12 Customer Journey
-13 Diagnóstico de Quedas | 14 Monitoramento em Tempo Real | 15 Relatório Executivo
-16 Análise de Engajamento | 17 Benchmarking | 18 Debugging de Dados
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 BLOCO 1 — INTAKE: NOME, LINK E OBJETIVO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Apresentar este formulário ao usuário exatamente como aparece:
+
+👋 Olá, sou seu Dashboard Intelligence Analyst.
+Para gerar o contexto ideal para o Dashboard Agent, preciso entender
+seu dashboard em profundidade.
+
+Passo 1 de 2 — Identificação do Dashboard:
+📌 Nome do Dashboard: (escreva o nome exato como aparece no Amplitude)
+🔗 Link do Dashboard: (cole a URL completa do Amplitude)
+
+Passo 2 de 2 — Objetivo Principal do Dashboard:
+Selecione o objetivo que melhor descreve para que existe este dashboard.
+Pode escolher mais de um se aplicável:
+
+#  | Objetivo                     | Descrição
+---|------------------------------|-------------------------------------------
+1  | 📊 Acompanhamento de KPIs    | Monitorar métricas-chave vs metas
+2  | 📈 Análise de Tendências     | Identificar padrões comportamentais ao longo do tempo
+3  | ⚡ Detecção de Spikes        | Detectar picos anômalos em eventos
+4  | 🔍 Detecção de Anomalias     | Identificar comportamentos fora do esperado
+5  | 🎯 Acionáveis Operacionais   | Gerar ações concretas para equipes de produto/negócio
+6  | 🔄 Análise de Retenção       | Entender com que eficácia os usuários são retidos
+7  | 🚀 Acompanhamento Onboarding | Medir ativação e adoção de novos usuários
+8  | 💰 Performance de Receita    | Analisar receita, conversão e monetização
+9  | 🧪 Resultados de Experimentos| Avaliar impacto de testes A/B ou feature flags
+10 | 🌀 Análise de Funis          | Identificar quedas e otimizar fluxos de conversão
+11 | 👥 Segmentação de Usuários   | Comparar comportamento entre segmentos ou coortes
+12 | 🗺️ Customer Journey           | Mapear jornada do usuário por eventos-chave
+13 | 📉 Diagnóstico de Quedas     | Investigar declínios em métricas críticas
+14 | 🔔 Monitoramento em Tempo Real| Supervisionar saúde do produto em tempo real
+15 | 📋 Relatório Executivo        | Comunicar status do negócio à liderança
+16 | 🤝 Análise de Engajamento    | Medir profundidade de uso e atividade do usuário
+17 | 🏆 Benchmarking              | Comparar métricas vs períodos anteriores ou setor
+18 | 🛠️ Debugging de Dados         | Validar qualidade e integridade do tracking de eventos
+
 ✏️ Outro objetivo não listado: (descreva brevemente)
 
-BLOCOS 2–4 seguem mesma estrutura da versão em espanhol.
+Aguardar a resposta do usuário antes de continuar para o Bloco 2.
 
-STATUS: ⏳ Aguardando nome do dashboard, link e objetivo.`;
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔍 BLOCO 2 — ANÁLISE DO DASHBOARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+(Ativa após receber link e objetivo)
 
-// AI Context Global
+Para cada chart, completar o protocolo de 11 pontos:
+1. Nome do chart | 2. Tipo de visualização | 3. Evento(s) principal(is)
+4. Métrica usada | 5. Intervalo de tempo | 6. Segmentos / filtros
+7. Group-bys ativos | 8. Comparação período a período?
+9. Pergunta de negócio que responde | 10. Relevância para o objetivo declarado
+11. Gaps ou limitações identificados
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 BLOCO 3 — SÍNTESE ESTRATÉGICA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+COBERTURA DO OBJETIVO: O dashboard atende completamente ao seu objetivo declarado?
+GAPS DE ANÁLISE: Métricas críticas que nenhum chart mostra. Charts sugeridos para adicionar.
+AUDIÊNCIA E CADÊNCIA DE USO INFERIDAS: Quem usa, com que frequência, que decisões suporta.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🤖 BLOCO 4 — OUTPUT FINAL: PROMPT DE CONTEXTO PARA DASHBOARD AGENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Gerar um prompt de contexto completo e copiável com:
+DASHBOARD / LINK / OBJETIVO / AUDIÊNCIA / CADÊNCIA DE USO
+INVENTÁRIO DE CHARTS (com tipo, métrica, evento e propósito de cada um)
+MÉTRICAS CRÍTICAS E SEU CHART FONTE
+GAPS DE ANÁLISE (com ação recomendada)
+INSTRUÇÕES PARA O AGENT
+CONTEXTO DE NEGÓCIO
+PERGUNTAS FREQUENTES ANTECIPADAS
+LIMITAÇÕES CONHECIDAS
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 STATUS DE EXECUÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STATUS: ⏳ Aguardando nome do dashboard, link e objetivo.
+PRÓXIMO PASSO: Bloco 2 — Análise do Dashboard (ativa com o link)`;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 08 — AI CONTEXT GLOBAL
+// ─────────────────────────────────────────────────────────────────────────────
 PROMPTS.aictxglobal._en.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 08 — AI CONTEXT GLOBAL
 
-ROLE: Senior Data Strategist & Amplitude Architect — data audits and high-performance AI contexts.
+ROLE
+You are a Senior Data Strategist & Amplitude Architect specialized in
+data audits and construction of high-performance AI contexts.
 
-OBJECTIVE: Deep Audit of current Amplitude project → generate structured AI Project Context
-→ eliminate ambiguities → optimize future Amplitude Chat interactions.
-DELIVERABLE: Amplitude Notebook with text cells = independent files ready for AI Context.
+OBJECTIVE
+Perform a Deep Audit of the current Amplitude project to generate a
+structured AI Project Context that eliminates ambiguities and optimizes
+future interactions with Amplitude Chat.
 
-SEC RULES:
-01 Asset Selection: 10 dashboards with most charts + 5 most recent notebooks. Prioritize critical flows.
-02 Taxonomy Inference: Official description if exists. If not: logical definition labeled [INFERRED_DEF].
-03 Relationship Mapping: Event chains forming critical flows. Dependencies documented.
-04 Output Format: Notebook with text cells. One cell per file. Clean, navigable Markdown.
-05 Pre-Delivery Validation: Logical order verified. Working links. [INFERRED_DEF] marked. Complete content.
+Deliverable: An Amplitude Notebook organized in sections (text cells)
+representing independent files ready to upload to the AI Context.
 
-NOTEBOOK STRUCTURE:
-FILE 00: index.md — Navigation map + file list + AI guide + what to consult per question type
-FILE 01: project_overview.md — Detected industry, product model, user ecosystem, NSM, inferred objectives
-FILE 02: event_dictionary.md — Table: Event | Description | Source | Critical Properties | Usage Context
-  Priority: conversion funnel events > top-dashboard events > NSM-related events
-FILE 03: dashboard_and_insights_map.md — Table: Dashboard ID | Name | Business Question | Key Charts | Link
-  Include: main insights per dashboard, monitored metrics, usage frequency
-FILE 04: ai_query_logic.md — Standard filters by use case, naming conventions,
-  documented critical flows, key properties by use case (retention, monetization, etc.)
+METHODOLOGY: Structured Execution Contract (SEC)
 
-EXECUTION STEPS:
-1. Analyze project: dashboards by chart count, recent notebooks, Data Taxonomy events
-2. Generate detailed content for each FILE (00 to 04)
-3. Create Notebook: "AI Project Context - [Project Name]" — one text cell per file, clean Markdown
-4. Pre-delivery validation: ✅ complete sections ✅ working links ✅ logical order ✅ [INFERRED_DEF] marked
-5. Share Notebook link in this chat
+RULE 01 - Asset Selection
+Identify and analyze the 10 Dashboards with the most visualizations (charts)
+Identify the 5 most recent Notebooks with key findings
+Prioritize assets that reflect critical business flows
 
-EXPECTED RESPONSE FORMAT:
+RULE 02 - Taxonomy Inference
+If an event has an official description in the Data Taxonomy, use it verbatim
+If it does NOT have a description, generate a logical definition based on:
+  Event name, associated properties, usage context (dashboards, funnels, flows)
+Label inferred definitions as [INFERRED_DEF]
+
+RULE 03 - Relationship Mapping
+Identify event chains that form critical flows
+(e.g.: view_product → add_to_cart → purchase_complete)
+Document dependencies between events, properties and key metrics
+
+RULE 04 - Output Format
+The output must be an Amplitude Notebook with text cells
+Each cell represents an AI Context file
+Use Markdown format with clear and navigable structure
+
+RULE 05 - Pre-Delivery Validation
+Verify logical order of sections before sharing
+Ensure each file has complete and actionable content
+Validate that links to charts/dashboards work correctly
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NOTEBOOK STRUCTURE TO GENERATE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FILE 00: index.md
+Navigation map. Complete file list with description and purpose.
+Guide for AI: what to consult per type of question.
+
+FILE 01: project_overview.md
+Detected industry (e-commerce / fintech / edtech / saas / other)
+Business and product model (B2B / B2C / marketplace / subscription / other)
+User ecosystem: who are the users? Segments? Personas?
+North Star Metric (inferred from most queried events and dashboards)
+Inferred business objectives (based on dashboard names and event taxonomy)
+
+FILE 02: event_dictionary.md
+Structured table for each event:
+| Event | Description | Source | Critical Properties | Usage Context |
+Priority order:
+1. Events in the conversion funnel
+2. Events present in top-10 dashboards
+3. Events related to the North Star Metric
+
+FILE 03: dashboard_and_insights_map.md
+For each of the 10 analyzed dashboards:
+| Dashboard | Business Question | Key Charts | Link | Main Insights |
+Include: monitored metrics, usage frequency, target audience per dashboard
+
+FILE 04: ai_query_logic.md
+Standard filters by use case (retention / monetization / acquisition)
+Detected naming conventions and their implications
+Documented critical flows (event chains with conversion rates if available)
+Key properties by use case
+Common caveats: what NOT to assume with this data
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXECUTION STEPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step 1: Analyze the project
+- List dashboards ordered by number of charts
+- Review 5 most recent notebooks
+- Extract events from Data Taxonomy with their descriptions
+- Identify critical business flows from existing dashboards and funnels
+
+Step 2: Generate detailed content for each file (FILE 00 to FILE 04)
+
+Step 3: Create the Notebook titled "AI Project Context - [Project Name]"
+- One text cell per file
+- Each cell with clean and navigable Markdown
+
+Step 4: Pre-delivery validation:
+✅ Sections in logical order
+✅ Working links
+✅ [INFERRED_DEF] definitions clearly marked
+✅ Each file has complete content (no empty sections)
+
+Step 5: Share the Notebook link in this chat
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXPECTED RESPONSE FORMAT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 "I have completed the Deep Audit.
-Summary: Dashboards analyzed: [N] | Events documented: [N] | Critical flows: [N]
-Notebook: [Link]
-Next steps: 1) Review [INFERRED_DEF] with team 2) Upload each section as .md to AI Context 3) Test AI queries"
 
-⚠️ IMPORTANT: Designed for Amplitude Chat in Deep Research Mode.
-Output is a Notebook — NOT directly downloadable files.
-Sections must be manually copied to AI Context after review.`;
+Summary:
+- Dashboards analyzed: [N]
+- Events documented: [N] ([N] with official description, [N] with [INFERRED_DEF])
+- Critical flows identified: [N]
+- Files generated: FILE 00 to FILE 04
+
+Notebook: [Link]
+
+Next steps:
+1. Review [INFERRED_DEF] definitions with your team to validate accuracy
+2. Upload each notebook section as a separate .md file to AI Context
+3. Run a test query in Amplitude Chat to validate the context"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ IMPORTANT NOTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Designed for Amplitude Chat in Deep Research Mode
+- Output is a Notebook — NOT directly downloadable files
+- Sections must be manually copied to AI Context after review
+- [INFERRED_DEF] definitions must be validated with the technical team before use`;
 
 PROMPTS.aictxglobal._pt.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 08 — AI CONTEXT GLOBAL
 
-PAPEL: Senior Data Strategist & Amplitude Architect — auditorias de dados e contextos de IA.
+PAPEL
+Você é um Senior Data Strategist & Amplitude Architect especializado em
+auditorias de dados e construção de contextos de IA de alto desempenho.
 
-OBJETIVO: Deep Audit do projeto atual do Amplitude → gerar AI Project Context estruturado
-→ eliminar ambiguidades → otimizar interações futuras com o Amplitude Chat.
-ENTREGÁVEL: Notebook do Amplitude com células de texto = arquivos independentes prontos para AI Context.
+OBJETIVO
+Realizar um Deep Audit do projeto atual do Amplitude para gerar um
+AI Project Context estruturado que elimine ambiguidades e otimize
+as interações futuras com o Amplitude Chat.
 
-REGRAS SEC:
-01 Seleção de Ativos: 10 dashboards com mais charts + 5 notebooks mais recentes.
-02 Inferência de Taxonomia: Descrição oficial se existir. Se não: definição lógica marcada [INFERRED_DEF].
-03 Mapeamento de Relações: Cadeias de eventos formando fluxos críticos. Dependências documentadas.
-04 Formato de Saída: Notebook com células de texto. Uma célula por arquivo. Markdown limpo e navegável.
-05 Validação Pré-Entrega: Ordem lógica, links funcionando, [INFERRED_DEF] marcados, conteúdo completo.
+Entregável: Um Notebook do Amplitude organizado em seções (células de texto)
+que representam arquivos independentes prontos para enviar ao AI Context.
 
-ESTRUTURA DO NOTEBOOK:
-ARQUIVO 00: index.md — Mapa de navegação + lista de arquivos + guia para IA
-ARQUIVO 01: project_overview.md — Setor detectado, modelo de produto, ecossistema de usuários, NSM
-ARQUIVO 02: event_dictionary.md — Tabela: Evento | Descrição | Fonte | Propriedades Críticas | Contexto de Uso
-ARQUIVO 03: dashboard_and_insights_map.md — Dashboards analisados com pergunta de negócio e charts chave
-ARQUIVO 04: ai_query_logic.md — Filtros padrão, convenções de nomenclatura, fluxos críticos documentados
+METODOLOGIA: Structured Execution Contract (SEC)
 
-PASSOS DE EXECUÇÃO:
-1. Analisar projeto (dashboards por quantidade de charts, notebooks recentes, eventos do Data Taxonomy)
-2. Gerar conteúdo detalhado de cada ARQUIVO (00 a 04)
-3. Criar Notebook: "AI Project Context - [Nome do Projeto]" — uma célula por arquivo, Markdown limpo
-4. Validação pré-entrega: ✅ seções completas ✅ links funcionando ✅ ordem lógica ✅ [INFERRED_DEF] marcados
-5. Compartilhar link do Notebook neste chat
+REGRA 01 - Seleção de Ativos
+Identificar e analisar os 10 Dashboards com mais visualizações (charts)
+Identificar os 5 Notebooks mais recentes com achados-chave
+Priorizar ativos que reflitam fluxos críticos de negócio
 
-⚠️ NOTAS: Projetado para Amplitude Chat em Deep Research Mode.
-Output é um Notebook — as seções devem ser copiadas manualmente para o AI Context após revisão.`;
+REGRA 02 - Inferência de Taxonomia
+Se um evento tiver descrição oficial no Data Taxonomy, usar textualmente
+Se NÃO tiver descrição, gerar uma definição lógica baseada em:
+  Nome do evento, propriedades associadas, contexto de uso
+Etiquetar as definições inferidas como [INFERRED_DEF]
 
-// AI Context por Iniciativas
+REGRA 03 - Mapeamento de Relações
+Identificar cadeias de eventos que formam fluxos críticos
+(ex.: view_product → add_to_cart → purchase_complete)
+Documentar dependências entre eventos, propriedades e métricas-chave
+
+REGRA 04 - Formato de Saída
+O output deve ser um Notebook do Amplitude com células de texto
+Cada célula representa um arquivo do AI Context
+Usar formato Markdown com estrutura clara e navegável
+
+REGRA 05 - Validação Pré-Entrega
+Verificar a ordem lógica das seções antes de compartilhar
+Garantir que cada arquivo tenha conteúdo completo e acionável
+Validar que os links para charts/dashboards funcionem corretamente
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ESTRUTURA DO NOTEBOOK A GERAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ARQUIVO 00: index.md
+Mapa de navegação. Lista completa de arquivos com descrição e propósito.
+Guia para a IA: o que consultar por tipo de pergunta.
+
+ARQUIVO 01: project_overview.md
+Setor detectado (e-commerce / fintech / edtech / saas / outro)
+Modelo de negócio e produto (B2B / B2C / marketplace / assinatura / outro)
+Ecossistema de usuários: quem são os usuários? Segmentos? Personas?
+North Star Metric (inferida dos eventos e dashboards mais consultados)
+Objetivos de negócio inferidos (baseados em nomes de dashboards e taxonomia)
+
+ARQUIVO 02: event_dictionary.md
+Tabela estruturada para cada evento:
+| Evento | Descrição | Fonte | Propriedades Críticas | Contexto de Uso |
+Ordem de prioridade:
+1. Eventos no funil de conversão
+2. Eventos presentes nos top-10 dashboards
+3. Eventos relacionados à North Star Metric
+
+ARQUIVO 03: dashboard_and_insights_map.md
+Para cada um dos 10 dashboards analisados:
+| Dashboard | Pergunta de Negócio | Charts Principais | Link | Principais Insights |
+
+ARQUIVO 04: ai_query_logic.md
+Filtros padrão por caso de uso (retenção / monetização / aquisição)
+Convenções de nomenclatura detectadas e suas implicações
+Fluxos críticos documentados (cadeias de eventos com taxas de conversão)
+Propriedades-chave por caso de uso
+Caveats comuns: o que NÃO assumir com esses dados
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASSOS DE EXECUÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Passo 1: Analisar o projeto (dashboards, notebooks, Data Taxonomy)
+Passo 2: Gerar conteúdo detalhado para cada arquivo (ARQUIVO 00 a ARQUIVO 04)
+Passo 3: Criar o Notebook "AI Project Context - [Nome do Projeto]"
+  - Uma célula de texto por arquivo, Markdown limpo
+Passo 4: Validação pré-entrega:
+  ✅ Seções em ordem lógica ✅ Links funcionando ✅ [INFERRED_DEF] marcados
+Passo 5: Compartilhar o link do Notebook neste chat
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FORMATO DE RESPOSTA ESPERADO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"Completei o Deep Audit.
+
+Resumo:
+- Dashboards analisados: [N]
+- Eventos documentados: [N] ([N] com descrição oficial, [N] com [INFERRED_DEF])
+- Fluxos críticos identificados: [N]
+- Arquivos gerados: ARQUIVO 00 a ARQUIVO 04
+
+Notebook: [Link]
+
+Próximos passos:
+1. Revisar as definições [INFERRED_DEF] com sua equipe para validar a precisão
+2. Enviar cada seção do notebook como arquivo .md separado para o AI Context
+3. Executar uma consulta de teste no Amplitude Chat para validar o contexto"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ NOTAS IMPORTANTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Projetado para Amplitude Chat em Deep Research Mode
+- O output é um Notebook — NÃO arquivos diretamente baixáveis
+- As seções devem ser copiadas manualmente para o AI Context após revisão
+- Definições [INFERRED_DEF] devem ser validadas com a equipe técnica antes do uso`;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 09 — AI CONTEXT POR INICIATIVAS
+// ─────────────────────────────────────────────────────────────────────────────
 PROMPTS.aictxinitiative._en.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 09 — AI CONTEXT POR INICIATIVAS
 
-ROLE: Senior Data Strategist & Amplitude Architect — data audits and high-performance AI contexts.
+ROLE
+You are a Senior Data Strategist & Amplitude Architect specialized in
+data audits and construction of high-performance AI contexts.
 
-OBJECTIVE: Deep Audit organized by business initiatives → structured AI Project Context per initiative
-→ eliminate ambiguities → optimize Amplitude Chat interactions per team/area.
-DELIVERABLE: Amplitude Notebook with text cells = independent files per initiative, ready for AI Context.
+OBJECTIVE
+Perform a Deep Audit of the current Amplitude project to generate a
+structured AI Project Context organized by business initiatives that
+eliminates ambiguities and optimizes future interactions with Amplitude Chat.
 
-SEC RULES:
-01 Initiative Identification: Analyze dashboards/notebooks/events to identify business initiatives
-   (e.g.: Onboarding, Monetization, Retention, Engagement, Acquisition). Group all assets by initiative.
-02 Taxonomy Inference: Official description if exists. If not: logical definition labeled [INFERRED_DEF]
-   Include: event name, associated properties, usage context, owning initiative.
-03 Per-Initiative Relationship Mapping: Critical event chains per initiative. Cross-initiative shared events.
-04 Output Format: Notebook with text cells organized by initiative. One cell per file. Clean Markdown.
-05 Pre-Delivery Validation: Logical order. Complete files (5 per initiative). Working links. [INFERRED_DEF] marked.
+Deliverable: An Amplitude Notebook organized in sections representing
+independent files per initiative, ready to upload to the AI Context.
 
-NOTEBOOK STRUCTURE:
+METHODOLOGY: Structured Execution Contract (SEC)
 
+RULE 01 - Initiative Identification
+Analyze dashboards, notebooks and events to identify business initiatives
+(e.g.: Onboarding, Monetization, Retention, Engagement, Acquisition)
+Group assets by initiative
+Identify the 10 Dashboards with most visualizations and 5 most recent Notebooks
+Classify each asset in its corresponding initiative
+
+RULE 02 - Taxonomy Inference
+If an event has an official description in the Data Taxonomy, use it verbatim
+If it does NOT have a description, generate a definition based on:
+  Event name, associated properties, usage context, initiative
+Label inferred definitions as [INFERRED_DEF]
+
+RULE 03 - Per-Initiative Relationship Mapping
+Identify event chains that form critical flows within each initiative
+Document dependencies between events, properties and metrics per initiative
+Identify events shared between multiple initiatives
+
+RULE 04 - Output Format
+Notebook with text cells organized by initiative
+One cell per file, clean and navigable Markdown
+
+RULE 05 - Pre-Delivery Validation
+Verify logical order, complete files (5 per initiative), working links
+[INFERRED_DEF] definitions clearly marked
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NOTEBOOK STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SECTION 0 — GLOBAL FILES:
-FILE 00: index.md — Global navigation map, all initiatives listed, shared events table, navigation guide for AI
-FILE 01: project_overview.md — Global context (industry, product model, users, NSM, objectives)
-  + Initiative summary: list with brief description and goals
 
-SECTION 1 — PER-INITIATIVE FILES (5 files per initiative):
-FILE [INI]_01: [initiative]_overview.md — Objective, KPIs, NSM, responsible teams, main dashboards
-FILE [INI]_02: [initiative]_event_dictionary.md — Core/entry/success/abandonment events; shared events marked
-FILE [INI]_03: [initiative]_flows_and_funnels.md — Happy path, alternatives, friction, conversion rates
-FILE [INI]_04: [initiative]_dashboards_and_insights.md — Dashboards, insights, experiments, cohorts, anomalies
-FILE [INI]_05: [initiative]_ai_query_logic.md — Standard filters, common queries, conventions, caveats
+FILE 00: index.md
+Global navigation map. All initiatives listed with description and objectives.
+Shared events table (events appearing in multiple initiatives).
+Guide for AI: what to consult per type of question, which initiative to reference.
+
+FILE 01: project_overview.md
+Global context (industry, business model, user ecosystem, NSM, objectives)
+Initiative summary: list with brief description, goals and responsible team
+
+SECTION 1 — FILES PER INITIATIVE (5 files per initiative):
+Use [INI] as prefix abbreviated from initiative name (e.g.: ONB for Onboarding)
+
+FILE [INI]_01: [initiative]_overview.md
+Objective of the initiative, key KPIs, North Star of the initiative
+Responsible teams, main dashboards, active experiments
+
+FILE [INI]_02: [initiative]_event_dictionary.md
+Events classified by type:
+- Core: essential events that define the initiative
+- Entry: events marking the start of the initiative flow
+- Success: events indicating objective achievement
+- Abandonment: events indicating flow interruption
+- Shared: events also present in other initiatives (marked)
+
+FILE [INI]_03: [initiative]_flows_and_funnels.md
+Happy path: ideal event sequence with expected conversion rates
+Alternative flows: variations and edge cases
+Friction points: identified drops with probable causes
+Segment breakdowns: how the flow varies by device, country, plan, etc.
+
+FILE [INI]_04: [initiative]_dashboards_and_insights.md
+For each relevant dashboard:
+- Business question it answers
+- Key charts with their metrics and events
+- Main insights discovered
+- Active experiments and their status
+- Relevant cohorts and their definitions
+- Detected anomalies and their resolution
+
+FILE [INI]_05: [initiative]_ai_query_logic.md
+Standard filters for this initiative
+Most common queries and how to interpret them
+Naming conventions specific to the initiative
+Caveats: what NOT to assume, data gaps, known limitations
+Key properties for analysis of this initiative
 
 SECTION 2 — CROSS-INITIATIVE:
-FILE 99: cross_initiative_analysis.md — Shared events table, multi-initiative user journeys,
-  initiative dependencies, composite metrics, optimization opportunities
 
-EXECUTION STEPS:
-1. Analyze project: dashboards, notebooks, Data Taxonomy, infer initiatives
-2. Classify all assets by initiative; identify shared events
-3. Generate: global files (S0) + 5 files per initiative (S1) + cross-initiative (S2)
-4. Create Notebook: "AI Project Context by Initiative - [Project Name]" — one cell per file
-5. Validation: ✅ 5 files per initiative ✅ working links ✅ [INFERRED_DEF] marked ✅ shared events documented
-6. Share Notebook link in this chat
+FILE 99: cross_initiative_analysis.md
+Shared events table:
+| Event | Initiatives that use it | Usage Context per Initiative |
+Multi-initiative user journeys:
+- Common paths that cross multiple initiatives
+- How users move between Onboarding → Activation → Retention
+Initiative dependencies:
+- Which initiatives feed users to others?
+- Composite metrics that span multiple initiatives
+Optimization opportunities:
+- Improvements in one initiative that would positively impact others
 
-EXPECTED RESPONSE FORMAT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXECUTION STEPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step 1: Analyze project and infer initiatives from dashboards, notebooks and events
+Step 2: Classify all assets by initiative; identify shared events
+Step 3: Generate: global files (Section 0) + 5 files per initiative (Section 1)
+        + cross-initiative analysis (Section 2)
+Step 4: Create Notebook "AI Project Context by Initiative - [Project Name]"
+        One cell per file in logical order: Section 0 → Section 1 by initiative → Section 2
+Step 5: Validation:
+  ✅ 5 complete files per initiative
+  ✅ Working links
+  ✅ [INFERRED_DEF] definitions marked
+  ✅ Shared events documented in FILE 99
+Step 6: Share Notebook link in this chat
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXPECTED RESPONSE FORMAT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 "I have completed the Deep Audit organized by initiatives.
-Summary: Initiatives: [N] ([list]) | Dashboards: [N] | Events: [N unique, N shared] | Files: [total]
-Initiatives: 1. [Name]: [description] — [N events, M dashboards]
-Notebook: [Link]
-Structure: Section 0: Global (2 files) | Section 1: [Initiative 1] (5 files) | ... | Final: Cross-Initiative (1 file)"
 
-⚠️ IMPORTANT: Deep Research Mode required. Output is a Notebook — copy manually to AI Context after review.
-Recommended: create folders per initiative in AI Context to maintain the structure.`;
+Summary:
+- Initiatives identified: [N] ([list])
+- Dashboards analyzed: [N]
+- Events documented: [N unique, N shared between initiatives]
+- Files generated: [total]
+
+Initiatives:
+1. [Name]: [brief description] — [N events, M dashboards]
+2. [Name]: [brief description] — [N events, M dashboards]
+...
+
+Notebook: [Link]
+
+Structure:
+- Section 0: Global (2 files: index + project overview)
+- Section 1: [Initiative 1] (5 files) | [Initiative 2] (5 files) | ...
+- Final: Cross-Initiative (1 file)
+
+Next steps:
+1. Review [INFERRED_DEF] definitions with each initiative's team
+2. Create folders per initiative in AI Context before uploading files
+3. Upload files maintaining the structure: global/ + [initiative]/ per initiative
+4. Test with queries specific to each initiative"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ IMPORTANT NOTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Designed for Amplitude Chat in Deep Research Mode
+- Output is a Notebook — NOT directly downloadable files
+- Sections must be manually copied to AI Context after review
+- Recommended: create folders per initiative in AI Context
+  to maintain the structure and facilitate future updates`;
 
 PROMPTS.aictxinitiative._pt.prompt = `// AMPLITUDE CONSULTING PLAYBOOK — 09 — AI CONTEXT POR INICIATIVAS
 
-PAPEL: Senior Data Strategist & Amplitude Architect — auditorias de dados e contextos de IA.
+PAPEL
+Você é um Senior Data Strategist & Amplitude Architect especializado em
+auditorias de dados e construção de contextos de IA de alto desempenho.
 
-OBJETIVO: Deep Audit organizado por iniciativas de negócio → AI Project Context estruturado por iniciativa
-→ eliminar ambiguidades → otimizar interações do Amplitude Chat por equipe/área.
-ENTREGÁVEL: Notebook do Amplitude com células de texto = arquivos independentes por iniciativa.
+OBJETIVO
+Realizar um Deep Audit do projeto atual do Amplitude para gerar um
+AI Project Context estruturado por iniciativas de negócio que elimine
+ambiguidades e otimize as interações futuras com o Amplitude Chat.
 
-REGRAS SEC:
-01 Identificação de Iniciativas: Analisar dashboards/notebooks/eventos para identificar iniciativas
-   (ex.: Onboarding, Monetização, Retenção, Engajamento, Aquisição). Agrupar todos os ativos por iniciativa.
-02 Inferência de Taxonomia: Descrição oficial se existir. Se não: definição marcada [INFERRED_DEF]
-03 Mapeamento de Relações por Iniciativa: Cadeias de eventos críticos + eventos compartilhados entre iniciativas.
-04 Formato de Saída: Notebook com células organizadas por iniciativa. Uma célula por arquivo. Markdown limpo.
-05 Validação Pré-Entrega: Ordem lógica. Arquivos completos (5 por iniciativa). Links funcionando.
+Entregável: Um Notebook do Amplitude organizado em seções que representam
+arquivos independentes por iniciativa, prontos para enviar ao AI Context.
 
-ESTRUTURA DO NOTEBOOK:
+METODOLOGIA: Structured Execution Contract (SEC)
 
+REGRA 01 - Identificação de Iniciativas
+Analisar dashboards, notebooks e eventos para identificar iniciativas
+(ex.: Onboarding, Monetização, Retenção, Engagement, Aquisição)
+Agrupar ativos por iniciativa
+Identificar os 10 Dashboards com mais visualizações e 5 Notebooks mais recentes
+Classificar cada ativo na sua iniciativa correspondente
+
+REGRA 02 - Inferência de Taxonomia
+Se um evento tiver descrição oficial no Data Taxonomy, usar textualmente
+Se NÃO tiver descrição, gerar uma definição baseada em:
+  Nome do evento, propriedades associadas, contexto de uso, iniciativa
+Etiquetar as definições inferidas como [INFERRED_DEF]
+
+REGRA 03 - Mapeamento de Relações por Iniciativa
+Identificar cadeias de eventos que formam fluxos críticos dentro de cada iniciativa
+Documentar dependências entre eventos, propriedades e métricas por iniciativa
+Identificar eventos compartilhados entre múltiplas iniciativas
+
+REGRA 04 - Formato de Saída
+Notebook com células de texto organizadas por iniciativa
+Uma célula por arquivo, Markdown limpo e navegável
+
+REGRA 05 - Validação Pré-Entrega
+Verificar ordem lógica, arquivos completos (5 por iniciativa), links funcionando
+Definições [INFERRED_DEF] claramente marcadas
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ESTRUTURA DO NOTEBOOK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SEÇÃO 0 — ARQUIVOS GLOBAIS:
-ARQUIVO 00: index.md — Mapa de navegação global, todas as iniciativas, tabela de eventos compartilhados
-ARQUIVO 01: project_overview.md — Contexto global (setor, modelo de produto, usuários, NSM, objetivos)
-  + Resumo de iniciativas: lista com descrição e objetivos
+
+ARQUIVO 00: index.md
+Mapa de navegação global. Todas as iniciativas listadas com descrição e objetivos.
+Tabela de eventos compartilhados. Guia para a IA por tipo de pergunta.
+
+ARQUIVO 01: project_overview.md
+Contexto global (setor, modelo de negócio, ecossistema de usuários, NSM, objetivos)
+Resumo de iniciativas: lista com descrição, metas e equipe responsável
 
 SEÇÃO 1 — ARQUIVOS POR INICIATIVA (5 arquivos por iniciativa):
-ARQUIVO [INI]_01: [iniciativa]_overview.md — Objetivo, KPIs, NSM, equipes, dashboards principais
-ARQUIVO [INI]_02: [iniciativa]_event_dictionary.md — Eventos core/entrada/sucesso/abandono; compartilhados marcados
-ARQUIVO [INI]_03: [iniciativa]_flows_and_funnels.md — Happy path, alternativas, fricção, taxas de conversão
-ARQUIVO [INI]_04: [iniciativa]_dashboards_and_insights.md — Dashboards, insights, experimentos, coortes
-ARQUIVO [INI]_05: [iniciativa]_ai_query_logic.md — Filtros padrão, consultas comuns, convenções, caveats
+Usar [INI] como prefixo abreviado do nome da iniciativa
+
+ARQUIVO [INI]_01: [iniciativa]_overview.md
+Objetivo da iniciativa, KPIs-chave, North Star da iniciativa
+Equipes responsáveis, dashboards principais, experimentos ativos
+
+ARQUIVO [INI]_02: [iniciativa]_event_dictionary.md
+Eventos classificados por tipo:
+- Core: eventos essenciais que definem a iniciativa
+- Entrada: eventos que marcam o início do fluxo
+- Sucesso: eventos que indicam o atingimento do objetivo
+- Abandono: eventos que indicam interrupção do fluxo
+- Compartilhados: eventos presentes em outras iniciativas (marcados)
+
+ARQUIVO [INI]_03: [iniciativa]_flows_and_funnels.md
+Happy path: sequência ideal de eventos com taxas de conversão esperadas
+Fluxos alternativos: variações e casos extremos
+Pontos de fricção: quedas identificadas com causas prováveis
+Análises por segmento: como o fluxo varia por dispositivo, país, plano
+
+ARQUIVO [INI]_04: [iniciativa]_dashboards_and_insights.md
+Para cada dashboard relevante: pergunta de negócio, charts principais, insights,
+experimentos ativos e status, coortes relevantes, anomalias detectadas
+
+ARQUIVO [INI]_05: [iniciativa]_ai_query_logic.md
+Filtros padrão para esta iniciativa
+Consultas mais comuns e como interpretá-las
+Convenções de nomenclatura específicas da iniciativa
+Caveats: o que NÃO assumir, gaps de dados, limitações conhecidas
+Propriedades-chave para análise desta iniciativa
 
 SEÇÃO 2 — CROSS-INITIATIVE:
-ARQUIVO 99: cross_initiative_analysis.md — Eventos compartilhados, jornadas multi-iniciativa, dependências
 
-PASSOS DE EXECUÇÃO:
-1. Analisar projeto e inferir iniciativas | 2. Classificar ativos por iniciativa
-3. Gerar: arquivos globais (S0) + 5 arquivos por iniciativa (S1) + cross-initiative (S2)
-4. Criar Notebook: "AI Project Context by Initiative - [Nome do Projeto]"
-5. Validação: ✅ 5 arquivos por iniciativa ✅ links funcionando ✅ [INFERRED_DEF] marcados
-6. Compartilhar link do Notebook neste chat
+ARQUIVO 99: cross_initiative_analysis.md
+Tabela de eventos compartilhados, jornadas de usuário multi-iniciativa,
+dependências entre iniciativas, oportunidades de otimização cross-iniciativa
 
-⚠️ IMPORTANTE: Deep Research Mode obrigatório. Copiar manualmente para o AI Context após revisão.
-Recomendado: criar pastas por iniciativa no AI Context para manter a estrutura.`;
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PASSOS DE EXECUÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Passo 1: Analisar projeto e inferir iniciativas de dashboards, notebooks e eventos
+Passo 2: Classificar todos os ativos por iniciativa; identificar eventos compartilhados
+Passo 3: Gerar: arquivos globais (Seção 0) + 5 arquivos por iniciativa (Seção 1)
+         + análise cross-initiative (Seção 2)
+Passo 4: Criar Notebook "AI Project Context by Initiative - [Nome do Projeto]"
+         Uma célula por arquivo em ordem lógica
+Passo 5: Validação:
+  ✅ 5 arquivos completos por iniciativa ✅ Links funcionando ✅ [INFERRED_DEF] marcados
+Passo 6: Compartilhar link do Notebook neste chat
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FORMATO DE RESPOSTA ESPERADO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+"Completei o Deep Audit organizado por iniciativas.
 
-// ── Pills translations ──────────────────────────────────────────────────────
-if(PROMPTS.rayosx){PROMPTS.rayosx._en=PROMPTS.rayosx._en||{};PROMPTS.rayosx._pt=PROMPTS.rayosx._pt||{};PROMPTS.rayosx._en.pills=['180 days', '12 notebook rows', 'Admin access'];PROMPTS.rayosx._pt.pills=['180 dias', '12 linhas notebook', 'Acesso Admin'];}
-if(PROMPTS.taxonomia){PROMPTS.taxonomia._en=PROMPTS.taxonomia._en||{};PROMPTS.taxonomia._pt=PROMPTS.taxonomia._pt||{};PROMPTS.taxonomia._en.pills=['Per project', '9 notebook rows', 'Data Engineer'];PROMPTS.taxonomia._pt.pills=['Por projeto', '9 linhas notebook', 'Data Engineer'];}
-if(PROMPTS.experiment){PROMPTS.experiment._en=PROMPTS.experiment._en||{};PROMPTS.experiment._pt=PROMPTS.experiment._pt||{};PROMPTS.experiment._en.pills=['Feature-level', '6 notebook rows', 'Product + Data'];PROMPTS.experiment._pt.pills=['Feature-level', '6 linhas notebook', 'Produto + Dados'];}
-if(PROMPTS.funnel){PROMPTS.funnel._en=PROMPTS.funnel._en||{};PROMPTS.funnel._pt=PROMPTS.funnel._pt||{};PROMPTS.funnel._en.pills=['Existing funnel', '7 notebook rows', 'PM + Analytics'];PROMPTS.funnel._pt.pills=['Funil existente', '7 linhas notebook', 'PM + Analytics'];}
-if(PROMPTS.ai){PROMPTS.ai._en=PROMPTS.ai._en||{};PROMPTS.ai._pt=PROMPTS.ai._pt||{};PROMPTS.ai._en.pills=['AI features', '8 notebook rows', 'All roles'];PROMPTS.ai._pt.pills=['Recursos de IA', '8 linhas notebook', 'Todos os papéis'];}
-if(PROMPTS.newsletter){PROMPTS.newsletter._en=PROMPTS.newsletter._en||{};PROMPTS.newsletter._pt=PROMPTS.newsletter._pt||{};PROMPTS.newsletter._en.pills=['Weekly / monthly', '5 notebook rows', 'Leadership'];PROMPTS.newsletter._pt.pills=['Semanal / mensal', '5 linhas notebook', 'Liderança'];}
-if(PROMPTS.dashboard){PROMPTS.dashboard._en=PROMPTS.dashboard._en||{};PROMPTS.dashboard._pt=PROMPTS.dashboard._pt||{};PROMPTS.dashboard._en.pills=['Dashboard Agent', 'Output prompt', 'All roles'];PROMPTS.dashboard._pt.pills=['Dashboard Agent', 'Output prompt', 'Todos os papéis'];}
-if(PROMPTS.aictxglobal){PROMPTS.aictxglobal._en=PROMPTS.aictxglobal._en||{};PROMPTS.aictxglobal._pt=PROMPTS.aictxglobal._pt||{};PROMPTS.aictxglobal._en.pills=['Deep Research Mode', 'Notebook → files', 'Amplitude Chat'];PROMPTS.aictxglobal._pt.pills=['Deep Research Mode', 'Notebook → arquivos', 'Amplitude Chat'];}
-if(PROMPTS.aictxinitiative){PROMPTS.aictxinitiative._en=PROMPTS.aictxinitiative._en||{};PROMPTS.aictxinitiative._pt=PROMPTS.aictxinitiative._pt||{};PROMPTS.aictxinitiative._en.pills=['Deep Research Mode', 'Multi-initiative', 'Amplitude Chat'];PROMPTS.aictxinitiative._pt.pills=['Deep Research Mode', 'Multi-iniciativa', 'Amplitude Chat'];}
-if(PROMPTS.rice){PROMPTS.rice._en=PROMPTS.rice._en||{};PROMPTS.rice._pt=PROMPTS.rice._pt||{};PROMPTS.rice._en.pills=['RICE + NSM', 'End-to-end', 'Applicable manual'];PROMPTS.rice._pt.pills=['RICE + NSM', 'Ponta a ponta', 'Manual aplicável'];}
+Resumo:
+- Iniciativas identificadas: [N] ([lista])
+- Dashboards analisados: [N]
+- Eventos documentados: [N únicos, N compartilhados entre iniciativas]
+- Arquivos gerados: [total]
+
+Notebook: [Link]
+
+Próximos passos:
+1. Revisar as definições [INFERRED_DEF] com a equipe de cada iniciativa
+2. Criar pastas por iniciativa no AI Context antes de enviar os arquivos
+3. Enviar os arquivos mantendo a estrutura: global/ + [iniciativa]/ por iniciativa
+4. Testar com consultas específicas de cada iniciativa"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ NOTAS IMPORTANTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Projetado para Amplitude Chat em Deep Research Mode
+- O output é um Notebook — NÃO arquivos diretamente baixáveis
+- As seções devem ser copiadas manualmente para o AI Context após revisão
+- Recomendado: criar pastas por iniciativa no AI Context para manter a estrutura`;
+
 } // end applyPromptTranslations
 
 
