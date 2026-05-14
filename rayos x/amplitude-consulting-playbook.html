@@ -310,134 +310,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
   </div>
 </div>
 
-<div class="grid-section">
-  <div class="grid-hdr">
-    <div class="grid-title" id="landing-grid-title">// Prompts del playbook</div>
-    <div class="grid-hint" id="landing-grid-hint">click para abrir →</div>
-  </div>
-  <div class="prompt-grid">
+<div id="prompt-grid-container"></div>
 
-    <div class="prompt-card" style="--card-color:#e8420a;--card-colorbg:#1a0a04" onclick="openDetail('rayosx')">
-      <div class="card-num">01 <span class="card-tag">Diagnóstico</span></div>
-      <div class="card-icon">🔬</div>
-      <div class="card-title">Rayos X</div>
-      <div class="card-desc">Auditoría exhaustiva de salud de cuenta. Scoring 0–100, champions, governance, features, AI tools y roadmap de 90 días. Punto de partida de cualquier engagement.</div>
-      <div class="card-pills"><span class="card-pill">180 días</span><span class="card-pill">12 filas notebook</span><span class="card-pill">Admin access</span></div>
-      <div class="card-arrow">↗</div>
-    </div>
-
-    <div class="prompt-card" style="--card-color:#3d8bff;--card-colorbg:#040d1a" onclick="openDetail('taxonomia')">
-      <div class="card-num">02 <span class="card-tag" style="background:#040d1a;color:#3d8bff">Governance</span></div>
-      <div class="card-icon">🗂️</div>
-      <div class="card-title">Taxonomía Audit</div>
-      <div class="card-desc">Análisis quirúrgico de eventos y propiedades. Detecta eventos fantasma con Ratio Q/I, anomalías de volumen y genera plan de limpieza con Quick Wins.</div>
-      <div class="card-pills"><span class="card-pill">Por proyecto</span><span class="card-pill">9 filas notebook</span><span class="card-pill">Data Engineer</span></div>
-      <div class="card-arrow">↗</div>
-    </div>
-
-    <div class="prompt-card" style="--card-color:#ffd24a;--card-colorbg:#1a1400" onclick="openDetail('experiment')">
-      <div class="card-num">03 <span class="card-tag" style="background:#1a1400;color:#ffd24a">Experimentos</span></div>
-      <div class="card-icon">⚗️</div>
-      <div class="card-title">Experiment Kickstart</div>
-      <div class="card-desc">Diseña el experimento completo con hipótesis, métricas, MDE y duración. Documenta el paso a paso para crearlo manualmente en Amplitude.</div>
-      <div class="card-pills"><span class="card-pill">Feature-level</span><span class="card-pill">6 filas notebook</span><span class="card-pill">Product + Data</span></div>
-      <div class="card-arrow">↗</div>
-    </div>
-
-    <div class="prompt-card" style="--card-color:#a78bfa;--card-colorbg:#0d0a1a" onclick="openDetail('funnel')">
-      <div class="card-num">04 <span class="card-tag" style="background:#0d0a1a;color:#a78bfa">Análisis</span></div>
-      <div class="card-icon">📉</div>
-      <div class="card-title">Funnel Diagnosis</div>
-      <div class="card-desc">Diagnostica drops por segmento con outlier ≥1.5×, cruza con session replay y prioriza los próximos 3 experimentos por impacto × esfuerzo.</div>
-      <div class="card-pills"><span class="card-pill">Funnel existente</span><span class="card-pill">7 filas notebook</span><span class="card-pill">PM + Analytics</span></div>
-      <div class="card-arrow">↗</div>
-    </div>
-
-    <div class="prompt-card" style="--card-color:#00c853;--card-colorbg:#001a09" onclick="openDetail('ai')">
-      <div class="card-num">05 <span class="card-tag" style="background:#001a09;color:#00c853">AI Adoption</span></div>
-      <div class="card-icon">🤖</div>
-      <div class="card-title">AI Adoption Accelerator</div>
-      <div class="card-desc">Analiza uso de AI Chat, Dashboard Agent, AI Visibility y Feedback. Detecta barreras, correlación AI↔output y genera prompts basados en datos reales.</div>
-      <div class="card-pills"><span class="card-pill">AI features</span><span class="card-pill">8 filas notebook</span><span class="card-pill">Todos los roles</span></div>
-      <div class="card-arrow">↗</div>
-    </div>
-
-    <div class="prompt-card" style="--card-color:#f472b6;--card-colorbg:#1a0410" onclick="openDetail('newsletter')">
-      <div class="card-num">06 <span class="card-tag" style="background:#1a0410;color:#f472b6">Contenido</span></div>
-      <div class="card-icon">📰</div>
-      <div class="card-title">Insights Newsletter</div>
-      <div class="card-desc">Prompt auto-ejecutado. Recolecta datos reales antes de redactar, detecta anomalías >15% y produce resumen ejecutivo listo para email o Slack.</div>
-      <div class="card-pills"><span class="card-pill">Semanal / mensual</span><span class="card-pill">5 filas notebook</span><span class="card-pill">Liderazgo</span></div>
-      <div class="card-arrow">↗</div>
-    </div>
-
-    <div class="prompt-card" style="--card-color:#06b6d4;--card-colorbg:#041214" onclick="openDetail('dashboard')">
-      <div class="card-num">07 <span class="card-tag" style="background:#041214;color:#06b6d4">Dashboard Agent</span></div>
-      <div class="card-icon">🧠</div>
-      <div class="card-title">Dashboard Intelligence Analyst</div>
-      <div class="card-desc">Analiza un dashboard en profundidad y genera un prompt de contexto estructurado listo para el Dashboard Agent. 18 objetivos de análisis, protocolo por chart.</div>
-      <div class="card-pills"><span class="card-pill">Dashboard Agent</span><span class="card-pill">Output prompt</span><span class="card-pill">Todos los roles</span></div>
-      <div class="card-arrow">↗</div>
-    </div>
-
-    <div class="prompt-card" style="--card-color:#a855f7;--card-colorbg:#0e0414" onclick="openDetail('aictxglobal')">
-      <div class="card-num">08 <span class="card-tag" style="background:#0e0414;color:#a855f7">AI Context</span></div>
-      <div class="card-icon">🗃️</div>
-      <div class="card-title">AI Context Global</div>
-      <div class="card-desc">Deep Audit del proyecto para generar un AI Context estructurado. Produce un notebook con 5 archivos listos para subir al AI Context de Amplitude Chat.</div>
-      <div class="card-pills"><span class="card-pill">Deep Research Mode</span><span class="card-pill">Notebook → archivos</span><span class="card-pill">Amplitude Chat</span></div>
-      <div class="card-arrow">↗</div>
-    </div>
-
-    <div class="prompt-card" style="--card-color:#10b981;--card-colorbg:#041410" onclick="openDetail('aictxinitiative')">
-      <div class="card-num">09 <span class="card-tag" style="background:#041410;color:#10b981">AI Context</span></div>
-      <div class="card-icon">📁</div>
-      <div class="card-title">AI Context por Iniciativas</div>
-      <div class="card-desc">Deep Audit por iniciativas de negocio. Genera hasta 5 archivos por iniciativa más archivos globales y cross-initiative para un contexto de IA granular.</div>
-      <div class="card-pills"><span class="card-pill">Deep Research Mode</span><span class="card-pill">Multi-iniciativa</span><span class="card-pill">Amplitude Chat</span></div>
-      <div class="card-arrow">↗</div>
-    </div>
-
-    <div class="prompt-card" style="--card-color:#f59e0b;--card-colorbg:#1a1000" onclick="openDetail('rice')">
-      <div class="card-num">10 <span class="card-tag" style="background:#1a1000;color:#f59e0b">Framework</span></div>
-      <div class="card-icon">🧪</div>
-      <div class="card-title">Experimentation Framework</div>
-      <div class="card-desc">From Zero to Hero. Framework RICE + North Star Metric aplicado en Amplitude. Manual completo end-to-end: priorización, diseño, ejecución y repositorio de resultados.</div>
-      <div class="card-pills"><span class="card-pill">RICE + NSM</span><span class="card-pill">End-to-end</span><span class="card-pill">Manual aplicable</span></div>
-      <div class="card-arrow">↗</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ══ CLAUDE SKILLS LANDING ══ -->
-<div style="max-width:1060px;margin:0 auto;padding:0 40px 56px">
-  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)">
-    <div style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)"><span id="landing-skills-title">// Claude Skills</span></div>
-    <div style="font-family:var(--mono);font-size:9px;color:var(--muted2)" id="landing-skills-hint">click para ver el detalle →</div>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border)">
-
-    <div class="prompt-card" style="--card-color:#3d8bff;--card-colorbg:#040d1a" onclick="openSkill('demo')">
-      <div class="card-num">01 <span class="card-tag" style="background:#040d1a;color:#3d8bff">Claude Desktop</span></div>
-      <div class="card-icon">🌐</div>
-      <div class="card-title">/amplitude-demo-generator</div>
-      <div class="card-desc">Genera una web demo funcional con Amplitude Analytics integrado, adaptada a cualquier industria y marca de referencia. Produce un index.html listo para abrir o publicar en GitHub Pages con SDK, eventos y Session Replay configurados.</div>
-      <div class="card-pills"><span class="card-pill">SPA funcional</span><span class="card-pill">SDK integrado</span><span class="card-pill">GitHub Pages</span></div>
-      <div class="card-arrow">↗</div>
-    </div>
-
-    <div class="prompt-card" style="--card-color:#00c853;--card-colorbg:#001a09" onclick="openSkill('seeder')">
-      <div class="card-num">02 <span class="card-tag" style="background:#001a09;color:#00c853">Claude Desktop</span></div>
-      <div class="card-icon">🌱</div>
-      <div class="card-title">/amplitude-data-seeder</div>
-      <div class="card-desc">Lee el tracking plan del proyecto vía MCP, genera eventos sintéticos con funnels realistas y los carga directamente vía Amplitude Batch API. Ideal para poblar proyectos demo o sandbox con datos creíbles antes de una presentación.</div>
-      <div class="card-pills"><span class="card-pill">MCP required</span><span class="card-pill">Batch API</span><span class="card-pill">Script Python</span></div>
-      <div class="card-arrow">↗</div>
-    </div>
-
-  </div>
-</div>
+<div id="skills-grid-container"></div>
 
 
 <footer class="land-footer">
@@ -464,7 +339,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
     </div>
     <div class="prompt-switcher">
       <div class="ps-btn" id="ps-btn" onclick="toggleSwitcher()">
-        <span id="ps-label">Navegar prompts</span>
+        <span id="ps-label"></span>
         <span class="arrow">▼</span>
       </div>
       <div class="ps-menu" id="ps-menu"></div>
@@ -478,6 +353,25 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13
     </div>
   </div>
 </div>
+<!-- ══ SKILL DETAIL PAGE ══ -->
+<div id="skill-page" class="page">
+  <nav class="detail-nav">
+    <button class="back-btn" onclick="goBackSkill()" id="skill-back-btn">← Volver</button>
+    <div class="detail-crumb">
+      <span>Claude Skills</span><span class="sep">/</span>
+      <span class="cur" id="skill-breadcrumb-name"></span>
+    </div>
+  </nav>
+  <div class="detail-layout">
+    <aside class="detail-sidebar" id="skill-sidebar"></aside>
+    <div class="detail-content">
+      <div class="detail-hero" id="skill-hero"></div>
+      <div id="skill-sections"></div>
+    </div>
+  </div>
+</div>
+
+
 
 <script>
 
@@ -490,6 +384,9 @@ rayosx: {
   desc: 'Auditoría exhaustiva de salud de cuenta. El punto de partida de cualquier engagement. Genera scorecard, champions, diagnóstico de governance, features y AI tools, y un roadmap de 90 días con notebook verificado.',
   color: 'var(--orange)',
   colorDim: 'var(--orange-dim)',
+  icon: '🔬',
+  colorbg: '#1a0a04',
+  pills: ['180 días', '12 filas notebook', 'Admin access'],
   tags: [{label:'Diagnóstico',color:'var(--orange)'},{label:'180 días',color:'var(--muted)'},{label:'Admin access',color:'var(--muted)'}],
   vars: [
     ['Período','Últimos 180 días (calculado automáticamente)'],
@@ -808,6 +705,9 @@ taxonomia: {
   desc: 'Análisis quirúrgico de la calidad de datos de un proyecto específico. Detecta eventos fantasma, anomalías de volumen, naming inconsistente y propiedades sin uso. Genera un plan de limpieza priorizado con Quick Wins identificados, owner sugerido y prompts de follow-up ejecutables.',
   color: 'var(--blue)',
   colorDim: 'var(--blue-dim)',
+  icon: '🗂️',
+  colorbg: '#040d1a',
+  pills: ['Por proyecto', '9 filas notebook', 'Data Engineer'],
   tags: [{label:'Governance',color:'var(--blue)'},{label:'Por proyecto',color:'var(--muted)'},{label:'Data Engineer',color:'var(--muted)'}],
   vars: [
     ['Proyecto','Auto-detectar desde sesión; si no es posible, preguntar'],
@@ -1042,6 +942,9 @@ experiment: {
   desc: 'Dado un feature o flujo del producto, diseña el experimento completo con hipótesis, métricas, tamaño de muestra y duración estimada, y documenta el paso a paso para crearlo manualmente en Amplitude. Incluye priorización de experimentos candidatos si hay más de uno en scope.',
   color: 'var(--yellow)',
   colorDim: 'var(--yellow-dim)',
+  icon: '⚗️',
+  colorbg: '#1a1500',
+  pills: ['Feature-level', '6 filas notebook', 'Product + Data'],
   tags: [{label:'Experimentos',color:'var(--yellow)'},{label:'Feature-level',color:'var(--muted)'},{label:'Product + Data',color:'var(--muted)'}],
   vars: [
     ['Feature / flujo','[DESCRIPCIÓN] — confirmar con usuario si no se provee'],
@@ -1260,6 +1163,9 @@ funnel: {
   desc: 'Diagnostica el funnel paso a paso con evidencia cuantitativa y cualitativa. Cruza drops por segmento con session replay, formula hipótesis de fricción con criterios de impacto y genera los 3 próximos experimentos priorizados por impacto × esfuerzo.',
   color: '#a78bfa',
   colorDim: '#a78bfa18',
+  icon: '📉',
+  colorbg: '#100a1a',
+  pills: ['Funnel existente', '7 filas notebook', 'PM + Analytics'],
   tags: [{label:'Análisis',color:'#a78bfa'},{label:'Funnel existente',color:'var(--muted)'},{label:'PM + Analytics',color:'var(--muted)'}],
   vars: [
     ['Funnel (OBLIGATORIO)','[NOMBRE o lista de eventos en orden] — detener si vacío'],
@@ -1512,6 +1418,9 @@ ai: {
   desc: 'Analiza el uso real de AI Chat, Dashboard Agent, AI Visibility y AI Feedback. Verifica qué herramientas están habilitadas, mide adopción con KPIs de éxito definidos al inicio, y genera prompts personalizados basados en los dashboards y eventos REALES de la cuenta.',
   color: 'var(--green)',
   colorDim: 'var(--green-dim)',
+  icon: '🤖',
+  colorbg: '#001a09',
+  pills: ['AI features', '8 filas notebook', 'Todos los roles'],
   tags: [{label:'AI Adoption',color:'var(--green)'},{label:'Todos los roles',color:'var(--muted)'},{label:'AI features',color:'var(--muted)'}],
   vars: [
     ['Proyecto','[NOMBRE_PROYECTO] — validar al inicio, no asumir'],
@@ -1772,6 +1681,9 @@ newsletter: {
   desc: 'Prompt de ejecución autónoma. Recolecta datos reales de Amplitude antes de redactar, detecta anomalías con umbral del 15%, y produce un resumen ejecutivo listo para pegar en email o Slack — sin edición adicional.',
   color: '#f472b6',
   colorDim: '#f472b618',
+  icon: '📰',
+  colorbg: '#1a0a14',
+  pills: ['Semanal / mensual', '5 filas notebook', 'Liderazgo'],
   tags: [{label:'Contenido',color:'#f472b6'},{label:'Auto-ejecutado',color:'var(--muted)'},{label:'Liderazgo',color:'var(--muted)'}],
   vars: [
     ['Proyecto','[NOMBRE_PROYECTO] — usar contexto activo si no se especifica'],
@@ -1985,6 +1897,9 @@ dashboard: {
   desc: 'Analiza un dashboard de Amplitude en profundidad y genera un prompt de contexto estructurado listo para usar con el Dashboard Agent. Incluye 18 objetivos de análisis, protocolo de análisis por chart, síntesis estratégica y output copiable.',
   color: '#06b6d4',
   colorDim: '#06b6d418',
+  icon: '🧠',
+  colorbg: '#001a1a',
+  pills: ['Dashboard Agent', 'Output prompt', 'Todos los roles'],
   tags: [{label:'Dashboard Agent',color:'#06b6d4'},{label:'Output prompt',color:'var(--muted)'},{label:'Todos los roles',color:'var(--muted)'}],
   vars: [
     ['Nombre del dashboard','Nombre exacto como aparece en Amplitude'],
@@ -2199,6 +2114,9 @@ aictxglobal: {
   desc: 'Deep Audit del proyecto para generar un AI Context estructurado. Produce un notebook con 5 archivos (index, project overview, event dictionary, dashboard map, AI query logic) listos para subir manualmente al AI Context de Amplitude Chat.',
   color: '#6B46C1',
   colorDim: '#F3EEFF',
+  icon: '🗃️',
+  colorbg: '#0d0a1a',
+  pills: ['Deep Research Mode', 'Notebook → archivos', 'Amplitude Chat'],
   tags: [{label:'Deep Research Mode',color:'#6B46C1'},{label:'Amplitude Chat',color:'var(--muted)'},{label:'Notebook to archivos',color:'var(--muted)'}],
   vars: [
     ['Proyecto','Auto-detectado desde el contexto de la sesion'],
@@ -2357,6 +2275,9 @@ aictxinitiative: {
   desc: 'Deep Audit organizado por iniciativas de negocio. Genera archivos globales + hasta 5 archivos por iniciativa (overview, events, flows, dashboards, AI logic) + analisis cross-initiative. El contexto mas granular para equipos por area.',
   color: '#276749',
   colorDim: '#E6FFFA',
+  icon: '📁',
+  colorbg: '#0a1a0a',
+  pills: ['Deep Research Mode', 'Multi-iniciativa', 'Amplitude Chat'],
   tags: [{label:'Deep Research Mode',color:'#276749'},{label:'Multi-iniciativa',color:'var(--muted)'},{label:'Amplitude Chat',color:'var(--muted)'}],
   vars: [
     ['Proyecto','Auto-detectado desde el contexto de la sesion'],
@@ -2575,6 +2496,9 @@ rice: {
   desc: 'Manual completo de experimentación aplicada. Desde la idea hasta el repositorio de resultados. Framework RICE + North Star Metric, proceso end-to-end en Amplitude, plantillas copy-paste y guía de uso con LLMs para equipos que nunca experimentaron antes.',
   color: '#f59e0b',
   colorDim: '#1a1000',
+  icon: '🧪',
+  colorbg: '#1a1a0a',
+  pills: ['RICE + NSM', 'End-to-end', 'Manual aplicable'],
   tags: [{label:'RICE Framework',color:'#f59e0b'},{label:'North Star Metric',color:'#f59e0b'},{label:'End-to-end',color:'var(--muted)'},{label:'Zero to Hero',color:'var(--muted)'}],
   vars: [
     ['Audiencia','Equipos que nunca experimentaron + equipos intermedios'],
@@ -2789,6 +2713,8 @@ Aquí está el contenido del notebook:
     skill_requires_tag: 'Antes de usar',
     skill_notes_tag: 'Producción',
     skill_repo_note: 'Los archivos SKILL.md de ambas skills están disponibles en el repositorio del playbook:',
+    skill_card_demo_desc: 'Genera una web demo funcional con Amplitude Analytics integrado, adaptada a cualquier industria y marca de referencia. Produce un index.html listo para abrir o publicar en GitHub Pages con SDK, eventos y Session Replay configurados.',
+    skill_card_seeder_desc: 'Lee el tracking plan del proyecto vía MCP, genera eventos sintéticos con funnels realistas y los carga directamente vía Amplitude Batch API. Ideal para poblar proyectos demo o sandbox con datos creíbles antes de una presentación.',
   },
 
   en: {
@@ -2949,6 +2875,8 @@ Here is the notebook content:
     skill_requires_tag: 'Before using',
     skill_notes_tag: 'Production',
     skill_repo_note: 'The SKILL.md files for both skills are available in the playbook repository:',
+    skill_card_demo_desc: 'Generates a functional web demo with Amplitude Analytics integrated, adapted to any industry and reference brand. Produces an index.html ready to open or publish on GitHub Pages with SDK, events and Session Replay configured.',
+    skill_card_seeder_desc: 'Reads the project tracking plan via MCP, generates synthetic events with realistic funnels and loads them directly via Amplitude Batch API. Ideal for populating demo or sandbox projects with credible data before a presentation.',
   },
 
   pt: {
@@ -3109,6 +3037,8 @@ Aqui está o conteúdo do notebook:
     skill_requires_tag: 'Antes de usar',
     skill_notes_tag: 'Produção',
     skill_repo_note: 'Os arquivos SKILL.md de ambas as skills estão disponíveis no repositório do playbook:',
+    skill_card_demo_desc: 'Gera uma web demo funcional com Amplitude Analytics integrado, adaptada a qualquer setor e marca de referência. Produz um index.html pronto para abrir ou publicar no GitHub Pages com SDK, eventos e Session Replay configurados.',
+    skill_card_seeder_desc: 'Lê o tracking plan do projeto via MCP, gera eventos sintéticos com funnels realistas e os carrega diretamente via Amplitude Batch API. Ideal para popular projetos demo ou sandbox com dados críveis antes de uma apresentação.',
   },
 };
 
@@ -4542,6 +4472,18 @@ PASSOS DE EXECUÇÃO:
 ⚠️ IMPORTANTE: Deep Research Mode obrigatório. Copiar manualmente para o AI Context após revisão.
 Recomendado: criar pastas por iniciativa no AI Context para manter a estrutura.`;
 
+
+// ── Pills translations ──────────────────────────────────────────────────────
+if(PROMPTS.rayosx){PROMPTS.rayosx._en=PROMPTS.rayosx._en||{};PROMPTS.rayosx._pt=PROMPTS.rayosx._pt||{};PROMPTS.rayosx._en.pills=['180 days', '12 notebook rows', 'Admin access'];PROMPTS.rayosx._pt.pills=['180 dias', '12 linhas notebook', 'Acesso Admin'];}
+if(PROMPTS.taxonomia){PROMPTS.taxonomia._en=PROMPTS.taxonomia._en||{};PROMPTS.taxonomia._pt=PROMPTS.taxonomia._pt||{};PROMPTS.taxonomia._en.pills=['Per project', '9 notebook rows', 'Data Engineer'];PROMPTS.taxonomia._pt.pills=['Por projeto', '9 linhas notebook', 'Data Engineer'];}
+if(PROMPTS.experiment){PROMPTS.experiment._en=PROMPTS.experiment._en||{};PROMPTS.experiment._pt=PROMPTS.experiment._pt||{};PROMPTS.experiment._en.pills=['Feature-level', '6 notebook rows', 'Product + Data'];PROMPTS.experiment._pt.pills=['Feature-level', '6 linhas notebook', 'Produto + Dados'];}
+if(PROMPTS.funnel){PROMPTS.funnel._en=PROMPTS.funnel._en||{};PROMPTS.funnel._pt=PROMPTS.funnel._pt||{};PROMPTS.funnel._en.pills=['Existing funnel', '7 notebook rows', 'PM + Analytics'];PROMPTS.funnel._pt.pills=['Funil existente', '7 linhas notebook', 'PM + Analytics'];}
+if(PROMPTS.ai){PROMPTS.ai._en=PROMPTS.ai._en||{};PROMPTS.ai._pt=PROMPTS.ai._pt||{};PROMPTS.ai._en.pills=['AI features', '8 notebook rows', 'All roles'];PROMPTS.ai._pt.pills=['Recursos de IA', '8 linhas notebook', 'Todos os papéis'];}
+if(PROMPTS.newsletter){PROMPTS.newsletter._en=PROMPTS.newsletter._en||{};PROMPTS.newsletter._pt=PROMPTS.newsletter._pt||{};PROMPTS.newsletter._en.pills=['Weekly / monthly', '5 notebook rows', 'Leadership'];PROMPTS.newsletter._pt.pills=['Semanal / mensal', '5 linhas notebook', 'Liderança'];}
+if(PROMPTS.dashboard){PROMPTS.dashboard._en=PROMPTS.dashboard._en||{};PROMPTS.dashboard._pt=PROMPTS.dashboard._pt||{};PROMPTS.dashboard._en.pills=['Dashboard Agent', 'Output prompt', 'All roles'];PROMPTS.dashboard._pt.pills=['Dashboard Agent', 'Output prompt', 'Todos os papéis'];}
+if(PROMPTS.aictxglobal){PROMPTS.aictxglobal._en=PROMPTS.aictxglobal._en||{};PROMPTS.aictxglobal._pt=PROMPTS.aictxglobal._pt||{};PROMPTS.aictxglobal._en.pills=['Deep Research Mode', 'Notebook → files', 'Amplitude Chat'];PROMPTS.aictxglobal._pt.pills=['Deep Research Mode', 'Notebook → arquivos', 'Amplitude Chat'];}
+if(PROMPTS.aictxinitiative){PROMPTS.aictxinitiative._en=PROMPTS.aictxinitiative._en||{};PROMPTS.aictxinitiative._pt=PROMPTS.aictxinitiative._pt||{};PROMPTS.aictxinitiative._en.pills=['Deep Research Mode', 'Multi-initiative', 'Amplitude Chat'];PROMPTS.aictxinitiative._pt.pills=['Deep Research Mode', 'Multi-iniciativa', 'Amplitude Chat'];}
+if(PROMPTS.rice){PROMPTS.rice._en=PROMPTS.rice._en||{};PROMPTS.rice._pt=PROMPTS.rice._pt||{};PROMPTS.rice._en.pills=['RICE + NSM', 'End-to-end', 'Applicable manual'];PROMPTS.rice._pt.pills=['RICE + NSM', 'Ponta a ponta', 'Manual aplicável'];}
 } // end applyPromptTranslations
 
 
@@ -4608,13 +4550,15 @@ function openDetail(id) {
   buildSwitcherMenu();
 
   const color = p.color || '#e8420a';
-  const tagsHtml = p.tags.map(t =>
-    `<span class="dtag" style="background:${t.color}18;color:${t.color};border-color:${t.color}44">${t.label}</span>`
+  const _desc  = getLangField(p,'desc')     || p.desc     || '';
+  const _tags  = getLangField(p,'tags')     || p.tags     || [];
+  const tagsHtml = _tags.map(tg =>
+    `<span class="dtag" style="background:${tg.color}18;color:${tg.color};border-color:${tg.color}44">${tg.label}</span>`
   ).join('');
   document.getElementById('detail-hero').innerHTML = `
     <div class="detail-num">${p.num} / 09</div>
     <div class="detail-title" style="color:${color}">${p.title}</div>
-    <div class="detail-desc">${p.desc}</div>
+    <div class="detail-desc">${_desc}</div>
     <div class="detail-tags">${tagsHtml}</div>
   `;
 
@@ -4963,15 +4907,68 @@ function copyBP(elId, btn) {
 }
 
 // ════════════════════════════════════════
-// RENDER LANDING (lang-aware)
+// RENDER LANDING (lang-aware — fully dynamic)
 // ════════════════════════════════════════
 function renderLanding() {
-  // Re-render static text elements that don't need full page rebuild
-  const lang = getLang();
-  // Update lang buttons
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
-  });
+  // ── Prompt grid ──────────────────────────────────────────────────────────
+  const promptOrder = ['rayosx','taxonomia','experiment','funnel','ai','newsletter','dashboard','aictxglobal','aictxinitiative','rice'];
+  const gridHTML = `
+    <div class="grid-section">
+      <div class="grid-hdr">
+        <div class="grid-title" id="landing-grid-title">${t('grid_title')}</div>
+        <div class="grid-hint" id="landing-grid-hint">${t('grid_hint')}</div>
+      </div>
+      <div class="prompt-grid">
+        ${promptOrder.map(id => {
+          const p = PROMPTS[id];
+          if (!p) return '';
+          const subtitle = getLangField(p,'subtitle') || p.subtitle || '';
+          const desc     = getLangField(p,'desc')     || p.desc     || '';
+          const tags     = getLangField(p,'tags')     || p.tags     || [];
+          return `<div class="prompt-card" style="--card-color:${p.color};--card-colorbg:${p.colorbg||'#1a0a04'}" onclick="openDetail('${id}')">
+            <div class="card-num">${p.num} ${tags.map(tg=>`<span class="card-tag" style="background:${p.colorbg||'#1a0a04'};color:${p.color}">${tg.label||tg}</span>`).join('')}</div>
+            <div class="card-icon">${p.icon||'📊'}</div>
+            <div class="card-title">${p.title}</div>
+            <div class="card-desc">${desc}</div>
+            <div class="card-pills">${(getLangField(p,'pills')||p.pills||[]).map(pl=>`<span class="card-pill">${pl}</span>`).join('')}</div>
+            <div class="card-arrow">↗</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  document.getElementById('prompt-grid-container').innerHTML = gridHTML;
+
+  // ── Skills grid ───────────────────────────────────────────────────────────
+  const skillsHTML = `
+    <div style="max-width:1060px;margin:0 auto;padding:0 40px 56px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)">
+        <div style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)" id="landing-skills-title">${t('skills_title')}</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--muted2)" id="landing-skills-hint">${t('skills_hint')}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
+        <div class="prompt-card" style="--card-color:#3d8bff;--card-colorbg:#040d1a" onclick="openSkill('demo')">
+          <div class="card-num">01 <span class="card-tag" style="background:#040d1a;color:#3d8bff">Claude Desktop</span></div>
+          <div class="card-icon">🌐</div>
+          <div class="card-title">/amplitude-demo-generator</div>
+          <div class="card-desc">${t('skill_card_demo_desc')}</div>
+          <div class="card-pills"><span class="card-pill">SPA funcional</span><span class="card-pill">SDK integrado</span><span class="card-pill">GitHub Pages</span></div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="prompt-card" style="--card-color:#00c853;--card-colorbg:#001a09" onclick="openSkill('seeder')">
+          <div class="card-num">02 <span class="card-tag" style="background:#001a09;color:#00c853">Claude Desktop</span></div>
+          <div class="card-icon">🌱</div>
+          <div class="card-title">/amplitude-data-seeder</div>
+          <div class="card-desc">${t('skill_card_seeder_desc')}</div>
+          <div class="card-pills"><span class="card-pill">MCP required</span><span class="card-pill">Batch API</span><span class="card-pill">Script Python</span></div>
+          <div class="card-arrow">↗</div>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('skills-grid-container').innerHTML = skillsHTML;
+
+  // ── ps-label ──────────────────────────────────────────────────────────────
+  const psLbl = document.getElementById('ps-label');
+  if (psLbl) psLbl.textContent = t('nav_label');
 }
 
 
