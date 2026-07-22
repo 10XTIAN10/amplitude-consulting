@@ -8,6 +8,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230a0a0a'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-size='20' font-weight='700' fill='%23e8420a'>C</text></svg>">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- Amplitude Unified SDK: Analytics + Session Replay + autocapture (page views, clicks, forms, etc.) -->
+<script src="https://cdn.amplitude.com/script/f52a86e7b3efd0b553d1fd2a53a78626.js"></script>
+<script>
+try {
+  window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+  window.amplitude.init('f52a86e7b3efd0b553d1fd2a53a78626', {
+    "fetchRemoteConfig": true,
+    "autocapture": {
+      "attribution": { "trackingMethod": ["userProperty", "eventProperty"] },
+      "fileDownloads": true,
+      "formInteractions": true,
+      "pageViews": true,
+      "sessions": true,
+      "elementInteractions": true,
+      "networkTracking": true,
+      "webVitals": true,
+      "frustrationInteractions": { "thrashedCursor": true, "errorClicks": true, "deadClicks": true, "rageClicks": true }
+    }
+  });
+} catch (e) {
+  console.warn('[Amplitude] init error (non-fatal):', e.message);
+}
+</script>
 <style>
 :root{
   --bg:#0a0a0a;
@@ -2839,6 +2863,19 @@ let currentSkillId = null;
 // ════════════════════════════════════════
 // ROUTER — URLs con hash, compartibles y con historial de back/forward
 // ════════════════════════════════════════
+// ════════════════════════════════════════
+// AMPLITUDE — helper de tracking
+// ════════════════════════════════════════
+function track(eventName, props) {
+  try {
+    if (window.amplitude && window.amplitude.track) {
+      window.amplitude.track(eventName, props || {});
+    }
+  } catch (e) {
+    console.warn('[Amplitude] track error:', e.message);
+  }
+}
+
 function showPage(pageId) {
   document.querySelectorAll('.page.active').forEach(p => p.classList.remove('active'));
   const el = document.getElementById(pageId);
@@ -2861,6 +2898,7 @@ function router() {
   if (parts[0] === 'prompt' && parts[1]) { openDetail(parts[1]); return; }
   if (parts[0] === 'skill' && parts[1]) { openSkill(parts[1]); return; }
   if (parts[0] === 'notebooks') { openLibrary(parts[1] || null); return; }
+  track('Page Viewed', { page: 'landing' });
   showPage('landing');
   renderLanding();
 }
@@ -2991,12 +3029,14 @@ function openDetail(id) {
   showPage('detail-page');
   const _h = '#/prompt/' + id;
   if (location.hash !== _h) history.pushState(null, '', _h);
+  track('Page Viewed', { page: 'prompt_detail', prompt_id: id, prompt_title: p.title });
 }
 
 function goBack() {
   showPage('landing');
   renderLanding();
   if (location.hash !== '#/') history.pushState(null, '', '#/');
+  track('Page Viewed', { page: 'landing' });
 }
 
 // THE FIX: use element ID lookup instead of `this`
@@ -3233,6 +3273,7 @@ function copyEl(elId, btn) {
   const b = clone.querySelector('button');
   if (b) b.remove();
   navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
+    track('Content Copied', { element_id: elId, prompt_id: currentPromptId });
     const orig = btn.textContent;
     btn.textContent = '✓ Copiado';
     setTimeout(() => btn.textContent = orig, 2000);
@@ -3245,6 +3286,7 @@ function escHtml(s) {
 function copyPr(id) {
   const prompt = getLangPrompt(PROMPTS[id]);
   navigator.clipboard.writeText(prompt).then(() => {
+    track('Prompt Copied', { prompt_id: id });
     const btn = document.getElementById(`cbtn-${id}`);
     btn.textContent = '✓ Copiado';
     btn.classList.add('copied');
@@ -3257,6 +3299,7 @@ function copyBP(elId, btn) {
   const b = clone.querySelector('button');
   if (b) b.remove();
   navigator.clipboard.writeText(clone.innerText.trim()).then(() => {
+    track('Content Copied', { element_id: elId, prompt_id: currentPromptId });
     const orig = btn.textContent;
     btn.textContent = '✓';
     setTimeout(() => btn.textContent = orig, 1800);
@@ -3388,6 +3431,7 @@ function openRice() {
   showPage('detail-page');
   const _h = '#/prompt/' + id;
   if (location.hash !== _h) history.pushState(null, '', _h);
+  track('Page Viewed', { page: 'prompt_detail', prompt_id: id, prompt_title: 'Experimentation Framework' });
 }
 
 // ── HELPERS ──────────────────────────────────────────────────────
@@ -4225,12 +4269,14 @@ function openSkill(id) {
   showPage('skill-page');
   const _h = '#/skill/' + id;
   if (location.hash !== _h) history.pushState(null, '', _h);
+  track('Page Viewed', { page: 'skill_detail', skill_id: id, skill_title: s.title });
 }
 
 function goBackSkill() {
   showPage('landing');
   renderLanding();
   if (location.hash !== '#/') history.pushState(null, '', '#/');
+  track('Page Viewed', { page: 'landing' });
 }
 
 function showSkillSec(id, key) {
@@ -4383,6 +4429,7 @@ async function openLibrary(itemId) {
   showPage('notebooks-page');
   const _h = '#/notebooks' + (itemId ? '/' + itemId : '');
   if (location.hash !== _h) history.pushState(null, '', _h);
+  track('Page Viewed', { page: 'notebooks', item_id: itemId || null });
   libSetStatus('Cargando…');
   await loadLibraryManifest();
   libSetStatus('');
@@ -4411,7 +4458,7 @@ function renderLibraryGrid() {
       <div class="lib-card-desc">${escHtml(item.description || '')}</div>
       <div class="lib-card-actions">
         <button class="lib-btn" onclick="goTo('#/notebooks/${item.id}')">Preview</button>
-        <a class="lib-btn lib-btn-download" href="${libPublicUrl(item.filename)}" download="${item.filename}">Download</a>
+        <a class="lib-btn lib-btn-download" href="${libPublicUrl(item.filename)}" download="${item.filename}" onclick="track('Library Item Downloaded', {item_id:'${item.id}', name:'${escHtml(item.name).replace(/'/g,"\\'")}', type:'${item.type}'})">Download</a>
         <button class="lib-btn lib-btn-danger" onclick="deleteLibraryItem('${item.id}')" title="Eliminar (solo Cristian)">🗑</button>
       </div>
     </div>
@@ -4423,6 +4470,7 @@ async function openLibraryPreview(item, pushHash) {
   document.getElementById('lib-preview-title').textContent = item.name;
   const body = document.getElementById('lib-preview-body');
   document.getElementById('lib-preview-modal').classList.add('active');
+  track('Library Item Previewed', { item_id: item.id, name: item.name, type: item.type });
   if (item.type === 'html') {
     body.innerHTML = `<iframe class="lib-preview-iframe" sandbox="allow-scripts allow-popups" src="${libPublicUrl(item.filename)}"></iframe>`;
     return;
@@ -4534,6 +4582,7 @@ function handleLibraryFileChosen(file) {
     document.getElementById('lib-file-input').value = '';
     return;
   }
+  track('Library File Selected', { ext, size: file.size });
   const pat = libRequireAuth();
   if (!pat) { document.getElementById('lib-file-input').value = ''; return; }
 
@@ -4600,10 +4649,12 @@ async function confirmLibraryUpload() {
     if (!putManifest.ok) throw new Error((await putManifest.json()).message || 'Error actualizando el índice');
 
     libSetStatus('Publicado — puede tardar ~1 minuto en verse reflejado en la web pública (GitHub Pages).', 'ok');
+    track('Library Item Published', { name, type: libPendingFile.type, filename: libPendingFile.filename });
     cancelLibraryUpload();
     libManifest = currentManifest;
     renderLibraryGrid();
   } catch (e) {
+    track('Library Upload Failed', { error: e.message });
     libSetStatus('Error: ' + e.message, 'err');
   }
 }
@@ -4612,6 +4663,7 @@ async function deleteLibraryItem(id) {
   const item = libManifest.find(i => i.id === id);
   if (!item) return;
   if (!confirm('¿Eliminar "' + item.name + '"? Esta acción no se puede deshacer.')) return;
+  track('Library Item Delete Requested', { item_id: id, name: item.name });
   const pat = libRequireAuth();
   if (!pat) return;
 
@@ -4643,9 +4695,11 @@ async function deleteLibraryItem(id) {
     if (!putManifest.ok) throw new Error((await putManifest.json()).message || 'Error actualizando el índice');
 
     libSetStatus('Eliminado.', 'ok');
+    track('Library Item Deleted', { item_id: id, name: item.name });
     libManifest = currentManifest;
     renderLibraryGrid();
   } catch (e) {
+    track('Library Delete Failed', { item_id: id, error: e.message });
     libSetStatus('Error: ' + e.message, 'err');
   }
 }
