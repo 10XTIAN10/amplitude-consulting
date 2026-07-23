@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🚀 Guía de Prompts Optimizados para Amplitude Chat</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f5f6fa;
+      color: #1a1a2e;
+      line-height: 1.7;
+      padding: 0 0 60px;
+    }
+
+    /* ── Header Banner ── */
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      padding: 56px 40px 48px;
+      text-align: center;
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px; }
+    .hero .subtitle {
+      font-size: 1.05rem; opacity: .85;
+      background: rgba(255,255,255,.1);
+      display: inline-block; padding: 8px 20px; border-radius: 20px; margin-top: 8px;
+    }
+    .hero .meta { font-size: .85rem; opacity: .6; margin-top: 16px; }
+
+    /* ── Container ── */
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Section Cards ── */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(0,0,0,.07);
+      padding: 40px 44px;
+      margin-top: 32px;
+    }
+    .card + .card { margin-top: 28px; }
+
+    /* ── Headings ── */
+    h1 { font-size: 2rem; font-weight: 800; }
+    h2 { font-size: 1.55rem; font-weight: 700; margin-bottom: 18px; color: #0f3460; border-bottom: 3px solid #e8eaf6; padding-bottom: 10px; }
+    h3 { font-size: 1.15rem; font-weight: 700; margin: 24px 0 10px; color: #16213e; }
+
+    p { margin-bottom: 14px; }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 4px solid #5c6bc0;
+      background: #f0f2ff;
+      border-radius: 0 10px 10px 0;
+      padding: 14px 20px;
+      margin: 18px 0;
+      color: #3949ab;
+      font-size: .97rem;
+    }
+    blockquote p { margin: 0; }
+    blockquote + blockquote { margin-top: 10px; }
+
+    /* ── Lists ── */
+    ul { padding-left: 22px; margin-bottom: 14px; }
+    ul li { margin-bottom: 6px; }
+
+    /* ── Tables ── */
+    .table-wrap { overflow-x: auto; margin: 18px 0; border-radius: 10px; box-shadow: 0 1px 6px rgba(0,0,0,.08); }
+    table { width: 100%; border-collapse: collapse; font-size: .93rem; }
+    thead tr { background: #3949ab; color: #fff; }
+    thead th { padding: 12px 16px; text-align: left; font-weight: 600; }
+    tbody tr:nth-child(even) { background: #f5f6fa; }
+    tbody tr:hover { background: #e8eaf6; transition: background .15s; }
+    tbody td { padding: 11px 16px; border-bottom: 1px solid #e8eaf6; vertical-align: top; }
+
+    /* ── Code Blocks ── */
+    pre {
+      background: #1a1a2e;
+      color: #a5d6a7;
+      border-radius: 12px;
+      padding: 24px 28px;
+      overflow-x: auto;
+      font-family: "Fira Code", "Cascadia Code", "Courier New", monospace;
+      font-size: .88rem;
+      line-height: 1.65;
+      margin: 18px 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    code {
+      background: #e8eaf6;
+      color: #3949ab;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: "Fira Code", monospace;
+      font-size: .88em;
+    }
+    pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+
+    /* ── Prompt Number Badge ── */
+    .prompt-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #3949ab;
+      color: #fff; border-radius: 30px;
+      padding: 6px 18px; font-size: .85rem; font-weight: 700;
+      margin-bottom: 18px; letter-spacing: .3px;
+    }
+
+    /* ── Workflow Diagram ── */
+    .workflow {
+      display: flex; flex-direction: column; gap: 0;
+      margin: 24px 0;
+    }
+    .workflow-step {
+      display: flex; align-items: flex-start; gap: 16px;
+      position: relative;
+    }
+    .workflow-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 22px; top: 52px;
+      width: 2px; height: calc(100% - 4px);
+      background: #e8eaf6;
+    }
+    .step-icon {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: #3949ab;
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0; z-index: 1;
+      box-shadow: 0 2px 8px rgba(57,73,171,.35);
+    }
+    .step-body { padding: 10px 0 28px; }
+    .step-body strong { display: block; font-size: 1rem; color: #0f3460; margin-bottom: 4px; }
+    .step-body span { font-size: .92rem; color: #555; }
+
+    /* ── TOC Table ── */
+    .toc-table thead tr { background: #0f3460; }
+
+    /* ── HR ── */
+    hr { border: none; border-top: 2px solid #e8eaf6; margin: 28px 0; }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center; margin-top: 48px;
+      font-size: .85rem; color: #888; font-style: italic;
+    }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #fff; }
+      .card { box-shadow: none; border: 1px solid #ddd; }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 1.6rem; }
+      .card { padding: 24px 20px; }
+      thead th, tbody td { padding: 9px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ HERO -->
+<div class="hero">
+  <h1>🚀 Guía de Prompts Optimizados<br>para Amplitude Chat</h1>
+  <div class="subtitle">💡 Tu arsenal completo para análisis de datos de alto impacto</div>
+  <div class="meta">Notebook: sk8n9hnm &nbsp;|&nbsp; Creado por Minders &nbsp;|&nbsp; Última actualización: Mayo 2026</div>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════════ INTRO -->
+  <div class="card">
+    <p>Este notebook contiene <strong>6 prompts optimizados</strong> para aprovechar al máximo las capacidades de <strong>Deep Research</strong> de Amplitude Chat. Cada prompt está diseñado para obtener análisis exhaustivos y accionables que impulsen decisiones de negocio.</p>
+
+    <hr>
+
+    <h3>📚 Contenido del Notebook</h3>
+    <div class="table-wrap">
+      <table class="toc-table">
+        <thead>
+          <tr><th>#</th><th>🎯 Prompt</th><th>👤 Rol Especializado</th><th>⏱️ Cuándo Usarlo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>📊 Analizar charts del dashboard</td><td>Analista de datos senior</td><td>Revisiones semanales/mensuales</td></tr>
+          <tr><td>2</td><td>✏️ Mejorar dashboards</td><td>Especialista en visualización</td><td>Dashboards para stakeholders</td></tr>
+          <tr><td>3</td><td>🔍 Investigar abandono en funnels</td><td>Experto en conversión</td><td>Caídas en conversión</td></tr>
+          <tr><td>4</td><td>🧪 Diseñar experimentos A/B</td><td>Growth Product Manager</td><td>Optimización basada en datos</td></tr>
+          <tr><td>5</td><td>📈 Comparar períodos (Bonus)</td><td>Analista de BI</td><td>Análisis trimestral/estacional</td></tr>
+          <tr><td>6</td><td>📓 Documentar en Notebook</td><td>Analista documentador</td><td>Compartir hallazgos con equipo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>🎓 Secciones Adicionales</h3>
+    <ul>
+      <li>🎭 <strong>Por qué importa el contexto de rol</strong> — Maximiza la calidad de las respuestas</li>
+      <li>💡 <strong>Tips para mejores resultados</strong> — Mejores prácticas y trucos</li>
+      <li>✅ <strong>Conclusión</strong> — Flujo de trabajo recomendado</li>
+    </ul>
+
+    <blockquote>
+      <p>📖 <strong>Cómo usar este notebook:</strong> Copia el prompt que necesites, reemplaza <code>[link del dashboard/funnel]</code> con tu URL específica de Amplitude, y ajusta los períodos de tiempo según tu necesidad.</p>
+    </blockquote>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ ROL -->
+  <div class="card">
+    <h2>🎭 Por qué importa el contexto de rol</h2>
+    <blockquote>
+      <p>🔑 <strong>Secreto profesional:</strong> Definir tu rol al inicio del prompt puede mejorar la calidad de las respuestas hasta en un 300%</p>
+    </blockquote>
+
+    <h3>🎯 Beneficios de definir tu rol</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>💎 Beneficio</th><th>📝 Descripción</th><th>📊 Impacto</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>🎯 Enfocar el análisis</strong></td><td>El modelo adopta la perspectiva y prioridades del rol especificado</td><td>Alto</td></tr>
+          <tr><td><strong>🔬 Mejorar la profundidad</strong></td><td>Respuestas más especializadas y técnicamente rigurosas</td><td>Muy Alto</td></tr>
+          <tr><td><strong>💬 Ajustar el lenguaje</strong></td><td>Terminología y frameworks apropiados para cada contexto</td><td>Medio</td></tr>
+          <tr><td><strong>⚡ Priorizar insights</strong></td><td>Qué es relevante para un analista vs. un PM vs. un ejecutivo</td><td>Alto</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>🎨 Ejemplos de roles personalizados</h3>
+    <p>Puedes adaptar el rol según tu necesidad específica:</p>
+    <ul>
+      <li>💰 <em>"Eres un CMO buscando optimizar CAC y LTV"</em></li>
+      <li>🎨 <em>"Eres un UX researcher investigando fricciones en la experiencia"</em></li>
+      <li>📊 <em>"Eres un data scientist buscando correlaciones estadísticamente significativas"</em></li>
+      <li>🚀 <em>"Eres un VP de Producto evaluando el impacto de un lanzamiento reciente"</em></li>
+      <li>⚡ <em>"Eres un growth hacker buscando quick wins de alto impacto"</em></li>
+    </ul>
+
+    <blockquote>
+      <p>💡 <strong>Pro Tip:</strong> Cada prompt en este notebook ya incluye un preámbulo de rol optimizado. Puedes personalizarlo según tu contexto para obtener respuestas aún más relevantes.</p>
+    </blockquote>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ PROMPT 1 -->
+  <div class="card">
+    <div class="prompt-badge">📊 Prompt #1</div>
+    <h2>Analizar Charts del Dashboard</h2>
+
+    <h3>🎯 Objetivo</h3>
+    <p>Obtener un análisis profundo de cada gráfico en un dashboard, identificando tendencias, anomalías y oportunidades de optimización.</p>
+
+    <h3>👤 Rol</h3>
+    <p><strong>Analista de datos senior especializado en product analytics</strong></p>
+
+    <h3>⏱️ Cuándo usarlo</h3>
+    <ul>
+      <li>✅ Revisiones semanales o mensuales de performance</li>
+      <li>✅ Preparación de reportes para stakeholders</li>
+      <li>✅ Cuando necesitas una visión holística del estado de tu producto</li>
+    </ul>
+
+    <h3>📝 Prompt:</h3>
+    <pre>Actúa como un analista de datos senior especializado en product analytics y descubrimiento de insights accionables. Tu objetivo es identificar patrones ocultos, anomalías significativas y oportunidades de crecimiento que otros podrían pasar por alto.
+
+Analiza en profundidad cada chart de este dashboard durante los últimos 30 días:
+[pega el link del dashboard]
+
+Para la comparación con el período anterior:
+
+Si los charts del dashboard NO tienen period-over-period configurado:
+1. Consulta directamente los eventos del período anterior (30 días previos) usando amplitude_mcp_query_dataset
+2. Calcula las métricas clave para ambos períodos
+3. Genera la comparación manualmente para identificar cambios
+
+Si los charts SÍ tienen period-over-period configurado:
+1. Usa los datos de comparación ya disponibles en los charts
+2. Analiza las variaciones period-over-period directamente
+
+Para cada gráfico, identifica y presenta en formato de tabla:
+- Tendencias principales y patrones de comportamiento por segmento de usuarios
+- Anomalías o cambios significativos (especifica fechas y magnitud del cambio)
+- Diferencias entre segmentos clave: usuarios móviles vs web, nuevos vs recurrentes, por plan de suscripción
+- Oportunidades de optimización basadas en los datos
+- Correlaciones entre métricas que puedan revelar insights accionables
+- Comparación vs. período anterior: cambios >10% con hipótesis de causas
+
+Prioriza los hallazgos en una lista numerada por impacto potencial en conversión y retención.
+Incluye links a los charts específicos donde encontraste cada insight.</pre>
+
+    <blockquote>
+      <p>💡 <strong>Tip: Comparación de períodos</strong> Este prompt incluye comparación automática con el período anterior. Si los charts no tienen period-over-period configurado, Amplitude consultará directamente los eventos del período anterior para generar la comparación.</p>
+      <p><strong>Puedes personalizar el período:</strong></p>
+      <ul>
+        <li><em>"últimos 7 días"</em> (compara con los 7 días previos)</li>
+        <li><em>"abril 2026"</em> (compara con marzo 2026)</li>
+        <li><em>"Q1 2026"</em> (compara con Q4 2025)</li>
+      </ul>
+    </blockquote>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ PROMPT 2 -->
+  <div class="card">
+    <div class="prompt-badge">✏️ Prompt #2</div>
+    <h2>Editar Dashboard (Agregar Descripciones)</h2>
+
+    <h3>🎯 Objetivo</h3>
+    <p>Que Amplitude agregue automáticamente descripciones y contexto a cada chart del dashboard para hacerlo más comprensible, sin modificar los nombres existentes.</p>
+
+    <h3>👤 Rol</h3>
+    <p><strong>Especialista en visualización de datos y comunicación ejecutiva</strong></p>
+
+    <h3>⏱️ Cuándo usarlo</h3>
+    <ul>
+      <li>✅ Dashboards para equipos de negocio o marketing</li>
+      <li>✅ Presentaciones para liderazgo ejecutivo</li>
+      <li>✅ Cuando necesitas que un dashboard sea self-service</li>
+    </ul>
+
+    <h3>📝 Prompt:</h3>
+    <pre>Actúa como un especialista en visualización de datos y comunicación de insights para stakeholders ejecutivos. Tu objetivo es transformar dashboards técnicos en narrativas claras que impulsen decisiones de negocio.
+
+Edita este dashboard agregando descripciones y contexto a cada chart:
+[pega el link del dashboard]
+
+Para cada chart del dashboard:
+1. MANTÉN el nombre/título actual del chart sin modificarlo
+2. AGREGA una descripción de 2-3 líneas que explique:
+   - Qué mide exactamente este chart
+   - Por qué es importante para el negocio
+   - Cómo interpretarlo (qué es bueno/malo, rangos esperados)
+   - Contexto adicional relevante (benchmarks, metas, comparaciones)
+
+Para el dashboard completo:
+- AGREGA un título general descriptivo si no tiene uno
+- AGREGA una descripción general del dashboard explicando su propósito y cómo usarlo
+- ORGANIZA los charts en secciones temáticas si aplica (ej: Adquisición, Activación, Retención)
+- AGREGA notas o anotaciones donde sea necesario para facilitar la interpretación
+
+Ejecuta estos cambios directamente en el dashboard.
+VERIFICACION: Confirma que las descripciones se agregaron correctamente a cada chart.</pre>
+
+    <blockquote>
+      <p>⚠️ <strong>Importante:</strong> Este prompt NO modifica los nombres de los charts existentes, solo agrega descripciones y contexto.</p>
+    </blockquote>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ PROMPT 3 -->
+  <div class="card">
+    <div class="prompt-badge">🔍 Prompt #3</div>
+    <h2>Investigar Abandono en Funnels</h2>
+
+    <h3>🎯 Objetivo</h3>
+    <p>Investigar a fondo las causas de abandono en un funnel de conversión y generar hipótesis accionables.</p>
+
+    <h3>👤 Rol</h3>
+    <p><strong>Experto en optimización de conversión y análisis de comportamiento</strong></p>
+
+    <h3>⏱️ Cuándo usarlo</h3>
+    <ul>
+      <li>✅ Cuando observas caídas en conversión</li>
+      <li>✅ Necesitas justificar inversión en UX/producto</li>
+      <li>✅ Quieres priorizar mejoras en el flujo de usuario</li>
+    </ul>
+
+    <h3>📝 Prompt:</h3>
+    <pre>Actúa como un experto en optimización de conversión y análisis de comportamiento de usuarios. Tu objetivo es diagnosticar las causas raíz del abandono en funnels aplicando metodologías rigurosas de análisis cuantitativo y cualitativo.
+
+Investiga a fondo por qué los usuarios abandonan este funnel en los últimos 30 días:
+[pega el link del chart de funnel]
+
+Analiza y presenta los resultados en secciones claras:
+
+1. Análisis de caída por paso:
+- Identifica el paso con mayor drop-off (% y número absoluto de usuarios)
+- Tiempo promedio entre pasos para usuarios que convierten vs. abandonan
+
+2. Segmentación de usuarios:
+Compara tasas de conversión entre:
+- Usuarios móviles (iOS/Android) vs web (desktop/mobile web)
+- Nuevos usuarios vs recurrentes
+- Por fuente de adquisición (orgánico, paid, referral, etc.)
+- Por geografía (top 5 países)
+- Por plan o tipo de cuenta (si aplica)
+
+3. Análisis de comportamiento:
+- Eventos o acciones previas al funnel que correlacionan con conversión exitosa
+- Eventos que realizan quienes abandonan vs. quienes convierten
+- Patrones temporales: días de la semana y horas del día con peor conversión
+
+4. Hipótesis de causas raíz:
+Lista numerada de 3-5 hipótesis concretas priorizadas por probabilidad e impacto.
+
+Compara con el período anterior (30 días previos) para identificar si el problema es nuevo o recurrente.
+Incluye el link al funnel en tu análisis.</pre>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ PROMPT 4 -->
+  <div class="card">
+    <div class="prompt-badge">🧪 Prompt #4</div>
+    <h2>Diseñar Experimentos A/B</h2>
+
+    <h3>🎯 Objetivo</h3>
+    <p>Diseñar experimentos A/B concretos y priorizados para mejorar la conversión en un funnel.</p>
+
+    <h3>👤 Rol</h3>
+    <p><strong>Growth Product Manager con expertise en experimentación</strong></p>
+
+    <h3>⏱️ Cuándo usarlo</h3>
+    <ul>
+      <li>✅ Después de identificar problemas de conversión (Prompt #3)</li>
+      <li>✅ Para pasar del diagnóstico a la acción</li>
+      <li>✅ Cuando necesitas experimentos bien diseñados y priorizados</li>
+    </ul>
+
+    <h3>📝 Prompt:</h3>
+    <pre>Actúa como un growth product manager con expertise en experimentación y metodología científica. 
+Tu objetivo es diseñar experimentos A/B rigurosos, priorizados y accionables que maximicen el aprendizaje y el impacto en conversión.
+
+Basándote en el análisis de este funnel durante los últimos 30 días, diseña 5 experimentos concretos para mejorar la conversión:
+[pega el link del chart de funnel]
+
+Para cada experimento, estructura la información así:
+
+Experimento #[N]: [Nombre descriptivo]
+- Hipótesis: [Declaración específica y medible]
+- Segmento objetivo: [Quiénes exactamente: ej. "usuarios móviles iOS que abandonan en el paso 2"]
+- Tamaño del segmento: [Usuarios/semana disponibles para el test]
+- Intervención propuesta: [Cambio específico a implementar - ej. "reducir campos del formulario de 8 a 4"]
+- Métrica primaria: [Ej. "Tasa de conversión del paso 2 al 3"]
+- Métricas secundarias: [Ej. "Tiempo en paso, tasa de error, conversión end-to-end"]
+- Duración estimada: [Semanas necesarias para significancia estadística]
+- Esfuerzo de implementación: [Bajo/Medio/Alto]
+- Impacto esperado: [% de mejora estimada]
+- Riesgos a monitorear: [Ej. "calidad de leads, tasa de rebote posterior"]
+
+Presenta los experimentos en una tabla comparativa final con columnas:
+Experimento | Esfuerzo | Impacto Esperado | Prioridad (1-5)
+
+Prioriza considerando la matriz esfuerzo vs. impacto.
+Incluye el link al funnel y sugiere cómo crear cohorts en Amplitude para cada segmento objetivo.</pre>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ PROMPT 5 -->
+  <div class="card">
+    <div class="prompt-badge">📈 Prompt #5 — BONUS</div>
+    <h2>Comparar Períodos</h2>
+
+    <h3>🎯 Objetivo</h3>
+    <p>Comparar el rendimiento entre dos períodos para identificar cambios significativos y sus posibles causas, incluso cuando los charts no tienen period-over-period configurado.</p>
+
+    <h3>👤 Rol</h3>
+    <p><strong>Analista de Business Intelligence enfocado en tendencias temporales</strong></p>
+
+    <h3>⏱️ Cuándo usarlo</h3>
+    <ul>
+      <li>✅ Revisiones trimestrales (QBR)</li>
+      <li>✅ Análisis de estacionalidad</li>
+      <li>✅ Evaluar impacto de lanzamientos de producto</li>
+      <li>✅ Comparar rendimiento mes a mes o año a año</li>
+    </ul>
+
+    <h3>📝 Prompt:</h3>
+    <pre>Actúa como un analista de business intelligence enfocado en análisis de tendencias temporales y estacionalidad. Tu objetivo es identificar cambios significativos entre períodos y explicar sus causas con hipótesis fundamentadas.
+
+Compara el rendimiento de este dashboard entre [Período 1: ej. Q1 2026 (enero-marzo)] vs [Período 2: ej. Q4 2025 (octubre-diciembre)]:
+[link del dashboard]
+
+Si los charts del dashboard NO tienen period-over-period configurado:
+1. Consulta directamente los eventos del período anterior usando amplitude_mcp_query_dataset
+2. Calcula las métricas clave para ambos períodos
+3. Genera la comparación manualmente
+
+Si los charts SÍ tienen period-over-period configurado:
+1. Usa los datos de comparación ya disponibles en los charts
+2. Analiza las variaciones y tendencias
+
+Para el análisis:
+- Identifica cambios significativos (>10%) en métricas clave
+- Explica posibles causas estacionales, de producto o de mercado
+- Segmenta por dimensiones relevantes (país, canal, plataforma, etc.)
+- Presenta los hallazgos en formato de tabla con columnas: Métrica | [Período 1] | [Período 2] | Cambio % | Insight
+
+Incluye:
+- Tabla comparativa de métricas principales
+- Gráficos o visualizaciones si es posible
+- Hipótesis sobre las causas de los cambios más significativos
+- Recomendaciones de acciones a tomar basadas en los hallazgos</pre>
+
+    <h3>⚠️ Limitaciones comunes y soluciones</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>🚧 Limitación</th><th>✅ Solución</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Charts sin PoP configurado</strong></td><td>Amplitude consultará directamente los eventos del período anterior usando <code>amplitude_mcp_query_dataset</code></td></tr>
+          <tr><td><strong>Rangos de fechas fijos</strong></td><td>Especifica explícitamente las fechas del período anterior en el prompt</td></tr>
+          <tr><td><strong>Métricas calculadas complejas</strong></td><td>Solicita que se replique el cálculo para ambos períodos</td></tr>
+          <tr><td><strong>Segmentaciones no disponibles</strong></td><td>Pide que se consulten los eventos raw con las dimensiones necesarias</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>📊 Mejores prácticas</h3>
+    <ul>
+      <li>✅ <strong>Especifica fechas exactas</strong> para ambos períodos (no solo "Q1 vs Q2")</li>
+      <li>✅ <strong>Define el umbral de cambio significativo</strong> (ej: >10%, >15%)</li>
+      <li>✅ <strong>Lista las métricas prioritarias</strong> que quieres comparar</li>
+      <li>✅ <strong>Menciona segmentaciones clave</strong> (país, canal, plataforma, cohorte)</li>
+      <li>✅ <strong>Pide hipótesis fundamentadas</strong> sobre las causas de los cambios</li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ PROMPT 6 -->
+  <div class="card">
+    <div class="prompt-badge">📓 Prompt #6</div>
+    <h2>Documentar Resultados en Notebook</h2>
+
+    <h3>🎯 Objetivo</h3>
+    <p>Documentar automáticamente los resultados de un análisis en un notebook de Amplitude para compartir con el equipo y mantener un registro histórico.</p>
+
+    <h3>👤 Rol</h3>
+    <p><strong>Analista de datos que documenta hallazgos de forma estructurada y profesional</strong></p>
+
+    <h3>⏱️ Cuándo usarlo</h3>
+    <ul>
+      <li>✅ Compartir insights con equipos multifuncionales</li>
+      <li>✅ Crear registro histórico de análisis</li>
+      <li>✅ Documentar decisiones basadas en datos</li>
+      <li>✅ Facilitar onboarding de nuevos miembros</li>
+    </ul>
+
+    <h3>📝 Prompt Base:</h3>
+    <pre>Actúa como un analista de datos que documenta sus hallazgos de forma estructurada y profesional para compartir con equipos multifuncionales.
+
+[Aquí va el prompt de análisis que quieras ejecutar - puede ser cualquiera de los prompts #1 a #5]
+
+Con el resultado del análisis genera un notebook en Amplitude que incluya:
+- Título descriptivo del análisis realizado
+- Fecha y período analizado
+- Resumen ejecutivo (3-5 puntos clave)
+- Hallazgos detallados con visualizaciones y links a charts
+- Recomendaciones accionables priorizadas
+- Próximos pasos sugeridos
+
+NOTEBOOK - INSTRUCCIÓN CRÍTICA DE ORDEN: Después de crear el notebook, SIEMPRE llama a get_notebook para verificar el orden real de las filas. Si alguna fila está fuera de lugar, usa edit_notebook con set_rows para reordenar todas las filas en el orden correcto antes de compartir el link. No compartas el link del notebook sin haber verificado y corregido el orden.
+Comparte el link del notebook en este hilo.</pre>
+
+    <h3>🎁 Beneficios de documentar en notebooks</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>💎 Beneficio</th><th>📝 Descripción</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>🤝 <strong>Compartir conocimiento</strong></td><td>Distribuye insights fácilmente con PMs, diseñadores, ejecutivos</td></tr>
+          <tr><td>📚 <strong>Registro histórico</strong></td><td>Mantén un archivo de análisis para referencia futura</td></tr>
+          <tr><td>💬 <strong>Colaboración</strong></td><td>Permite que otros comenten y agreguen contexto</td></tr>
+          <tr><td>📊 <strong>Seguimiento</strong></td><td>Documenta decisiones y su justificación basada en datos</td></tr>
+          <tr><td>🎓 <strong>Onboarding</strong></td><td>Nuevos miembros del equipo pueden revisar análisis previos</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ TIPS -->
+  <div class="card">
+    <h2>💡 Tips para Mejores Resultados con Amplitude Chat</h2>
+
+    <h3>🎯 Mejores Prácticas</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>💡 Tip</th><th>📝 Descripción</th><th>🔍 Ejemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🔗 <strong>Incluye el link directo</strong></td>
+            <td>Siempre pega el link al dashboard o chart que quieres analizar</td>
+            <td><code>https://app.amplitude.com/analytics/myorg/chart/abc123</code></td>
+          </tr>
+          <tr>
+            <td>📅 <strong>Especifica el período</strong></td>
+            <td>Define el rango de tiempo relevante para tu análisis</td>
+            <td><em>"últimos 30 días"</em>, <em>"comparando Q1 vs Q2"</em></td>
+          </tr>
+          <tr>
+            <td>👥 <strong>Menciona segmentos</strong></td>
+            <td>Indica los segmentos específicos que te interesan</td>
+            <td><em>"usuarios móviles"</em>, <em>"usuarios de plan premium"</em></td>
+          </tr>
+          <tr>
+            <td>📊 <strong>Pide formatos específicos</strong></td>
+            <td>Solicita el formato de salida que necesitas</td>
+            <td><em>"presenta en tabla"</em>, <em>"prioriza en lista numerada"</em></td>
+          </tr>
+          <tr>
+            <td>🔬 <strong>Usa Deep Research</strong></td>
+            <td>Para análisis complejos, activa el modo Deep Research</td>
+            <td>Ideal para investigaciones de root cause y anomalías</td>
+          </tr>
+          <tr>
+            <td>🔄 <strong>Itera sobre los resultados</strong></td>
+            <td>Haz preguntas de seguimiento para profundizar</td>
+            <td><em>"Profundiza en el segmento de usuarios móviles iOS"</em></td>
+          </tr>
+          <tr>
+            <td>🎭 <strong>Define tu rol</strong></td>
+            <td>Agrega contexto de rol al inicio del prompt</td>
+            <td><em>"Actúa como un CMO buscando optimizar CAC y LTV"</em></td>
+          </tr>
+          <tr>
+            <td>📓 <strong>Documenta en notebooks</strong></td>
+            <td>Solicita que el resultado se guarde en un notebook verificado</td>
+            <td><em>"Con el resultado genera un notebook. NOTEBOOK - INSTRUCCIÓN CRÍTICA..."</em></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ CONCLUSIÓN -->
+  <div class="card">
+    <h2>✅ Conclusión: Tu Flujo de Trabajo de Análisis</h2>
+    <p>Estos prompts están diseñados para aprovechar al máximo las capacidades de <strong>Deep Research</strong> de Amplitude Chat y obtener análisis exhaustivos y accionables.</p>
+
+    <h3>🔄 Flujo de Trabajo Recomendado (6 Pasos)</h3>
+
+    <!-- Visual workflow diagram -->
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="step-icon">📊</div>
+        <div class="step-body">
+          <strong>1. DIAGNÓSTICO</strong>
+          <span>Usa el Prompt #1 para obtener una visión general del dashboard</span>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-icon">✏️</div>
+        <div class="step-body">
+          <strong>2. COMUNICACIÓN</strong>
+          <span>Usa el Prompt #2 para hacer el dashboard comprensible para todos</span>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-icon">🔍</div>
+        <div class="step-body">
+          <strong>3. INVESTIGACIÓN</strong>
+          <span>Usa el Prompt #3 para investigar problemas de conversión</span>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-icon">🧪</div>
+        <div class="step-body">
+          <strong>4. ACCIÓN</strong>
+          <span>Usa el Prompt #4 para diseñar experimentos basados en datos</span>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-icon">📈</div>
+        <div class="step-body">
+          <strong>5. SEGUIMIENTO</strong>
+          <span>Usa el Prompt #5 (Bonus) para comparar períodos</span>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-icon">📓</div>
+        <div class="step-body">
+          <strong>6. DOCUMENTACIÓN</strong>
+          <span>Usa el Prompt #6 para guardar los resultados en un notebook compartible</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>🎯 Recuerda</h3>
+    <blockquote>
+      <p>💡 <strong>Cada prompt incluye un preámbulo de rol optimizado.</strong> Personalízalo según tu contexto para obtener respuestas aún más relevantes.</p>
+    </blockquote>
+    <blockquote>
+      <p>🔗 <strong>Siempre incluye el link directo</strong> al dashboard o funnel que quieres analizar.</p>
+    </blockquote>
+    <blockquote>
+      <p>📅 <strong>Especifica períodos de tiempo</strong> para análisis más precisos y comparables.</p>
+    </blockquote>
+
+    <hr>
+
+    <h3>🚀 ¿Listo para empezar?</h3>
+    <p>Copia el prompt que necesites, reemplaza <code>[link del dashboard/funnel]</code> con tu URL específica de Amplitude, y comienza a obtener insights accionables.</p>
+  </div>
+
+  <div class="footer">
+    ✨ Creado por Minders &nbsp;|&nbsp; 📅 Última actualización: Mayo 2026
+  </div>
+
+</div><!-- /container -->
+</body>
+</html>
