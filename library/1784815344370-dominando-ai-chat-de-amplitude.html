@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚡ Dominando el AI Chat de Amplitude</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f5f6fa;
+      color: #1a1a2e;
+      line-height: 1.7;
+      padding: 2rem 1rem;
+    }
+
+    /* ── Container ── */
+    .notebook {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── Sections ── */
+    .section {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 2rem 2.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+    h2 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 1rem;
+      padding-bottom: .4rem;
+      border-bottom: 2px solid #e8eaf0;
+    }
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #3a3a5c;
+      margin: 1.4rem 0 .6rem;
+    }
+    p { margin-bottom: .85rem; }
+    em { font-style: italic; }
+    strong { font-weight: 700; }
+
+    /* ── Lists ── */
+    ol, ul {
+      padding-left: 1.6rem;
+      margin-bottom: .85rem;
+    }
+    li { margin-bottom: .35rem; }
+
+    /* ── Horizontal Rule ── */
+    hr { display: none; }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 4px solid #6c63ff;
+      background: #f0eeff;
+      border-radius: 0 8px 8px 0;
+      padding: .8rem 1.2rem;
+      margin: 1rem 0;
+      color: #3a3a5c;
+    }
+    blockquote p { margin: 0; }
+
+    /* ── Code (inline) ── */
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      background: #eef0f8;
+      color: #6c63ff;
+      padding: .15em .4em;
+      border-radius: 4px;
+      font-size: .88em;
+    }
+
+    /* ── Code Block ── */
+    pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: .85rem;
+      line-height: 1.6;
+      white-space: pre;
+    }
+    pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+      font-size: inherit;
+    }
+
+    /* ── Tables ── */
+    .table-wrap { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .93rem;
+    }
+    thead tr { background: #6c63ff; color: #fff; }
+    thead th {
+      padding: .65rem 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    tbody tr:nth-child(even) { background: #f7f8fc; }
+    tbody tr:hover { background: #eef0f8; }
+    td {
+      padding: .6rem 1rem;
+      border-bottom: 1px solid #e8eaf0;
+      vertical-align: top;
+    }
+
+    /* ── Two-column row (section 8 & 9) ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 640px) {
+      .two-col { grid-template-columns: 1fr; }
+      h1 { font-size: 1.5rem; }
+      .section { padding: 1.2rem 1rem; }
+    }
+
+    /* ── TOC ── */
+    .toc ol { counter-reset: toc-counter; list-style: none; padding-left: 0; }
+    .toc ol li { counter-increment: toc-counter; padding: .25rem 0; }
+    .toc ol li::before {
+      content: counter(toc-counter) ". ";
+      font-weight: 700;
+      color: #6c63ff;
+    }
+    .toc a { color: #6c63ff; text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* ── Badge chips ── */
+    .badge {
+      display: inline-block;
+      padding: .2em .6em;
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 700;
+      margin-right: .3rem;
+    }
+    .badge-fast { background: #fff3cd; color: #856404; }
+    .badge-deep { background: #d1ecf1; color: #0c5460; }
+
+    /* ── Diagram box ── */
+    .diagram {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 10px;
+      padding: 1.4rem 1.6rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: .82rem;
+      line-height: 1.7;
+      white-space: pre;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      color: #888;
+      font-size: .82rem;
+      margin-top: 2rem;
+      padding-bottom: 1rem;
+    }
+    .footer a { color: #6c63ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="notebook">
+
+  <!-- ══════════════════════════════════════════════
+       SECCIÓN 0 — Portada + TOC
+  ══════════════════════════════════════════════ -->
+  <div class="section">
+    <h1>⚡ Dominando el AI Chat de Amplitude</h1>
+
+    <h2>🗂️ Tabla de contenidos</h2>
+    <div class="toc">
+      <ol>
+        <li><a href="#s1">Introducción y objetivos</a></li>
+        <li><a href="#s2">¿Qué es el AI Chat?</a></li>
+        <li><a href="#s3">Fast Mode vs Deep Research</a></li>
+        <li><a href="#s4">Tip: cómo elegir el modo</a></li>
+        <li><a href="#s5">El comando <code>remember</code></a></li>
+        <li><a href="#s6">Prompts para Dashboards</a></li>
+        <li><a href="#s7">Prompts para Charts</a></li>
+        <li><a href="#s8">Buenas prácticas vs Errores comunes</a></li>
+        <li><a href="#s9">Flujo de trabajo recomendado</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECCIÓN 1 — Introducción
+  ══════════════════════════════════════════════ -->
+  <div class="section" id="s1">
+    <h2>1. 🎯 Introducción y objetivos</h2>
+
+    <p>El AI Chat de Amplitude es un asistente conversacional que traduce preguntas de negocio en lenguaje natural en análisis reales sobre tus datos. En lugar de construir cada chart a mano, podés preguntar directamente <em>"¿por qué cayó la conversión de checkout en Brasil la semana pasada?"</em> y obtener una respuesta fundamentada en tus eventos y propiedades.</p>
+
+    <blockquote>
+      <p>💡 <strong>La idea central:</strong> el AI Chat no reemplaza tu criterio analítico — lo acelera. Vos definís la pregunta y el contexto; el asistente hace el trabajo pesado de consultar, segmentar y visualizar.</p>
+    </blockquote>
+
+    <h3>🎯 Objetivos de aprendizaje</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Objetivo de aprendizaje</th><th>Resultado esperado</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Reconocer casos de uso del AI Chat</td><td>Saber cuándo usar IA y cuándo un análisis manual es mejor</td></tr>
+          <tr><td>Seleccionar entre Fast Mode y Deep Research</td><td>Optimizar tiempo y profundidad según la pregunta</td></tr>
+          <tr><td>Usar <code>remember</code> para dar contexto</td><td>Respuestas alineadas a definiciones ML/MP (GMV, sites, MeliPlus)</td></tr>
+          <tr><td>Escribir prompts efectivos</td><td>Aplicar prompts listos para dashboards, charts y casos reales</td></tr>
+          <tr><td>Adoptar un flujo de trabajo repetible</td><td>Seguir 6 pasos para pasar de la pregunta al insight accionable</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECCIÓN 2 — ¿Qué es el AI Chat?
+  ══════════════════════════════════════════════ -->
+  <div class="section" id="s2">
+    <h2>2. 🤖 ¿Qué es el AI Chat?</h2>
+
+    <p>El <strong>AI Chat</strong> es un agente de IA integrado en Amplitude que entiende tu taxonomía (eventos, propiedades, cohortes, charts y dashboards) y responde preguntas de negocio ejecutando análisis reales sobre tus datos. Funciona en tres contextos:</p>
+
+    <ul>
+      <li>🏠 <strong>Global / Home</strong> — preguntas abiertas sobre cualquier parte del producto.</li>
+      <li>📊 <strong>Dashboard</strong> — interpretar y resumir el conjunto de charts de un tablero.</li>
+      <li>📈 <strong>Chart</strong> — profundizar, modificar o explicar un gráfico específico.</li>
+    </ul>
+
+    <h3>¿Cuándo usar AI Chat vs análisis manual?</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Situación</th><th>✅ Usá AI Chat</th><th>🔧 Análisis manual</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Pregunta exploratoria y rápida</td><td>"¿Qué eventos cayeron esta semana en MLB?"</td><td>—</td></tr>
+          <tr><td>Interpretar un dashboard existente</td><td>Resumen ejecutivo automático de tendencias</td><td>—</td></tr>
+          <tr><td>Root-cause de una anomalía</td><td>Deep Research encuentra segmentos que la explican</td><td>—</td></tr>
+          <tr><td>Análisis con lógica muy específica / regulatoria</td><td>Como punto de partida</td><td>Definición manual precisa del chart</td></tr>
+          <tr><td>Métrica que exige una definición exacta ya validada</td><td>—</td><td>Chart guardado y auditado</td></tr>
+          <tr><td>Onboarding de nuevos analistas</td><td>Aprender la taxonomía preguntando</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <blockquote>
+      <p>✅ <strong>Regla práctica:</strong> usá AI Chat para <em>explorar, resumir y descubrir</em>; usá el análisis manual para <em>producir métricas oficiales y auditables</em>.</p>
+    </blockquote>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECCIÓN 3 — Fast Mode vs Deep Research
+  ══════════════════════════════════════════════ -->
+  <div class="section" id="s3">
+    <h2>3. ⚡ Fast Mode vs 🔬 Deep Research</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th></th><th>⚡ <strong>Fast Mode</strong></th><th>🔬 <strong>Deep Research</strong></th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Velocidad</strong></td><td>Segundos</td><td>Minutos</td></tr>
+          <tr><td><strong>Alcance</strong></td><td>1 métrica / 1 pregunta</td><td>Investigación multi-paso</td></tr>
+          <tr><td><strong>Cómo trabaja</strong></td><td>Consulta directa sobre eventos y propiedades</td><td>Razona, segmenta y descarta hipótesis</td></tr>
+          <tr><td><strong>Salida</strong></td><td>Respuesta / chart puntual</td><td>Reporte estructurado con evidencia</td></tr>
+          <tr><td><strong>Ideal para</strong></td><td>Explorar e iterar rápido</td><td>Root-cause y reportes ejecutivos</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>⚡ Ejemplos de prompts — Fast Mode</h3>
+    <pre><code>¿Cuántos usuarios únicos hicieron CHECKOUT en MLA en los últimos 7 días?
+
+Mostrame la tendencia diaria de VIEW_ITEM por site este mes.
+
+Creá un funnel de VIEW_ITEM → CHECKOUT filtrado por gp:meliplus_status = active.</code></pre>
+
+    <h3>🔬 Ejemplos de prompts — Deep Research</h3>
+    <pre><code>¿Por qué cayó la conversión de checkout en Brasil (MLB) la semana pasada?
+Analizá segmentos y descartá causas alternativas.
+
+Investigá qué diferencia el comportamiento de sellers power vs small
+en el embudo de publicación.
+
+Generá un reporte ejecutivo del impacto de MeliPlus sobre el GMV
+en los últimos 90 días, con recomendaciones.</code></pre>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECCIÓN 4 — Cómo elegir el modo
+  ══════════════════════════════════════════════ -->
+  <div class="section" id="s4">
+    <h2>4. 🧭 Tip: cómo elegir el modo correcto</h2>
+
+    <div class="diagram">                ¿Tu pregunta se responde con UN solo número o chart?
+                                     │
+              ┌──────────────────────┴──────────────────────┐
+             SÍ                                              NO
+              │                                               │
+         ⚡ FAST MODE                                   🔬 DEEP RESEARCH
+   "¿Cuánto?", "¿Cuántos?",                    "¿Por qué?", "¿Qué explica…?",
+   "Mostrame la tendencia…",                   "Comparame y encontrá la causa",
+   "Creá este chart"                           "Hacé un reporte"</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Si tu pregunta empieza con…</th><th>Modo sugerido</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>¿Cuánto / cuántos / qué tan…?</td><td><span class="badge badge-fast">⚡ Fast</span></td></tr>
+          <tr><td>Mostrame / Creá / Filtrá…</td><td><span class="badge badge-fast">⚡ Fast</span></td></tr>
+          <tr><td>¿Por qué / qué causó / qué explica…?</td><td><span class="badge badge-deep">🔬 Deep</span></td></tr>
+          <tr><td>Comparame X vs Y y encontrá la diferencia clave</td><td><span class="badge badge-deep">🔬 Deep</span></td></tr>
+          <tr><td>Hacé un reporte / resumen ejecutivo con recomendaciones</td><td><span class="badge badge-deep">🔬 Deep</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <blockquote>
+      <p>⏱️ <strong>Tip de eficiencia:</strong> empezá en Fast Mode para acotar el problema y, si el hallazgo amerita profundidad, escalá a Deep Research con la pregunta ya refinada.</p>
+    </blockquote>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECCIÓN 5 — remember
+  ══════════════════════════════════════════════ -->
+  <div class="section" id="s5">
+    <h2>5. 🧠 El comando <code>remember</code></h2>
+
+    <p>El comando <code>remember</code> le permite al AI Chat <strong>guardar contexto persistente</strong>: definiciones, métricas, preferencias y reglas de negocio que se aplican automáticamente en tus próximas preguntas.</p>
+
+    <h3>Cómo funciona</h3>
+    <ol>
+      <li>Escribís <code>remember: …</code> con la instrucción o definición.</li>
+      <li>El asistente la almacena y la aplica en conversaciones futuras.</li>
+      <li>Podés acumular varias memorias (definiciones + preferencias + reglas).</li>
+    </ol>
+
+    <h3>Sintaxis básica</h3>
+    <pre><code>remember: &lt;definición, regla o preferencia en lenguaje natural&gt;</code></pre>
+
+    <h3>Ejemplos de uso</h3>
+    <pre><code># Contexto de negocio
+remember: nuestro North Star es el GMV (Gross Merchandise Value).
+
+# Definición de métrica
+remember: "conversión de checkout" = usuarios con CHECKOUT / usuarios con VIEW_ITEM en la misma ventana.
+
+# Regla de segmentación
+remember: siempre segmentá por 'site'. MLA=Argentina, MLB=Brasil, MLM=México, MCO=Colombia.
+
+# Preferencia de formato
+remember: mostrá los resultados en tablas y, cuando compares países, ordená por GMV descendente.</code></pre>
+
+    <h3>Casos de uso del <code>remember</code></h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Categoría</th><th>Qué guardar</th><th>Ejemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🏢 Contexto de negocio</td>
+            <td>North Star, modelo de negocio, verticales</td>
+            <td><code>remember: North Star = GMV; verticales = marketplace, Envíos, Pago, Ads.</code></td>
+          </tr>
+          <tr>
+            <td>📐 Definiciones</td>
+            <td>Cómo se calcula cada métrica clave</td>
+            <td><code>remember: "usuario activo MeliPlus" = gp:meliplus_status = active.</code></td>
+          </tr>
+          <tr>
+            <td>🌎 Segmentación</td>
+            <td>Códigos de país, segmentos de usuario/seller</td>
+            <td><code>remember: agrupá seller_segment en power, large, medium, small.</code></td>
+          </tr>
+          <tr>
+            <td>⚙️ Preferencias</td>
+            <td>Formato de salida, orden, timezone</td>
+            <td><code>remember: timezone UTC, la semana empieza el lunes.</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <blockquote>
+      <p>✅ <strong>Buena práctica:</strong> definí las memorias clave al inicio de cada sesión y quedarán disponibles para todos los análisis siguientes.</p>
+    </blockquote>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECCIÓN 6 — Prompts Dashboard
+  ══════════════════════════════════════════════ -->
+  <div class="section" id="s6">
+    <h2>6. 📊 Ejemplos de Prompts — Análisis de Dashboard</h2>
+
+    <h3>🔎 Interpretación general</h3>
+    <pre><code>Resumime los principales hallazgos de este dashboard en 5 bullets ejecutivos.
+
+¿Cuáles son las 3 tendencias más importantes de este tablero en los últimos 30 días?
+
+Explicá qué mide cada chart de este dashboard y qué historia cuentan en conjunto.</code></pre>
+
+    <h3>🚨 Detección de anomalías</h3>
+    <pre><code>¿Hay algún cambio o anomalía inusual en las métricas de este dashboard esta semana?
+
+Identificá el chart con la mayor caída porcentual vs el período anterior y explicá qué pasó.
+
+Detectá picos o valles atípicos y correlacionalos con releases o campañas si existen.</code></pre>
+
+    <h3>👥 Análisis de segmentos</h3>
+    <pre><code>Desglosá las métricas de este dashboard por site y decime qué país sobresale.
+
+Compará usuarios MeliPlus (gp:meliplus_status = active) vs no-suscriptores en estas métricas.
+
+¿Qué segmento de gp:lifecycle_ml concentra el mayor crecimiento este mes?</code></pre>
+
+    <h3>📝 Generación de reportes</h3>
+    <pre><code>Generá un resumen ejecutivo semanal de este dashboard con conclusiones y recomendaciones.
+
+Creá un reporte comparativo mes actual vs mes anterior con las variaciones más relevantes.
+
+Armá un texto para presentar a stakeholders con los KPIs clave y su interpretación.</code></pre>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECCIÓN 7 — Prompts Chart
+  ══════════════════════════════════════════════ -->
+  <div class="section" id="s7">
+    <h2>7. 📈 Ejemplos de Prompts — Análisis de Chart</h2>
+
+    <h3>🔍 Interpretar charts existentes</h3>
+    <pre><code>¿Qué me está diciendo este chart? Dame la conclusión principal en una frase.
+
+¿Cuál es la tendencia general y qué puntos de inflexión ves en esta serie?
+
+Explicá este funnel: ¿en qué paso se pierden más usuarios y por qué podría ser?</code></pre>
+
+    <h3>🛠️ Modificar / optimizar charts</h3>
+    <pre><code>Agregá un desglose (group by) por site a este chart.
+
+Cambiá la ventana temporal a los últimos 90 días con granularidad semanal.
+
+Filtrá este chart para mostrar solo usuarios con gp:meliplus_status = active.</code></pre>
+
+    <h3>💎 Profundizar en insights</h3>
+    <pre><code>¿Qué segmento explica la caída visible en este chart la última semana?
+
+Compará este comportamiento entre MLA, MLB y MLM y decime la diferencia clave.
+
+¿Este cambio es estadísticamente relevante o está dentro del ruido normal?</code></pre>
+
+    <h3>➕ Crear análisis relacionados</h3>
+    <pre><code>A partir de este chart, creá un análisis de retención de los mismos usuarios.
+
+Generá un funnel complementario que muestre los pasos previos a este evento.
+
+Creá una cohorte con los usuarios que aparecen en este chart y su GMV asociado.</code></pre>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECCIÓN 8 — Buenas prácticas + Errores (2 col)
+  ══════════════════════════════════════════════ -->
+  <div class="section" id="s8">
+    <div class="two-col">
+      <!-- Buenas prácticas -->
+      <div>
+        <h2>8. ✅ Buenas prácticas</h2>
+
+        <p><strong>✅ Sé específico con el contexto</strong> En lugar de "muéstrame usuarios", di "muéstrame usuarios únicos que completaron una simulación de crédito en los últimos 7 días, desglosado por plataforma".</p>
+
+        <p><strong>✅ Usá el contexto de la página</strong> Si tenés un chart o dashboard abierto, el AI Chat lo detecta automáticamente. Podés decir "este gráfico" o "este dashboard" sin necesidad de especificar el nombre.</p>
+
+        <p><strong>✅ Iterá sobre las respuestas</strong> Si la primera respuesta no es exactamente lo que buscabas, refiná: <em>"Ahora mostrame lo mismo pero solo para usuarios de iOS"</em> o <em>"Agregá una comparación con el mes anterior"</em>.</p>
+
+        <p><strong>✅ Pedí acciones concretas</strong> Terminá tus análisis con <em>"¿Qué acción recomendarías?"</em> o <em>"¿Qué experimento podría validar esta hipótesis?"</em> para obtener recomendaciones accionables.</p>
+
+        <p><strong>✅ Guardá los charts generados</strong> Cuando el AI Chat crea un chart, guardalo haciendo clic en el link y luego en "Save" para que quede disponible en tus dashboards.</p>
+      </div>
+
+      <!-- Errores comunes -->
+      <div>
+        <h2>❌ Errores comunes a evitar</h2>
+
+        <p><strong>❌ No inventes eventos o propiedades</strong> El AI Chat trabaja con los eventos reales de tu proyecto. Si no sabés el nombre exacto, preguntá: <em>"¿Qué eventos existen relacionados con el proceso de solicitud?"</em></p>
+
+        <p><strong>❌ No confundas correlación con causalidad</strong> El AI Chat puede identificar patrones y correlaciones, pero la causalidad solo se puede establecer con experimentos controlados (A/B testing).</p>
+
+        <p><strong>❌ No uses períodos incompletos</strong> Evitá analizar el día o semana actual si aún no terminó. Usá <em>"últimos 7 días completos"</em> o <em>"semana pasada"</em> para datos más confiables.</p>
+
+        <p><strong>❌ No esperes respuestas perfectas a la primera</strong> El AI Chat mejora con el contexto. Si la respuesta no es exacta, refiná la pregunta con más detalles sobre el segmento, período o métrica que buscás.</p>
+
+        <p><strong>❌ No olvides verificar los datos</strong> Siempre validá que los eventos y métricas usados en el análisis sean los correctos para tu caso de uso.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECCIÓN 9 — Flujo de trabajo
+  ══════════════════════════════════════════════ -->
+  <div class="section" id="s9">
+    <h2>9. 🗺️ Flujo de trabajo recomendado</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Paso</th><th>Acción</th><th>Detalle</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1</strong></td>
+            <td>Definí la pregunta de negocio</td>
+            <td>Escribí en una frase qué querés responder y por qué importa. Ej: <em>"¿MeliPlus mejora la retención en MLA?"</em></td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td>Seleccioná el modo apropiado</td>
+            <td>¿Un número/chart? → ⚡ Fast Mode. ¿Un "por qué" o un reporte? → 🔬 Deep Research.</td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td>Proporcioná contexto (<code>remember</code>)</td>
+            <td>Cargá definiciones, sites, métricas y exclusiones para que la respuesta hable tu idioma de negocio.</td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td>Formulá el prompt</td>
+            <td>Especificá métrica + segmento + período usando nombres reales de eventos y propiedades.</td>
+          </tr>
+          <tr>
+            <td><strong>5</strong></td>
+            <td>Revisá y refiná</td>
+            <td>Chequeá la definición y las fechas usadas; iterá de a un cambio por vez hasta afinar el hallazgo.</td>
+          </tr>
+          <tr>
+            <td><strong>6</strong></td>
+            <td>Actuá sobre los insights</td>
+            <td>Guardá el chart/cohorte, compartí el reporte y traducí el hallazgo en una acción concreta.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="diagram">Pregunta de negocio → Modo → Contexto (remember) → Prompt → Revisar/Refinar → Acción
+        ▲                                                                       │
+        └───────────────────────  el ciclo se repite  ──────────────────────────┘</div>
+
+    <blockquote>
+      <p>🔁 <strong>El ciclo se repite:</strong> cada acción genera nuevas preguntas. Volvé al Paso 1 y mantené el análisis vivo.</p>
+    </blockquote>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════ -->
+  <div class="footer">
+    ✨ Creado por Minders &nbsp;|&nbsp; 📅 Última actualización: Mayo 2026
+  </div>
+
+</div>
+</body>
+</html>
