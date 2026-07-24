@@ -4164,13 +4164,14 @@ demo: {
     { n:'3', title:'Generación del HTML', color:'#3d8bff', body:'Crea el index.html con el Unified Script + engagement.js + experiment-js-client vía unpkg, en el orden correcto, con Session Replay y Guides & Surveys registrados vía amplitude.add() antes del init.' },
     { n:'4', title:'Feature Experiment pre-armado', color:'#3d8bff', body:'Configura el flag key y las dos variantes (control/treatment) según lo elegido en la Ronda 3. Con Deployment Key hace fetch() real; sin ella, split local 50/50 dejado explícito en consola y en el .md.' },
     { n:'5', title:'Documento de implementación', color:'#3d8bff', body:'Genera AMPLITUDE-IMPLEMENTATION.md con el estado de los 5 productos, el detalle del experimento pre-armado y la lista completa de eventos trackeados.' },
-    { n:'6', title:'GitHub Pages (opcional)', color:'#3d8bff', body:'Si decís que sí: Claude crea el repositorio, hace el commit y push, activa GitHub Pages, y vuelve a subir el .md ya actualizado con la URL pública real.' },
+    { n:'6', title:'GitHub Pages (opcional)', color:'#3d8bff', body:'Si decís que sí: Claude crea el repositorio, corre <strong>git add .</strong>, <strong>git commit -m "mensaje"</strong> y <strong>git push</strong> dentro de esa carpeta, activa GitHub Pages, y vuelve a subir el .md ya actualizado con la URL pública real.' },
   ],
   notes: [
     { type:'warn', text:'Feature Experiment no tiene versión CDN oficial de Amplitude — se usa el bundle UMD standalone de @amplitude/experiment-js-client vía unpkg, con versión fija (@1.21.3) para reproducibilidad.' },
     { type:'warn', text:'La Deployment Key de Feature Experiment NO es la misma que la API Key de Analytics — se genera en Amplitude → Experiment → Feature Experiment → Deployments.' },
     { type:'info', text:'El Unified Script ya incluye Web Experiment por defecto — no hace falta el snippet anti-flicker viejo de experiment.js.' },
     { type:'info', text:'Guides & Surveys queda excluido del Unified Script por tamaño de bundle — siempre requiere el script .engagement.js aparte, cargado después del Unified Script.' },
+    { type:'info', text:'Cada proyecto/carpeta tiene su propio repo y remoto de GitHub — el <strong>git add . / git commit / git push</strong> siempre corre parado dentro de la carpeta del proyecto correspondiente, así el commit llega solo a su repo.' },
   ],
   install: `1. Abrí Claude Desktop → Settings → Skills
 2. Creá una carpeta: amplitude-demo-generator-unified/
